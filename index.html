@@ -102,33 +102,172 @@ section{position:relative;z-index:1}
 .tier.featured .tier-top{background:linear-gradient(to right,var(--gold-bright),#f5e070,var(--gold-bright))}
 
 /* ── SEATING CHART ── */
-.seating{background:var(--bg2);padding:0 0 80px}
-.seat-layout{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:0;border:1px solid var(--border)}
-.seat-left{padding:28px;border-right:1px solid var(--border)}
-.seat-right{padding:24px;background:var(--surface);display:flex;flex-direction:column;gap:14px}
+.seating{
+  background:var(--bg2);
+  padding:0 0 96px;
+  position:relative;
+}
+.seating::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 60% 30% at 50% 10%, rgba(201,169,110,.06) 0%, transparent 70%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(201,169,110,.018) 30px,
+      rgba(201,169,110,.018) 31px
+    );
+  pointer-events:none;
+  z-index:0;
+}
+.seating .sec-hdr,.seating .sec-inner,.seating>div{position:relative;z-index:1}
+.seat-layout{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 400px;
+  gap:0;
+  border:1px solid rgba(201,169,110,.25);
+  box-shadow:0 0 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(201,169,110,.15);
+  background:rgba(7,7,11,.7);
+  backdrop-filter:blur(4px);
+}
+.seat-left{
+  padding:32px;
+  border-right:1px solid rgba(201,169,110,.2);
+  position:relative;
+}
+.seat-right{
+  padding:32px 28px;
+  background:linear-gradient(160deg,rgba(201,169,110,.05) 0%,rgba(0,0,0,.2) 100%);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  position:relative;
+}
+.seat-right::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(to right,transparent,var(--gold-bright),var(--gold),var(--gold-bright),transparent);
+}
 
 /* SVG seats */
-.legend-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.legend-row{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+  padding:10px 12px 14px;
+  border-bottom:1px solid rgba(201,169,110,.15);
+  background:rgba(0,0,0,.2);
+  border:1px solid rgba(201,169,110,.1);
+}
 .ldot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
 .legend-row span{font-size:11px;color:var(--text-dim);letter-spacing:.06em}
 
 /* Form */
-.form-head{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold-pale);letter-spacing:.05em;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:4px}
+.form-head{
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  font-weight:700;
+  color:var(--gold-pale);
+  letter-spacing:.06em;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(201,169,110,.2);
+  margin-bottom:4px;
+  text-align:center;
+}
+.form-head-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;
+  font-style:italic;
+  color:var(--text-dim);
+  text-align:center;
+  margin-top:4px;
+  display:block;
+}
 .frow{margin-bottom:10px}
 .frow label{display:block;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
-.frow input{width:100%;padding:10px 13px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;transition:.2s}
+.frow input{
+  width:100%;
+  padding:12px 14px;
+  background:rgba(0,0,0,.4);
+  border:1px solid rgba(201,169,110,.15);
+  border-bottom:1px solid rgba(201,169,110,.3);
+  color:var(--text);
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  outline:none;
+  transition:.2s;
+  letter-spacing:.02em;
+}
 .frow input:focus{border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,169,110,.25)}
-.cart-block{border:1px solid var(--border);padding:14px}
+.cart-block{
+  border:1px solid rgba(201,169,110,.2);
+  padding:16px;
+  background:rgba(0,0,0,.25);
+  position:relative;
+}
+.cart-block::before{
+  content:'';
+  position:absolute;
+  top:0;left:8px;right:8px;
+  height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,169,110,.4),transparent);
+}
 .cart-head{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .cart-item{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);padding:5px 0;border-bottom:1px solid var(--border)}
 .cart-item:last-child{border-bottom:0}
 .cart-total-row{display:flex;justify-content:space-between;font-family:'Playfair Display',serif;font-size:16px;color:var(--gold-pale);padding-top:10px;margin-top:4px}
 .notice{padding:8px 12px;font-size:12px;border:1px solid;font-family:'Cormorant Garamond',serif;font-style:italic;display:none}
-.btn-checkout{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--bg);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;border:0;cursor:pointer;transition:.3s}
+.btn-checkout{
+  width:100%;
+  padding:16px;
+  background:linear-gradient(135deg,var(--gold-bright),var(--gold),#b8882e);
+  color:var(--bg);
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  border:0;
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
+}
+.btn-checkout::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(255,255,255,.12),transparent);
+  pointer-events:none;
+}
 .btn-checkout:hover{box-shadow:0 0 30px rgba(201,169,110,.5)}
 .btn-checkout:disabled{opacity:.5;cursor:not-allowed}
 .open-tier-row{display:flex;gap:10px;margin-bottom:8px}
-.ot-card{flex:1;border:1px solid var(--border);padding:12px;text-align:center}
+.ot-card{
+  flex:1;
+  border:1px solid rgba(201,169,110,.2);
+  padding:16px 12px;
+  text-align:center;
+  background:rgba(0,0,0,.2);
+  position:relative;
+  transition:.2s;
+}
+.ot-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+.ot-card:hover{background:rgba(201,169,110,.06);border-color:rgba(201,169,110,.35)}
 .ot-card .ot-name{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 .ot-card .ot-price{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-pale);margin-bottom:8px}
 .qty-row{display:flex;align-items:center;justify-content:center;gap:8px}
@@ -142,6 +281,40 @@ footer .ft-logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:
 footer p{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text-dim);line-height:1.8}
 footer a{color:var(--gold);text-decoration:none}
 
+/* ── ZOOM/PAN CHART ── */
+.chart-container{
+  position:relative;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 95%, rgba(201,169,110,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 100%, #0e0b18 0%, #07070b 100%);
+  border:1px solid rgba(201,169,110,.2);
+  box-shadow:inset 0 -1px 0 rgba(201,169,110,.15), inset 0 0 40px rgba(0,0,0,.5);
+  overflow:hidden;
+  user-select:none;
+  touch-action:none;
+  min-height:340px;
+  cursor:grab;
+}
+.chart-container:active{cursor:grabbing}
+.chart-container svg{display:block;width:100%;transform-origin:0 0;will-change:transform}
+.chart-controls{display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap}
+.cc-btn{padding:5px 12px;border:1px solid var(--border-bright);background:transparent;color:var(--gold);font-size:11px;letter-spacing:.1em;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.15s}
+.cc-btn:hover{background:rgba(201,169,110,.12)}
+.cc-hint{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--text-dim);margin-left:auto}
+/* ── STICKY CART FOOTER ── */
+.sticky-cart{position:fixed;bottom:0;left:0;right:0;background:rgba(10,9,15,.96);border-top:1px solid var(--border-bright);padding:12px 24px;display:flex;align-items:center;gap:20px;z-index:999;transform:translateY(100%);transition:transform .3s;backdrop-filter:blur(12px)}
+.sticky-cart.show{transform:translateY(0)}
+.sc-summary{flex:1;min-width:0}
+.sc-count{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-pale)}
+.sc-items{font-size:11px;color:var(--text-dim);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-total{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);white-space:nowrap}
+.sc-btn{padding:13px 28px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--bg);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border:0;cursor:pointer;white-space:nowrap;transition:.3s;flex-shrink:0}
+.sc-btn:hover{box-shadow:0 0 24px rgba(201,169,110,.5)}
+/* ── STEP FLOW ── */
+.step-pill{display:inline-flex;align-items:center;gap:8px;padding:4px 14px;border:1px solid var(--border);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.step-num{width:20px;height:20px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+/* ── SEAT TOOLTIP ── */
+.seat-tip{position:absolute;background:var(--bg);border:1px solid var(--gold);padding:6px 10px;font-size:11px;color:var(--gold-pale);pointer-events:none;z-index:10;display:none;white-space:nowrap;font-family:'Cormorant Garamond',serif}
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .tiers{grid-template-columns:1fr 1fr}
@@ -335,9 +508,15 @@ footer a{color:var(--gold);text-decoration:none}
 <!-- ══════════════════ SEATING + RESERVATION ══════════════════ -->
 <section class="seating" id="gala-seating">
   <div class="sec-hdr">
-    <p class="over">Seating Chart</p>
-    <h2>The Grand Ballroom</h2>
-    <p>VVIP &amp; VIP guests select exact seats from the fan arc below. Gold and General tickets are open seating.</p>
+    <p class="over">◆ &nbsp; Seating &amp; Reservations &nbsp; ◆</p>
+    <h2>Reserve Your Place</h2>
+    <p>VVIP &amp; VIP guests select their exact seat from the fan chart. Gold &amp; General are open ballroom seating — choose your quantity and proceed.</p>
+  </div>
+  <!-- art deco divider -->
+  <div style="display:flex;align-items:center;gap:18px;max-width:500px;margin:-24px auto 48px;padding:0 24px">
+    <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold))"></div>
+    <svg width="40" height="20" viewBox="0 0 40 20"><polygon points="20,2 38,10 20,18 2,10" fill="none" stroke="#c9a96e" stroke-width="1"/><polygon points="20,6 34,10 20,14 6,10" fill="none" stroke="#c9a96e" stroke-width=".5" opacity=".5"/></svg>
+    <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,var(--gold))"></div>
   </div>
 
   <div class="sec-inner">
@@ -345,33 +524,51 @@ footer a{color:var(--gold);text-decoration:none}
 
       <!-- LEFT: SVG MAP -->
       <div class="seat-left">
+        <div class="step-pill"><span class="step-num">1</span> Tap a seat on the map to select it</div>
+
         <div class="legend-row">
-          <span><i class="ldot" style="background:#a78bfa"></i>VVIP · $500</span>
-          <span><i class="ldot" style="background:#f472b6"></i>VIP · $250</span>
-          <span><i class="ldot" style="background:var(--gold)"></i>Gold · $150</span>
-          <span><i class="ldot" style="background:#94a3b8"></i>General · $100</span>
+          <span><i class="ldot" style="background:#a78bfa"></i>VVIP $500</span>
+          <span><i class="ldot" style="background:#f472b6"></i>VIP $250</span>
+          <span><i class="ldot" style="background:var(--gold)"></i>Gold $150</span>
+          <span><i class="ldot" style="background:#94a3b8"></i>General $100</span>
           <span><i class="ldot" style="background:#4ade80"></i>Selected</span>
           <span><i class="ldot" style="background:#1e2333"></i>Sold</span>
         </div>
-        <div id="svg-wrap" style="width:100%"></div>
+
+        <div class="chart-controls">
+          <button class="cc-btn" id="btn-zoom-in">＋ Zoom</button>
+          <button class="cc-btn" id="btn-zoom-out">－ Zoom</button>
+          <button class="cc-btn" id="btn-reset">↺ Reset</button>
+          <span class="cc-hint">Drag to pan · Pinch to zoom</span>
+        </div>
+
+        <div class="chart-container" id="chart-container">
+          <div class="seat-tip" id="seat-tip"></div>
+          <div id="svg-wrap" style="position:relative"></div>
+        </div>
+
         <!-- Open seating qty -->
-        <div class="open-tier-row" style="margin-top:16px">
-          <div class="ot-card">
-            <div class="ot-name">Gold Open Seating</div>
-            <div class="ot-price">$150</div>
-            <div class="qty-row">
-              <button class="qb" data-k="g" data-d="-1">−</button>
-              <span class="qv" id="g-qty">0</span>
-              <button class="qb" data-k="g" data-d="1">+</button>
+        <div style="margin-top:18px;padding:20px 16px;border:1px solid rgba(201,169,110,.18);background:rgba(0,0,0,.2);position:relative;">
+          <div style="position:absolute;top:-1px;left:24px;right:24px;height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,.4),transparent)"></div>
+          <div class="step-pill" style="margin-bottom:14px"><span class="step-num">2</span> Or pick open seating below</div>
+          <div class="open-tier-row">
+            <div class="ot-card">
+              <div class="ot-name">Gold Open Seating</div>
+              <div class="ot-price">$150</div>
+              <div class="qty-row">
+                <button class="qb" data-k="g" data-d="-1">−</button>
+                <span class="qv" id="g-qty">0</span>
+                <button class="qb" data-k="g" data-d="1">+</button>
+              </div>
             </div>
-          </div>
-          <div class="ot-card">
-            <div class="ot-name">General Admission</div>
-            <div class="ot-price">$100</div>
-            <div class="qty-row">
-              <button class="qb" data-k="n" data-d="-1">−</button>
-              <span class="qv" id="n-qty">0</span>
-              <button class="qb" data-k="n" data-d="1">+</button>
+            <div class="ot-card">
+              <div class="ot-name">General Admission</div>
+              <div class="ot-price">$100</div>
+              <div class="qty-row">
+                <button class="qb" data-k="n" data-d="-1">−</button>
+                <span class="qv" id="n-qty">0</span>
+                <button class="qb" data-k="n" data-d="1">+</button>
+              </div>
             </div>
           </div>
         </div>
@@ -379,7 +576,7 @@ footer a{color:var(--gold);text-decoration:none}
 
       <!-- RIGHT: FORM + CART -->
       <div class="seat-right">
-        <div class="form-head">Reserve Your Place</div>
+        <div class="form-head">Reserve Your Place<span class="form-head-sub">Complete your details to secure your seat</span></div>
 
         <div class="frow">
           <label for="g-name">Full Name</label>
@@ -405,8 +602,9 @@ footer a{color:var(--gold);text-decoration:none}
 
         <div class="notice" id="g-notice"></div>
 
+        <div class="step-pill" style="margin-top:4px"><span class="step-num">3</span> Click below to pay &amp; confirm</div>
         <button class="btn-checkout" id="btn-checkout">Proceed to Payment →</button>
-        <p style="font-size:10px;letter-spacing:.08em;color:var(--text-dim);text-align:center;margin-top:8px;font-family:'Cormorant Garamond',serif;font-style:italic">Seats reserved for 15 minutes upon checkout</p>
+        <p style="font-size:10px;letter-spacing:.08em;color:var(--text-dim);text-align:center;margin-top:8px;font-family:'Cormorant Garamond',serif;font-style:italic">Seats held for 15 minutes · Secure checkout</p>
       </div>
 
     </div>
@@ -560,7 +758,8 @@ function renderCart(){
   if(vp.length) lines.push('<div class="cart-item"><span>VIP ×'+vp.length+' ('+vp.join(', ')+')</span><b>$'+fmt(vp.length*CFG.prices.VIP)+'</b></div>');
   if(ST.gQty) lines.push('<div class="cart-item"><span>Gold Open ×'+ST.gQty+'</span><b>$'+fmt(ST.gQty*CFG.prices.GOLD)+'</b></div>');
   if(ST.nQty) lines.push('<div class="cart-item"><span>General ×'+ST.nQty+'</span><b>$'+fmt(ST.nQty*CFG.prices.GENERAL)+'</b></div>');
-  document.getElementById('cart-lines').innerHTML=lines.length?lines.join(''):'<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div>';
+  document.getElementById('cart-lines').innerHTML=lines.length?lines.join(''):'<div style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div>';
+  if(window._updateStickyCart) window._updateStickyCart(ST.sel,ST.gQty,ST.nQty,total);
 }
 function showNotice(msg,type){
   var el=document.getElementById('g-notice');
@@ -610,7 +809,69 @@ async function loadInventory(){
   }catch(e){}
 }
 
-// ── PARTICLES ──
+// ── FIREWORKS ──
+(function(){
+  var canvas=document.createElement('canvas');
+  canvas.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55';
+  document.body.insertBefore(canvas,document.body.firstChild);
+  var ctx=canvas.getContext('2d');
+  var W,H,particles=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+
+  var COLORS=['#f0d07a','#c9a96e','#f7e9c0','#fcd34d','#fff8dc','#e0c97a','#fffacd'];
+
+  function Firework(x,y){
+    this.x=x;this.y=y;
+    this.color=COLORS[Math.floor(Math.random()*COLORS.length)];
+    this.particles=[];
+    var count=Math.floor(40+Math.random()*30);
+    for(var i=0;i<count;i++){
+      var angle=Math.random()*Math.PI*2;
+      var speed=Math.random()*3.5+1;
+      this.particles.push({x:x,y:y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,alpha:1,size:Math.random()*2+.5});
+    }
+  }
+  Firework.prototype.update=function(){
+    this.particles.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.vy+=0.06;p.vx*=0.98;p.alpha-=0.013;
+    });
+    this.particles=this.particles.filter(function(p){return p.alpha>0;});
+    return this.particles.length>0;
+  };
+  Firework.prototype.draw=function(ctx){
+    var color=this.color;
+    this.particles.forEach(function(p){
+      ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=color;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    });
+  };
+
+  var fwList=[];
+  function launchRandom(){
+    var x=W*.1+Math.random()*(W*.8);
+    var y=H*.1+Math.random()*(H*.55);
+    fwList.push(new Firework(x,y));
+  }
+
+  // Initial burst
+  for(var i=0;i<4;i++) setTimeout(launchRandom,i*280);
+  // Ongoing random launches
+  setInterval(function(){
+    if(Math.random()<0.7) launchRandom();
+  },1800);
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    fwList=fwList.filter(function(fw){var alive=fw.update();fw.draw(ctx);return alive;});
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ── GOLD PARTICLES ──
 (function(){
   var wrap=document.getElementById('particles');
   if(!wrap) return;
@@ -643,6 +904,73 @@ document.getElementById('btn-checkout').onclick=checkout;
 window.scrollToSeating=function(){
   document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'});
 };
+
+// ── ZOOM / PAN ──
+(function(){
+  var container=document.getElementById('chart-container');
+  var svgWrap=container.querySelector('#svg-wrap');
+  if(!svgWrap) return;
+  var scale=1,ox=0,oy=0;
+  var dragging=false,startX,startY,startOx,startOy;
+  var pinchDist=null;
+  function apply(){svgWrap.style.transform='translate('+ox+'px,'+oy+'px) scale('+scale+')';}
+  svgWrap.style.transformOrigin='0 0';
+  container.addEventListener('mousedown',function(e){
+    dragging=true;startX=e.clientX;startY=e.clientY;startOx=ox;startOy=oy;e.preventDefault();
+  });
+  window.addEventListener('mousemove',function(e){if(!dragging)return;ox=startOx+(e.clientX-startX);oy=startOy+(e.clientY-startY);apply();});
+  window.addEventListener('mouseup',function(){dragging=false;});
+  container.addEventListener('wheel',function(e){e.preventDefault();var d=e.deltaY>0?-.15:.15;scale=Math.max(.5,Math.min(4,scale+d));apply();},{passive:false});
+  container.addEventListener('touchstart',function(e){
+    if(e.touches.length===1){dragging=true;startX=e.touches[0].clientX;startY=e.touches[0].clientY;startOx=ox;startOy=oy;}
+    else if(e.touches.length===2){dragging=false;pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+    e.preventDefault();
+  },{passive:false});
+  container.addEventListener('touchmove',function(e){
+    if(e.touches.length===1&&dragging){ox=startOx+(e.touches[0].clientX-startX);oy=startOy+(e.touches[0].clientY-startY);apply();}
+    else if(e.touches.length===2&&pinchDist!==null){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);scale=Math.max(.5,Math.min(4,scale*(d/pinchDist)));pinchDist=d;apply();}
+    e.preventDefault();
+  },{passive:false});
+  container.addEventListener('touchend',function(){dragging=false;pinchDist=null;});
+  document.getElementById('btn-zoom-in').onclick=function(){scale=Math.min(4,scale+.25);apply();};
+  document.getElementById('btn-zoom-out').onclick=function(){scale=Math.max(.5,scale-.25);apply();};
+  document.getElementById('btn-reset').onclick=function(){scale=1;ox=0;oy=0;apply();};
+})();
+
+// ── STICKY CART ──
+(function(){
+  var sticky=document.createElement('div');
+  sticky.className='sticky-cart';
+  sticky.id='sticky-cart';
+  var summary=document.createElement('div');summary.className='sc-summary';
+  var cnt=document.createElement('div');cnt.className='sc-count';cnt.id='sc-count';cnt.textContent='0 tickets';
+  var items=document.createElement('div');items.className='sc-items';items.id='sc-items';items.textContent='Select seats above';
+  summary.appendChild(cnt);summary.appendChild(items);
+  var tot=document.createElement('div');tot.className='sc-total';tot.textContent='$';
+  var totSpan=document.createElement('span');totSpan.id='sc-total';totSpan.textContent='0';
+  tot.appendChild(totSpan);
+  var btn=document.createElement('button');btn.className='sc-btn';btn.id='sc-pay';btn.textContent='Pay Now →';
+  sticky.appendChild(summary);sticky.appendChild(tot);sticky.appendChild(btn);
+  document.body.appendChild(sticky);
+  btn.onclick=function(){
+    document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'});
+    setTimeout(function(){document.getElementById('btn-checkout').click();},600);
+  };
+  window._updateStickyCart=function(sel,gQ,nQ,total){
+    var count=sel.size+gQ+nQ;
+    cnt.textContent=count+' ticket'+(count!==1?'s':'')+' selected';
+    var parts=[];
+    var vv=Array.from(sel).filter(function(s){return s.indexOf('VVIP')===0;});
+    var vp=Array.from(sel).filter(function(s){return s.indexOf('VIP')===0;});
+    if(vv.length) parts.push('VVIP x'+vv.length);
+    if(vp.length) parts.push('VIP x'+vp.length);
+    if(gQ) parts.push('Gold x'+gQ);
+    if(nQ) parts.push('General x'+nQ);
+    items.textContent=parts.length?parts.join(' · '):'Nothing selected yet';
+    totSpan.textContent=fmt(total);
+    if(count>0) sticky.classList.add('show'); else sticky.classList.remove('show');
+  };
+})();
 
 })();
 </script>
