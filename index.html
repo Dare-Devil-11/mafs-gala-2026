@@ -126,7 +126,7 @@ section{position:relative;z-index:1}
 .mrow-price{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold)}
 /* seat map collapse */
 .seat-map-collapse{border:1px solid rgba(212,175,110,.25);margin-top:0;border-top:0;overflow:hidden;max-height:0;transition:max-height .4s ease;background:rgba(0,0,0,.2)}
-.seat-map-collapse.open{max-height:600px}
+.seat-map-collapse.open{max-height:780px}
 .seat-map-inner{padding:20px}
 /* order summary panel */
 .pur-right{position:sticky;top:20px}
@@ -163,15 +163,16 @@ footer a{color:var(--gold);text-decoration:none}
 .chart-container{
   position:relative;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 95%, rgba(212,175,110,.22) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 98%, rgba(212,175,110,.20) 0%, transparent 55%),
     radial-gradient(ellipse 100% 100% at 50% 100%, #14102a 0%, #0f0e15 100%);
   border:1px solid rgba(201,169,110,.2);
   box-shadow:inset 0 -1px 0 rgba(201,169,110,.15), inset 0 0 40px rgba(0,0,0,.5);
   overflow:hidden;
   user-select:none;
   touch-action:none;
-  min-height:340px;
   cursor:grab;
+  aspect-ratio: 760/420;
+  max-height:520px;
 }
 .chart-container:active{cursor:grabbing}
 .chart-container svg{display:block;width:100%;transform-origin:0 0;will-change:transform}
@@ -214,6 +215,7 @@ footer a{color:var(--gold);text-decoration:none}
 <!-- ══════════════════ HERO ══════════════════ -->
 <section class="hero" id="top">
   <div class="particles" id="particles"></div>
+<canvas id="fw-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55"></canvas>
 
   <!-- art deco border corners -->
   <div style="position:absolute;top:30px;left:30px;right:30px;bottom:30px;border:1px solid rgba(201,169,110,.18);pointer-events:none;z-index:1"></div>
@@ -376,7 +378,7 @@ footer a{color:var(--gold);text-decoration:none}
           <div class="trow-info">
             <div class="trow-name">Gold &mdash; Grand Ballroom</div>
             <div class="trow-desc">Open ballroom floor seating · Full dinner service · Access to all event programming</div>
-            <div class="trow-avail">200 tickets available</div>
+            <div class="trow-avail">200 seats · First come first serve · Click any gold seat on the map</div>
           </div>
           <div class="trow-right">
             <div class="trow-price">$150 <span>/ ticket</span></div>
@@ -396,7 +398,7 @@ footer a{color:var(--gold);text-decoration:none}
           <div class="trow-info">
             <div class="trow-name">General &mdash; The Promenade</div>
             <div class="trow-desc">General admission entry · Dinner &amp; refreshments · Full event access</div>
-            <div class="trow-avail">200 tickets available</div>
+            <div class="trow-avail">200 seats · First come first serve · Click any grey seat on the map</div>
           </div>
           <div class="trow-right">
             <div class="trow-price">$100 <span>/ ticket</span></div>
@@ -410,17 +412,19 @@ footer a{color:var(--gold);text-decoration:none}
       </div>
 
       <!-- SEAT MAP (slides in when VVIP or VIP > 0) -->
-      <div class="seat-map-collapse" id="seat-map-collapse">
+      <div class="seat-map-collapse open" id="seat-map-collapse">
         <div class="seat-map-inner">
           <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px">
             <span style="width:20px;height:20px;border:1px solid var(--gold);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">✦</span>
             Choose Your Exact Seat (Optional — seats auto-assigned if skipped)
           </div>
           <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding:8px 12px;border:1px solid rgba(212,175,110,.15);background:rgba(0,0,0,.2)">
-            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#a78bfa;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VVIP $500</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#f472b6;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VIP $250</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#4ade80;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Selected</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#1e2333;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Sold</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#a78bfa;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VVIP $500</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#f472b6;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VIP $250</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#c9a96e;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Gold $150</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#64748b;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>General $100</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#4ade80;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Selected</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#1e2333;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Sold</span>
           </div>
           <div class="chart-controls">
             <button class="cc-btn" id="btn-zoom-in">＋ Zoom</button>
@@ -432,7 +436,7 @@ footer a{color:var(--gold);text-decoration:none}
           </div>
           <div class="chart-container" id="chart-container">
             <div class="seat-tip" id="seat-tip"></div>
-            <div id="svg-wrap" style="position:relative;transform-origin:center center"></div>
+            <div id="svg-wrap" style="position:relative;transform-origin:center center;width:100%;height:100%"></div>
           </div>
         </div>
       </div>
@@ -589,7 +593,13 @@ var ARCS=[
   {t:'VIP', n:22,r:208,a0:207,a1:333},
   {t:'VIP', n:24,r:235,a0:205,a1:335},
   {t:'VIP', n:26,r:262,a0:203,a1:337},
-  {t:'VIP', n:28,r:289,a0:201,a1:339}
+  {t:'VIP', n:28,r:289,a0:201,a1:339},
+  {t:'GOLD',n:62,r:310,a0:199,a1:341},
+  {t:'GOLD',n:68,r:322,a0:198,a1:342},
+  {t:'GOLD',n:70,r:334,a0:197,a1:343},
+  {t:'GEN', n:62,r:352,a0:197,a1:343},
+  {t:'GEN', n:68,r:364,a0:196,a1:344},
+  {t:'GEN', n:70,r:376,a0:195,a1:345}
 ];
 var CX=400,CY=500,NS='http://www.w3.org/2000/svg';
 var ST={sel:new Set(),inv:{},vvipQty:0,vipQty:0,gQty:0,nQty:0,merch:{m_prog:0,m_tote:0,m_photo:0,m_poster:0}};
@@ -599,13 +609,15 @@ var MERCH_NAMES={m_prog:'Gala Programme',m_tote:'Tote Bag',m_photo:'Photo Packag
 ['VVIP-01','VVIP-02','VVIP-03','VVIP-04','VVIP-05','VVIP-06','VVIP-07','VVIP-08','VVIP-09','VVIP-10','VVIP-11','VVIP-12'].forEach(function(id){ST.inv[id]='sold';});
 ['VIP-001','VIP-002','VIP-003','VIP-004','VIP-005','VIP-006','VIP-007','VIP-008','VIP-009','VIP-010','VIP-011','VIP-012','VIP-013','VIP-014','VIP-015','VIP-016','VIP-017','VIP-018','VIP-019','VIP-020','VIP-021','VIP-022','VIP-023','VIP-024','VIP-025'].forEach(function(id){ST.inv[id]='sold';});
 var circles={};
-var vi=0,pi=0;
+var vi=0,pi=0,gi=0,ni=0;
 
 var ALL_ARCS=ARCS.map(function(arc){
   var ids=[];
   for(var i=0;i<arc.n;i++){
     if(arc.t==='VVIP') ids.push('VVIP-'+(++vi<10?'0':'')+vi);
-    else ids.push('VIP-'+(++pi<10?'00':pi<100?'0':'')+pi);
+    else if(arc.t==='VIP') ids.push('VIP-'+(++pi<10?'00':pi<100?'0':'')+pi);
+    else if(arc.t==='GOLD') ids.push('GOLD-'+(++gi<10?'00':gi<100?'0':'')+gi);
+    else ids.push('GEN-'+(++ni<10?'00':ni<100?'0':'')+ni);
   }
   return {arc:arc,ids:ids};
 });
@@ -630,23 +642,18 @@ function seatColor(id,t){
   var s=ST.inv[id]||'available';
   if(s==='sold') return '#1e2333';
   if(s==='locked') return '#3b3550';
-  return t==='VVIP'?'#a78bfa':'#f472b6';
+  if(t==='VVIP') return '#a78bfa';
+  if(t==='VIP')  return '#f472b6';
+  if(t==='GOLD') return '#c9a96e';
+  return '#64748b';
 }
 
 function buildSVG(){
-  var svg=svgEl('svg',{viewBox:'-10 0 820 510',width:'100%',style:'display:block;max-height:400px'});
+  var svg=svgEl('svg',{viewBox:'20 110 760 420',width:'100%',style:'display:block;width:100%;height:auto'});
 
-  // Gold band
-  svg.appendChild(svgEl('path',{d:bandPath(302,338,199,341),fill:'#c9a96e',opacity:'.1','pointer-events':'none'}));
-  // General band
-  svg.appendChild(svgEl('path',{d:bandPath(344,378,197,343),fill:'#94a3b8',opacity:'.08','pointer-events':'none'}));
-
-  var gl=svgEl('text',{x:'400',y:'318',fill:'#c9a96e','font-size':'9','font-weight':'700','text-anchor':'middle','pointer-events':'none','letter-spacing':'2','font-family':'Montserrat,sans-serif','opacity':'.7'});
-  gl.textContent='GOLD OPEN SEATING';
-  svg.appendChild(gl);
-  var nl=svgEl('text',{x:'400',y:'276',fill:'#94a3b8','font-size':'9','font-weight':'700','text-anchor':'middle','pointer-events':'none','letter-spacing':'2','font-family':'Montserrat,sans-serif','opacity':'.6'});
-  nl.textContent='GENERAL ADMISSION';
-  svg.appendChild(nl);
+  // Subtle zone fills for orientation
+  svg.appendChild(svgEl('path',{d:bandPath(302,340,199,341),fill:'#c9a96e',opacity:'.05','pointer-events':'none'}));
+  svg.appendChild(svgEl('path',{d:bandPath(348,380,196,344),fill:'#64748b',opacity:'.04','pointer-events':'none'}));
 
   circles={};
   ALL_ARCS.forEach(function(entry){
@@ -655,12 +662,25 @@ function buildSVG(){
       var ratio=arc.n>1?i/(arc.n-1):0.5;
       var a=arc.a0+(arc.a1-arc.a0)*ratio;
       var x=px(arc.r,a),y=py(arc.r,a);
-      var rad=arc.t==='VVIP'?6:4.5;
+      var rad=arc.t==='VVIP'?6:arc.t==='VIP'?4.5:arc.t==='GOLD'?3:2.5;
       var c=svgEl('circle',{cx:f(x),cy:f(y),r:rad,fill:seatColor(id,arc.t),'data-id':id,'data-t':arc.t,style:'cursor:pointer;transition:fill .12s'});
       var s=ST.inv[id]||'available';
       if(s==='available'){
         (function(cid,circle,t){
-          circle.onclick=function(){toggleSeat(cid);};
+          circle.onclick=function(){
+            if(t==='GOLD'||t==='GEN'){
+              // first come first serve — click just adds/removes from qty selection
+              toggleSeat(cid);
+              // sync qty button display to match selected count
+              var goldCount=Array.from(ST.sel).filter(function(s){return s.indexOf('GOLD-')===0;}).length;
+              var genCount=Array.from(ST.sel).filter(function(s){return s.indexOf('GEN-')===0;}).length;
+              ST.gQty=goldCount; ST.nQty=genCount;
+              var gEl=document.getElementById('tq-gold'); if(gEl) gEl.textContent=goldCount;
+              var nEl=document.getElementById('tq-general'); if(nEl) nEl.textContent=genCount;
+            } else {
+              toggleSeat(cid);
+            }
+          };
           circle.onmouseenter=function(){if(!ST.sel.has(cid)) circle.setAttribute('fill','#fcd34d');};
           circle.onmouseleave=function(){circle.setAttribute('fill',seatColor(cid,t));};
         })(id,c,arc.t);
@@ -692,7 +712,6 @@ function toggleSeat(id){
 }
 function calcTotal(){
   var t=0;
-  // map-selected seats override qty buttons for VVIP/VIP
   var vvSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
   var vpSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
   var vvCount=vvSel.length||ST.vvipQty;
@@ -714,8 +733,8 @@ function renderCart(){
   var itemCount=0;
   if(vvCount){lines.push(sumLine('VVIP Platinum Suite x'+vvCount,fmt(vvCount*CFG.prices.VVIP)));itemCount+=vvCount;}
   if(vpCount){lines.push(sumLine('VIP Gold Reserve x'+vpCount,fmt(vpCount*CFG.prices.VIP)));itemCount+=vpCount;}
-  if(ST.gQty){lines.push(sumLine('Gold Ballroom x'+ST.gQty,fmt(ST.gQty*CFG.prices.GOLD)));itemCount+=ST.gQty;}
-  if(ST.nQty){lines.push(sumLine('General Admission x'+ST.nQty,fmt(ST.nQty*CFG.prices.GENERAL)));itemCount+=ST.nQty;}
+  if(ST.gQty){lines.push(sumLine('Gold Ballroom x'+ST.gQty+' (first come first serve)',fmt(ST.gQty*CFG.prices.GOLD)));itemCount+=ST.gQty;}
+  if(ST.nQty){lines.push(sumLine('General Admission x'+ST.nQty+' (first come first serve)',fmt(ST.nQty*CFG.prices.GENERAL)));itemCount+=ST.nQty;}
   Object.keys(ST.merch).forEach(function(k){
     if(ST.merch[k]>0){lines.push(sumLine(MERCH_NAMES[k]+' x'+ST.merch[k],fmt(ST.merch[k]*MERCH_PRICES[k])));itemCount+=ST.merch[k];}
   });
@@ -728,15 +747,15 @@ function renderCart(){
   var cnt=document.getElementById('sum-count');
   if(cnt) cnt.textContent=itemCount+(itemCount===1?' item':' items');
   // highlight active rows
-  ['vvip','vip','gold','general'].forEach(function(t){
-    var row=document.getElementById('trow-'+t);
+  ['vvip','vip','gold','general'].forEach(function(tt){
+    var row=document.getElementById('trow-'+tt);
     if(row){
-      var active=(t==='vvip'&&vvCount>0)||(t==='vip'&&vpCount>0)||(t==='gold'&&ST.gQty>0)||(t==='general'&&ST.nQty>0);
+      var active=(tt==='vvip'&&vvCount>0)||(tt==='vip'&&vpCount>0)||(tt==='gold'&&ST.gQty>0)||(tt==='general'&&ST.nQty>0);
       row.classList.toggle('trow-active',active);
     }
   });
-  // show/hide seat map
-  var mapOpen=vvCount>0||vpCount>0;
+  // seat map always visible
+  var mapOpen=true;
   var collapse=document.getElementById('seat-map-collapse');
   if(collapse) collapse.classList.toggle('open',mapOpen);
   if(window._updateStickyCart){var _vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});var _vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});window._updateStickyCart(ST.sel,ST.gQty+(_vv.length||ST.vvipQty),ST.nQty+(_vp.length||ST.vipQty),total);}
@@ -932,6 +951,92 @@ async function loadInventory(){
     requestAnimationFrame(loop);
   }
   loop();
+
+/* ── FIREWORKS ── */
+(function(){
+  var canvas=document.getElementById('fw-canvas');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W,H,particles=[];
+  var COLORS=['#d4af6e','#f5d97a','#ffffff','#a78bfa','#4ade80','#fcd34d','#f9a8d4'];
+
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+
+  function Particle(x,y,color){
+    var angle=Math.random()*Math.PI*2;
+    var speed=Math.random()*3+1.5;
+    this.x=x; this.y=y;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.alpha=1;
+    this.decay=Math.random()*0.018+0.012;
+    this.size=Math.random()*2+1;
+    this.color=color;
+    this.trail=[];
+  }
+  Particle.prototype.update=function(){
+    this.trail.push({x:this.x,y:this.y,a:this.alpha});
+    if(this.trail.length>4)this.trail.shift();
+    this.x+=this.vx; this.y+=this.vy;
+    this.vy+=0.04;  /* gravity */
+    this.vx*=0.98; this.vy*=0.98;
+    this.alpha-=this.decay;
+  };
+  Particle.prototype.draw=function(){
+    for(var i=0;i<this.trail.length;i++){
+      var t=this.trail[i];
+      ctx.globalAlpha=t.a*0.3*(i/this.trail.length);
+      ctx.fillStyle=this.color;
+      ctx.beginPath();ctx.arc(t.x,t.y,this.size*.6,0,Math.PI*2);ctx.fill();
+    }
+    ctx.globalAlpha=this.alpha;
+    ctx.fillStyle=this.color;
+    ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
+  };
+
+  function burst(x,y){
+    var color=COLORS[Math.floor(Math.random()*COLORS.length)];
+    var count=Math.floor(Math.random()*8+10);
+    for(var i=0;i<count;i++) particles.push(new Particle(x,y,color));
+    /* gold sparkle ring */
+    for(var j=0;j<5;j++){
+      var sp=new Particle(x,y,'#fdf0cc');
+      sp.size=0.8; sp.decay=0.025;
+      sp.vx*=1.6; sp.vy*=1.6;
+      particles.push(sp);
+    }
+  }
+
+  var lastBurst=0;
+  var burstInterval=2200;
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    ctx.clearRect(0,0,W,H);
+    /* periodic auto-burst */
+    if(ts-lastBurst>burstInterval){
+      lastBurst=ts;
+      burstInterval=1800+Math.random()*2400;
+      /* fire 1-2 bursts per cycle */
+      var count=Math.random()<0.4?2:1;
+      for(var b=0;b<count;b++){
+        burst(
+          W*0.15+Math.random()*(W*0.70),
+          H*0.05+Math.random()*(H*0.45)
+        );
+      }
+    }
+    particles=particles.filter(function(p){
+      p.update();p.draw();
+      return p.alpha>0.02;
+    });
+  }
+  requestAnimationFrame(loop);
+})();
+
 })();
 
 // ── GOLD PARTICLES ──
