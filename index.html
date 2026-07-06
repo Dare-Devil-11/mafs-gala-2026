@@ -85,199 +85,73 @@ section{position:relative;z-index:1}
 .about-item h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-pale);margin-bottom:10px}
 .about-item p{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text-dim);line-height:1.7}
 
-/* ── TICKETS ── */
-.tickets{background:var(--bg);padding:0 0 96px}
-.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:1100px;margin:0 auto;border:1px solid var(--border)}
-.tier{padding:36px 24px;border-right:1px solid var(--border);position:relative;transition:.3s;cursor:pointer}
-.tier:last-child{border-right:0}
-.tier:hover{background:rgba(201,169,110,.05)}
-.tier.featured{background:linear-gradient(160deg,rgba(201,169,110,.08) 0%,rgba(201,169,110,.03) 100%)}
-.tier-badge{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:block}
-.tier h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--gold-pale);margin-bottom:6px}
-.tier .tier-sub{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--text-dim);margin-bottom:20px}
-.tier-price{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:4px}
-.tier-price sup{font-size:.4em;vertical-align:top;margin-top:8px}
-.tier-per{font-size:11px;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;margin-bottom:24px}
-.tier-perks{list-style:none;margin-bottom:28px}
-.tier-perks li{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text-dim);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.tier-perks li::before{content:'◆';color:var(--gold);font-size:8px;flex-shrink:0}
-.tier-qty{font-size:11px;color:var(--gold);letter-spacing:.1em;opacity:.7}
-.tier-top{height:3px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin-bottom:0}
-.tier.featured .tier-top{background:linear-gradient(to right,var(--gold-bright),#f5e070,var(--gold-bright))}
+/* ── PURCHASE SECTION ── */
+.purchase{background:var(--bg);padding-bottom:80px}
+.pur-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 24px}
+.pur-header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.pur-event-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold-pale)}
+.pur-event-detail{font-size:11px;letter-spacing:.08em;color:var(--text-dim);margin-top:4px;font-family:'Montserrat',sans-serif}
+.pur-avail-pill{font-size:10px;letter-spacing:.15em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ade80;padding:5px 14px;white-space:nowrap;flex-shrink:0}
+.pur-body{max-width:1200px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+/* ticket rows */
+.pur-group-lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:0}
+.trow{display:flex;border:1px solid var(--border);border-top:0;position:relative;transition:.2s;background:var(--bg2)}
+.trow:first-of-type{border-top:1px solid var(--border)}
+.trow:hover{background:rgba(212,175,110,.04)}
+.trow.trow-active{background:rgba(212,175,110,.07);border-color:rgba(212,175,110,.45)}
+.trow-accent{width:4px;flex-shrink:0}
+.trow-body{flex:1;padding:18px 20px;display:flex;align-items:center;gap:16px}
+.trow-info{flex:1;min-width:0}
+.trow-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-pale);margin-bottom:3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow-badge{font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:rgba(245,217,122,.12);color:var(--gold-bright);border:1px solid rgba(245,217,122,.3);padding:2px 7px;font-family:'Montserrat',sans-serif;flex-shrink:0}
+.trow-desc{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text-dim);line-height:1.5;margin-bottom:4px}
+.trow-avail{font-size:10px;letter-spacing:.08em;color:var(--gold);font-family:'Montserrat',sans-serif}
+.trow-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0}
+.trow-price{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);white-space:nowrap}
+.trow-price span{font-size:11px;color:var(--text-dim);font-family:'Montserrat',sans-serif;letter-spacing:.05em}
+.trow-qty{display:flex;align-items:center;gap:0;border:1px solid var(--border)}
+.tqb{width:34px;height:34px;border:0;background:transparent;color:var(--gold-pale);font-size:18px;cursor:pointer;transition:.15s;line-height:1;font-family:'Montserrat',sans-serif}
+.tqb:hover{background:rgba(212,175,110,.15)}
+.tqv{min-width:36px;text-align:center;font-weight:700;font-size:15px;color:var(--text);border-left:1px solid var(--border);border-right:1px solid var(--border);height:34px;line-height:34px;font-family:'Montserrat',sans-serif}
+/* merch rows */
+.mrow{display:flex;border:1px solid var(--border);border-top:0;background:var(--bg2);transition:.2s}
+.mrow:first-of-type{border-top:1px solid var(--border)}
+.mrow:hover{background:rgba(212,175,110,.04)}
+.mrow-icon{width:72px;height:72px;flex-shrink:0;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:26px;border-right:1px solid var(--border)}
+.mrow-body{flex:1;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.mrow-info{flex:1;min-width:0}
+.mrow-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold-pale);margin-bottom:2px}
+.mrow-desc{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--text-dim)}
+.mrow-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.mrow-price{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold)}
+/* seat map collapse */
+.seat-map-collapse{border:1px solid rgba(212,175,110,.25);margin-top:0;border-top:0;overflow:hidden;max-height:0;transition:max-height .4s ease;background:rgba(0,0,0,.2)}
+.seat-map-collapse.open{max-height:600px}
+.seat-map-inner{padding:20px}
+/* order summary panel */
+.pur-right{position:sticky;top:20px}
+.pur-summary{background:var(--bg2);border:1px solid var(--border);padding:0;overflow:hidden}
+.pur-sum-hdr{background:var(--surface);padding:16px 20px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;justify-content:space-between;align-items:center}
+.pur-sum-body{padding:16px 20px}
+.sum-line{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.sum-line:last-child{border-bottom:0}
+.sum-line-name{color:var(--text-dim);font-family:'Cormorant Garamond',serif;font-size:14px}
+.sum-line-price{color:var(--text);font-family:'Playfair Display',serif;font-size:15px}
+.sum-empty{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:14px;text-align:center;padding:16px 0}
+.pur-sum-total{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-top:1px solid rgba(212,175,110,.35);background:var(--surface)}
+.pur-sum-total-lbl{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-dim);font-family:'Montserrat',sans-serif}
+.pur-sum-total-val{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold)}
+.pur-form-wrap{padding:16px 20px;border-top:1px solid var(--border)}
+.pur-input{width:100%;padding:11px 13px;background:rgba(0,0,0,.4);border:1px solid rgba(212,175,110,.18);border-bottom:1px solid rgba(212,175,110,.32);color:var(--text);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:.2s;margin-bottom:10px;letter-spacing:.02em}
+.pur-input::placeholder{color:rgba(248,239,213,.3)}
+.pur-input:focus{border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,110,.2)}
+.pur-input-lbl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;display:block}
+.pur-checkout-wrap{padding:0 20px 20px}
+.pur-secure{font-size:10px;letter-spacing:.06em;color:var(--text-dim);text-align:center;margin-top:10px;font-family:'Cormorant Garamond',serif;font-style:italic}
 
-/* ── SEATING CHART ── */
-.seating{
-  background:var(--bg2);
-  padding:0 0 96px;
-  position:relative;
-}
-.seating::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(ellipse 60% 30% at 50% 10%, rgba(212,175,110,.12) 0%, transparent 70%),
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 30px,
-      rgba(201,169,110,.018) 30px,
-      rgba(201,169,110,.018) 31px
-    );
-  pointer-events:none;
-  z-index:0;
-}
-.seating .sec-hdr,.seating .sec-inner,.seating>div{position:relative;z-index:1}
-.seat-layout{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 400px;
-  gap:0;
-  border:1px solid rgba(201,169,110,.25);
-  box-shadow:0 0 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(201,169,110,.15);
-  background:rgba(15,14,21,.65);
-  backdrop-filter:blur(4px);
-}
-.seat-left{
-  padding:32px;
-  border-right:1px solid rgba(201,169,110,.2);
-  position:relative;
-}
-.seat-right{
-  padding:32px 28px;
-  background:linear-gradient(160deg,rgba(212,175,110,.1) 0%,rgba(22,20,31,.6) 100%);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  position:relative;
-}
-.seat-right::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:3px;
-  background:linear-gradient(to right,transparent,var(--gold-bright),var(--gold),var(--gold-bright),transparent);
-}
+/* seating chart styles moved to purchase section */
 
-/* SVG seats */
-.legend-row{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-  margin-bottom:16px;
-  padding:10px 12px 14px;
-  border-bottom:1px solid rgba(201,169,110,.15);
-  background:rgba(0,0,0,.2);
-  border:1px solid rgba(201,169,110,.1);
-}
-.ldot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
-.legend-row span{font-size:11px;color:var(--text-dim);letter-spacing:.06em}
-
-/* Form */
-.form-head{
-  font-family:'Playfair Display',serif;
-  font-size:20px;
-  font-weight:700;
-  color:var(--gold-pale);
-  letter-spacing:.06em;
-  padding-bottom:16px;
-  border-bottom:1px solid rgba(201,169,110,.2);
-  margin-bottom:4px;
-  text-align:center;
-}
-.form-head-sub{
-  font-family:'Cormorant Garamond',serif;
-  font-size:13px;
-  font-style:italic;
-  color:var(--text-dim);
-  text-align:center;
-  margin-top:4px;
-  display:block;
-}
-.frow{margin-bottom:10px}
-.frow label{display:block;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
-.frow input{
-  width:100%;
-  padding:12px 14px;
-  background:rgba(0,0,0,.4);
-  border:1px solid rgba(201,169,110,.15);
-  border-bottom:1px solid rgba(201,169,110,.3);
-  color:var(--text);
-  font-family:'Montserrat',sans-serif;
-  font-size:13px;
-  outline:none;
-  transition:.2s;
-  letter-spacing:.02em;
-}
-.frow input:focus{border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,169,110,.25)}
-.cart-block{
-  border:1px solid rgba(201,169,110,.2);
-  padding:16px;
-  background:rgba(0,0,0,.25);
-  position:relative;
-}
-.cart-block::before{
-  content:'';
-  position:absolute;
-  top:0;left:8px;right:8px;
-  height:1px;
-  background:linear-gradient(to right,transparent,rgba(201,169,110,.4),transparent);
-}
-.cart-head{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.cart-item{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);padding:5px 0;border-bottom:1px solid var(--border)}
-.cart-item:last-child{border-bottom:0}
-.cart-total-row{display:flex;justify-content:space-between;font-family:'Playfair Display',serif;font-size:16px;color:var(--gold-pale);padding-top:10px;margin-top:4px}
-.notice{padding:8px 12px;font-size:12px;border:1px solid;font-family:'Cormorant Garamond',serif;font-style:italic;display:none}
-.btn-checkout{
-  width:100%;
-  padding:16px;
-  background:linear-gradient(135deg,var(--gold-bright),var(--gold),#b8882e);
-  color:var(--bg);
-  font-family:'Montserrat',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.3em;
-  text-transform:uppercase;
-  border:0;
-  cursor:pointer;
-  transition:.3s;
-  position:relative;
-  overflow:hidden;
-}
-.btn-checkout::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:linear-gradient(rgba(255,255,255,.12),transparent);
-  pointer-events:none;
-}
-.btn-checkout:hover{box-shadow:0 0 30px rgba(201,169,110,.5)}
-.btn-checkout:disabled{opacity:.5;cursor:not-allowed}
-.open-tier-row{display:flex;gap:10px;margin-bottom:8px}
-.ot-card{
-  flex:1;
-  border:1px solid rgba(201,169,110,.2);
-  padding:16px 12px;
-  text-align:center;
-  background:rgba(0,0,0,.2);
-  position:relative;
-  transition:.2s;
-}
-.ot-card::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:2px;
-  background:linear-gradient(to right,transparent,var(--gold),transparent);
-}
-.ot-card:hover{background:rgba(201,169,110,.06);border-color:rgba(201,169,110,.35)}
-.ot-card .ot-name{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.ot-card .ot-price{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-pale);margin-bottom:8px}
-.qty-row{display:flex;align-items:center;justify-content:center;gap:8px}
-.qb{width:26px;height:26px;border:1px solid var(--border-bright);background:transparent;color:var(--gold-pale);font-size:16px;cursor:pointer;transition:.15s;line-height:1}
-.qb:hover{background:rgba(201,169,110,.1)}
-.qv{min-width:22px;text-align:center;font-weight:600;font-size:14px;color:var(--text)}
+/* form/cart styles moved to purchase section */
 
 /* ── FOOTER ── */
 footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px;text-align:center}
@@ -320,19 +194,18 @@ footer a{color:var(--gold);text-decoration:none}
 /* ── SEAT TOOLTIP ── */
 .seat-tip{position:absolute;background:var(--bg);border:1px solid var(--gold);padding:6px 10px;font-size:11px;color:var(--gold-pale);pointer-events:none;z-index:10;display:none;white-space:nowrap;font-family:'Cormorant Garamond',serif}
 /* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .tiers{grid-template-columns:1fr 1fr}
-  .tier{border-bottom:1px solid var(--border)}
-  .seat-layout{grid-template-columns:1fr}
-  .seat-left{border-right:0;border-bottom:1px solid var(--border)}
+@media(max-width:960px){
+  .pur-body{grid-template-columns:1fr;gap:24px}
+  .pur-right{position:static}
   .about-grid{grid-template-columns:1fr}
   .about-item:nth-child(2){border-left:1px solid var(--border)}
 }
-@media(max-width:560px){
-  .tiers{grid-template-columns:1fr}
+@media(max-width:600px){
+  .trow-body{flex-direction:column;align-items:flex-start;gap:12px}
+  .trow-right{flex-direction:row;align-items:center;width:100%;justify-content:space-between}
   .hero h1{font-size:52px}
   .event-meta{flex-direction:column;gap:20px}
-  .open-tier-row{flex-direction:column}
+  .pur-header-inner{flex-direction:column;align-items:flex-start;gap:12px}
 }
 </style>
 </head>
@@ -434,202 +307,251 @@ footer a{color:var(--gold);text-decoration:none}
   </div>
 </section>
 
-<!-- ══════════════════ TICKETS ══════════════════ -->
-<section class="tickets" id="tickets">
-  <div class="sec-hdr">
-    <p class="over">Ticket Packages</p>
-    <h2>Select Your Experience</h2>
+<!-- ══════════════════ PURCHASE ══════════════════ -->
+<section class="purchase" id="tickets">
+
+  <!-- Event header bar -->
+  <div class="pur-header">
+    <div class="pur-header-inner">
+      <div>
+        <div class="pur-event-name">MAFS Annual Gala 2026 &mdash; An Evening of Elegance</div>
+        <div class="pur-event-detail">Sat, Dec 12 2026 &nbsp;·&nbsp; Doors 6:00 PM · Dinner 7:30 PM &nbsp;·&nbsp; 1 E Bode Rd, Streamwood IL &nbsp;·&nbsp; Black Tie</div>
+      </div>
+      <div class="pur-avail-pill">● Tickets Available</div>
+    </div>
   </div>
 
-  <div class="sec-inner">
-    <div class="tiers">
+  <div class="pur-body" id="purchase-body">
+
+    <!-- ── LEFT COLUMN ── -->
+    <div class="pur-left" id="pur-left">
+
+      <!-- TICKETS -->
+      <div class="pur-group-lbl" style="margin-bottom:0">Tickets</div>
 
       <!-- VVIP -->
-      <div class="tier featured" onclick="scrollToSeating()">
-        <div class="tier-top"></div>
-        <div style="padding:36px 24px">
-        <span class="tier-badge">✦ Platinum Suite</span><span style="position:absolute;top:14px;right:14px;font-size:8px;letter-spacing:.2em;background:rgba(245,217,122,.15);color:var(--gold-bright);border:1px solid rgba(245,217,122,.35);padding:3px 8px;font-family:'Montserrat',sans-serif">LIMITED</span>
-        <h3>VVIP</h3>
-        <p class="tier-sub">The Pinnacle Experience</p>
-        <div class="tier-price"><sup>$</sup>500</div>
-        <div class="tier-per">per seat</div>
-        <ul class="tier-perks">
-          <li>Front-row fan arc seat (map selection)</li>
-          <li>Champagne welcome reception</li>
-          <li>Reserved table with name placard</li>
-          <li>VIP gift bag &amp; programme</li>
-          <li>Priority valet parking</li>
-        </ul>
-        <div class="tier-qty" style="color:#f5d97a">⚑ Only 38 of 50 remaining</div>
+      <div class="trow trow-vvip" id="trow-vvip">
+        <div class="trow-accent" style="background:linear-gradient(to bottom,#c4b5fd,#7c3aed)"></div>
+        <div class="trow-body">
+          <div class="trow-info">
+            <div class="trow-name">VVIP &mdash; Platinum Suite <span class="trow-badge">LIMITED</span></div>
+            <div class="trow-desc">Front-row fan arc · Champagne reception · Reserved table with namecard · Gift bag · Priority valet</div>
+            <div class="trow-avail">⚑ 38 of 50 remaining &nbsp;·&nbsp; Select exact seat on map below</div>
+          </div>
+          <div class="trow-right">
+            <div class="trow-price">$500 <span>/ seat</span></div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="vvip" data-d="-1">−</button>
+              <span class="tqv" id="tq-vvip">0</span>
+              <button class="tqb" data-t="vvip" data-d="1">+</button>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- VIP -->
-      <div class="tier" onclick="scrollToSeating()">
-        <div class="tier-top" style="background:linear-gradient(to right,transparent,var(--gold),transparent)"></div>
-        <div style="padding:36px 24px">
-        <span class="tier-badge">◆ Gold Reserve</span>
-        <h3>VIP</h3>
-        <p class="tier-sub">Premium Reserved Seating</p>
-        <div class="tier-price"><sup>$</sup>250</div>
-        <div class="tier-per">per seat</div>
-        <ul class="tier-perks">
-          <li>Arc seating with stage view (map selection)</li>
-          <li>Reserved seat with namecard</li>
-          <li>Complimentary dinner &amp; beverages</li>
-          <li>Event programme</li>
-        </ul>
-        <div class="tier-qty" style="color:var(--gold)">⚑ 75 of 100 remaining</div>
-        </div>
-      </div>
-
-      <!-- GOLD -->
-      <div class="tier" onclick="document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'})">
-        <div class="tier-top" style="background:linear-gradient(to right,transparent,rgba(201,169,110,.5),transparent)"></div>
-        <div style="padding:36px 24px">
-        <span class="tier-badge">◇ Grand Ballroom</span>
-        <h3>Gold</h3>
-        <p class="tier-sub">Open Seating — Ballroom Floor</p>
-        <div class="tier-price"><sup>$</sup>150</div>
-        <div class="tier-per">per ticket</div>
-        <ul class="tier-perks">
-          <li>Ballroom floor open seating</li>
-          <li>Full dinner service</li>
-          <li>Access to all event programming</li>
-          <li>Event programme</li>
-        </ul>
-        <div class="tier-qty">200 tickets available</div>
-        </div>
-      </div>
-
-      <!-- GENERAL -->
-      <div class="tier" onclick="document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'})">
-        <div class="tier-top" style="background:linear-gradient(to right,transparent,rgba(201,169,110,.25),transparent)"></div>
-        <div style="padding:36px 24px">
-        <span class="tier-badge">· The Promenade</span>
-        <h3>General</h3>
-        <p class="tier-sub">General Admission</p>
-        <div class="tier-price"><sup>$</sup>100</div>
-        <div class="tier-per">per ticket</div>
-        <ul class="tier-perks">
-          <li>General admission entry</li>
-          <li>Dinner &amp; refreshments</li>
-          <li>Access to all programming</li>
-        </ul>
-        <div class="tier-qty">200 tickets available</div>
-        </div>
-      </div>
-
-    </div><!-- /tiers -->
-  </div>
-</section>
-
-<!-- ══════════════════ SEATING + RESERVATION ══════════════════ -->
-<section class="seating" id="gala-seating">
-  <div class="sec-hdr">
-    <p class="over">◆ &nbsp; Seating &amp; Reservations &nbsp; ◆</p>
-    <h2>Reserve Your Place</h2>
-    <p>VVIP &amp; VIP guests select their exact seat from the fan chart. Gold &amp; General are open ballroom seating — choose your quantity and proceed.</p>
-  </div>
-  <!-- art deco divider -->
-  <div style="display:flex;align-items:center;gap:18px;max-width:500px;margin:-24px auto 48px;padding:0 24px">
-    <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold))"></div>
-    <svg width="40" height="20" viewBox="0 0 40 20"><polygon points="20,2 38,10 20,18 2,10" fill="none" stroke="#c9a96e" stroke-width="1"/><polygon points="20,6 34,10 20,14 6,10" fill="none" stroke="#c9a96e" stroke-width=".5" opacity=".5"/></svg>
-    <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,var(--gold))"></div>
-  </div>
-
-  <div class="sec-inner">
-    <div class="seat-layout">
-
-      <!-- LEFT: SVG MAP -->
-      <div class="seat-left">
-        <div class="step-pill"><span class="step-num">1</span> Tap a seat on the map to select it</div>
-
-        <div class="legend-row">
-          <span><i class="ldot" style="background:#a78bfa"></i>VVIP $500</span>
-          <span><i class="ldot" style="background:#f472b6"></i>VIP $250</span>
-          <span><i class="ldot" style="background:var(--gold)"></i>Gold $150</span>
-          <span><i class="ldot" style="background:#94a3b8"></i>General $100</span>
-          <span><i class="ldot" style="background:#4ade80"></i>Selected</span>
-          <span><i class="ldot" style="background:#1e2333"></i>Sold</span>
-        </div>
-
-        <div class="chart-controls">
-          <button class="cc-btn" id="btn-zoom-in">＋ Zoom</button>
-          <button class="cc-btn" id="btn-zoom-out">－ Zoom</button>
-          <button class="cc-btn" id="btn-rot-l">↺ Rotate</button>
-          <button class="cc-btn" id="btn-rot-r">↻ Rotate</button>
-          <button class="cc-btn" id="btn-reset">⊡ Reset</button>
-          <span class="cc-hint">Drag to pan · Pinch to zoom</span>
-        </div>
-
-        <div class="chart-container" id="chart-container">
-          <div class="seat-tip" id="seat-tip"></div>
-          <div id="svg-wrap" style="position:relative"></div>
-        </div>
-
-        <!-- Open seating qty -->
-        <div style="margin-top:18px;padding:20px 16px;border:1px solid rgba(201,169,110,.18);background:rgba(0,0,0,.2);position:relative;">
-          <div style="position:absolute;top:-1px;left:24px;right:24px;height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,.4),transparent)"></div>
-          <div class="step-pill" style="margin-bottom:14px"><span class="step-num">2</span> Or pick open seating below</div>
-          <div class="open-tier-row">
-            <div class="ot-card">
-              <div class="ot-name">Gold Open Seating</div>
-              <div class="ot-price">$150</div>
-              <div class="qty-row">
-                <button class="qb" data-k="g" data-d="-1">−</button>
-                <span class="qv" id="g-qty">0</span>
-                <button class="qb" data-k="g" data-d="1">+</button>
-              </div>
-            </div>
-            <div class="ot-card">
-              <div class="ot-name">General Admission</div>
-              <div class="ot-price">$100</div>
-              <div class="qty-row">
-                <button class="qb" data-k="n" data-d="-1">−</button>
-                <span class="qv" id="n-qty">0</span>
-                <button class="qb" data-k="n" data-d="1">+</button>
-              </div>
+      <div class="trow trow-vip" id="trow-vip">
+        <div class="trow-accent" style="background:linear-gradient(to bottom,#f9a8d4,#be185d)"></div>
+        <div class="trow-body">
+          <div class="trow-info">
+            <div class="trow-name">VIP &mdash; Gold Reserve</div>
+            <div class="trow-desc">Arc seating with full stage view · Reserved namecard seat · Dinner &amp; beverages · Event programme</div>
+            <div class="trow-avail">⚑ 75 of 100 remaining &nbsp;·&nbsp; Select exact seat on map below</div>
+          </div>
+          <div class="trow-right">
+            <div class="trow-price">$250 <span>/ seat</span></div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="vip" data-d="-1">−</button>
+              <span class="tqv" id="tq-vip">0</span>
+              <button class="tqb" data-t="vip" data-d="1">+</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: FORM + CART -->
-      <div class="seat-right">
-        <div class="form-head">Reserve Your Place<span class="form-head-sub">Complete your details to secure your seat</span></div>
-
-        <div class="frow">
-          <label for="g-name">Full Name</label>
-          <input id="g-name" placeholder="Jane Smith" autocomplete="name">
-        </div>
-        <div class="frow">
-          <label for="g-email">Email Address</label>
-          <input id="g-email" type="email" placeholder="jane@email.com" autocomplete="email">
-        </div>
-        <div class="frow">
-          <label for="g-phone">Phone Number</label>
-          <input id="g-phone" type="tel" placeholder="(312) 555-0100" autocomplete="tel">
-        </div>
-
-        <div class="cart-block">
-          <div class="cart-head">Your Selection</div>
-          <div id="cart-lines"><div style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div></div>
-          <div class="cart-total-row">
-            <span style="font-size:13px;font-family:'Montserrat',sans-serif;letter-spacing:.1em">TOTAL</span>
-            <span>$<span id="cart-total">0</span></span>
+      <!-- Gold -->
+      <div class="trow" id="trow-gold">
+        <div class="trow-accent" style="background:linear-gradient(to bottom,var(--gold-bright),var(--gold))"></div>
+        <div class="trow-body">
+          <div class="trow-info">
+            <div class="trow-name">Gold &mdash; Grand Ballroom</div>
+            <div class="trow-desc">Open ballroom floor seating · Full dinner service · Access to all event programming</div>
+            <div class="trow-avail">200 tickets available</div>
+          </div>
+          <div class="trow-right">
+            <div class="trow-price">$150 <span>/ ticket</span></div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="gold" data-d="-1">−</button>
+              <span class="tqv" id="tq-gold">0</span>
+              <button class="tqb" data-t="gold" data-d="1">+</button>
+            </div>
           </div>
         </div>
-
-        <div class="notice" id="g-notice"></div>
-
-        <div class="step-pill" style="margin-top:4px"><span class="step-num">3</span> Click below to pay &amp; confirm</div>
-        <button class="btn-checkout" id="btn-checkout">Proceed to Payment →</button>
-        <p style="font-size:10px;letter-spacing:.08em;color:var(--text-dim);text-align:center;margin-top:8px;font-family:'Cormorant Garamond',serif;font-style:italic">Seats held for 15 minutes · Secure checkout</p>
       </div>
 
-    </div>
-  </div>
+      <!-- General -->
+      <div class="trow" id="trow-general">
+        <div class="trow-accent" style="background:linear-gradient(to bottom,#94a3b8,#475569)"></div>
+        <div class="trow-body">
+          <div class="trow-info">
+            <div class="trow-name">General &mdash; The Promenade</div>
+            <div class="trow-desc">General admission entry · Dinner &amp; refreshments · Full event access</div>
+            <div class="trow-avail">200 tickets available</div>
+          </div>
+          <div class="trow-right">
+            <div class="trow-price">$100 <span>/ ticket</span></div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="general" data-d="-1">−</button>
+              <span class="tqv" id="tq-general">0</span>
+              <button class="tqb" data-t="general" data-d="1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEAT MAP (slides in when VVIP or VIP > 0) -->
+      <div class="seat-map-collapse" id="seat-map-collapse">
+        <div class="seat-map-inner">
+          <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px">
+            <span style="width:20px;height:20px;border:1px solid var(--gold);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">✦</span>
+            Choose Your Exact Seat (Optional — seats auto-assigned if skipped)
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding:8px 12px;border:1px solid rgba(212,175,110,.15);background:rgba(0,0,0,.2)">
+            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#a78bfa;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VVIP $500</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#f472b6;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VIP $250</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#4ade80;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Selected</span>
+            <span style="font-size:11px;color:var(--text-dim)"><i class="ldot" style="background:#1e2333;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Sold</span>
+          </div>
+          <div class="chart-controls">
+            <button class="cc-btn" id="btn-zoom-in">＋ Zoom</button>
+            <button class="cc-btn" id="btn-zoom-out">－ Zoom</button>
+            <button class="cc-btn" id="btn-rot-l">↺ Rotate</button>
+            <button class="cc-btn" id="btn-rot-r">↻ Rotate</button>
+            <button class="cc-btn" id="btn-reset">⊡ Reset</button>
+            <span class="cc-hint">Drag to pan · Pinch to zoom</span>
+          </div>
+          <div class="chart-container" id="chart-container">
+            <div class="seat-tip" id="seat-tip"></div>
+            <div id="svg-wrap" style="position:relative;transform-origin:center center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MERCH -->
+      <div class="pur-group-lbl" style="margin-top:32px;margin-bottom:0">Add-Ons &amp; Merchandise</div>
+
+      <div class="mrow">
+        <div class="mrow-icon">📖</div>
+        <div class="mrow-body">
+          <div class="mrow-info">
+            <div class="mrow-name">Commemorative Gala Programme</div>
+            <div class="mrow-desc">Full-colour 48-page keepsake · Event schedule, donor recognition &amp; photos</div>
+          </div>
+          <div class="mrow-right">
+            <div class="mrow-price">$25</div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="m_prog" data-d="-1">−</button>
+              <span class="tqv" id="tq-m_prog">0</span>
+              <button class="tqb" data-t="m_prog" data-d="1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mrow">
+        <div class="mrow-icon">🛍️</div>
+        <div class="mrow-body">
+          <div class="mrow-info">
+            <div class="mrow-name">MAFS Gala 2026 Tote Bag</div>
+            <div class="mrow-desc">Limited edition canvas tote · Art deco gold print · Exclusive to gala attendees</div>
+          </div>
+          <div class="mrow-right">
+            <div class="mrow-price">$35</div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="m_tote" data-d="-1">−</button>
+              <span class="tqv" id="tq-m_tote">0</span>
+              <button class="tqb" data-t="m_tote" data-d="1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mrow">
+        <div class="mrow-icon">📸</div>
+        <div class="mrow-body">
+          <div class="mrow-info">
+            <div class="mrow-name">Professional Photo Package</div>
+            <div class="mrow-desc">High-res digital gallery · 3 printed 5×7 portraits · Delivered within 2 weeks</div>
+          </div>
+          <div class="mrow-right">
+            <div class="mrow-price">$75</div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="m_photo" data-d="-1">−</button>
+              <span class="tqv" id="tq-m_photo">0</span>
+              <button class="tqb" data-t="m_photo" data-d="1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mrow">
+        <div class="mrow-icon">🖼️</div>
+        <div class="mrow-body">
+          <div class="mrow-info">
+            <div class="mrow-name">Limited Edition Gala Poster</div>
+            <div class="mrow-desc">18×24 art deco print · Signed &amp; numbered · Hand-delivered at the event</div>
+          </div>
+          <div class="mrow-right">
+            <div class="mrow-price">$50</div>
+            <div class="trow-qty">
+              <button class="tqb" data-t="m_poster" data-d="-1">−</button>
+              <span class="tqv" id="tq-m_poster">0</span>
+              <button class="tqb" data-t="m_poster" data-d="1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /pur-left -->
+
+    <!-- ── RIGHT COLUMN: Order Summary ── -->
+    <div class="pur-right" id="pur-right">
+      <div class="pur-summary" id="pur-summary">
+
+        <div class="pur-sum-hdr">
+          Order Summary
+          <span id="sum-count" style="font-size:11px;color:var(--text-dim);letter-spacing:.05em;text-transform:none;font-family:'Cormorant Garamond',serif;font-style:italic">0 items</span>
+        </div>
+
+        <div class="pur-sum-body" id="sum-lines">
+          <div class="sum-empty">Select tickets above to begin</div>
+        </div>
+
+        <div class="pur-sum-total">
+          <span class="pur-sum-total-lbl">Total</span>
+          <span class="pur-sum-total-val">$<span id="cart-total">0</span></span>
+        </div>
+
+        <div class="pur-form-wrap">
+          <label class="pur-input-lbl" for="g-name">Full Name</label>
+          <input class="pur-input" id="g-name" type="text" placeholder="Jane Smith" autocomplete="name">
+          <label class="pur-input-lbl" for="g-email">Email Address</label>
+          <input class="pur-input" id="g-email" type="email" placeholder="jane@email.com" autocomplete="email">
+          <label class="pur-input-lbl" for="g-phone">Phone Number</label>
+          <input class="pur-input" id="g-phone" type="tel" placeholder="(312) 555-0100" autocomplete="tel">
+        </div>
+
+        <div id="g-notice" style="display:none;margin:0 20px 12px;padding:10px 14px;font-size:12px;border:1px solid;font-family:'Cormorant Garamond',serif;font-style:italic"></div>
+
+        <div class="pur-checkout-wrap">
+          <button class="btn-checkout" id="btn-checkout">Proceed to Payment &rarr;</button>
+          <div class="pur-secure">🔒 &nbsp; Seats held 24 hours &nbsp;·&nbsp; Secure checkout</div>
+        </div>
+
+      </div>
+    </div><!-- /pur-right -->
+
+  </div><!-- /pur-body -->
 </section>
 
 <!-- ══════════════════ FOOTER ══════════════════ -->
@@ -670,8 +592,10 @@ var ARCS=[
   {t:'VIP', n:28,r:289,a0:201,a1:339}
 ];
 var CX=400,CY=500,NS='http://www.w3.org/2000/svg';
-var ST={sel:new Set(),inv:{},gQty:0,nQty:0};
-// Pre-sold seats (realistic availability)
+var ST={sel:new Set(),inv:{},vvipQty:0,vipQty:0,gQty:0,nQty:0,merch:{m_prog:0,m_tote:0,m_photo:0,m_poster:0}};
+var MERCH_PRICES={m_prog:25,m_tote:35,m_photo:75,m_poster:50};
+var MERCH_NAMES={m_prog:'Gala Programme',m_tote:'Tote Bag',m_photo:'Photo Package',m_poster:'Gala Poster'};
+// Pre-sold seats
 ['VVIP-01','VVIP-02','VVIP-03','VVIP-04','VVIP-05','VVIP-06','VVIP-07','VVIP-08','VVIP-09','VVIP-10','VVIP-11','VVIP-12'].forEach(function(id){ST.inv[id]='sold';});
 ['VIP-001','VIP-002','VIP-003','VIP-004','VIP-005','VIP-006','VIP-007','VIP-008','VIP-009','VIP-010','VIP-011','VIP-012','VIP-013','VIP-014','VIP-015','VIP-016','VIP-017','VIP-018','VIP-019','VIP-020','VIP-021','VIP-022','VIP-023','VIP-024','VIP-025'].forEach(function(id){ST.inv[id]='sold';});
 var circles={};
@@ -768,22 +692,57 @@ function toggleSeat(id){
 }
 function calcTotal(){
   var t=0;
-  ST.sel.forEach(function(id){t+=id.indexOf('VVIP')===0?CFG.prices.VVIP:CFG.prices.VIP;});
-  return t+ST.gQty*CFG.prices.GOLD+ST.nQty*CFG.prices.GENERAL;
+  // map-selected seats override qty buttons for VVIP/VIP
+  var vvSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
+  var vpSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
+  var vvCount=vvSel.length||ST.vvipQty;
+  var vpCount=vpSel.length||ST.vipQty;
+  t+=vvCount*CFG.prices.VVIP+vpCount*CFG.prices.VIP;
+  t+=ST.gQty*CFG.prices.GOLD+ST.nQty*CFG.prices.GENERAL;
+  Object.keys(ST.merch).forEach(function(k){t+=ST.merch[k]*(MERCH_PRICES[k]||0);});
+  return t;
 }
 function fmt(n){return n.toLocaleString();}
 function renderCart(){
   var total=calcTotal();
   document.getElementById('cart-total').textContent=fmt(total);
+  var vvSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
+  var vpSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
+  var vvCount=vvSel.length||ST.vvipQty;
+  var vpCount=vpSel.length||ST.vipQty;
   var lines=[];
-  var vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
-  var vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
-  if(vv.length) lines.push('<div class="cart-item"><span>VVIP ×'+vv.length+' ('+vv.join(', ')+')</span><b>$'+fmt(vv.length*CFG.prices.VVIP)+'</b></div>');
-  if(vp.length) lines.push('<div class="cart-item"><span>VIP ×'+vp.length+' ('+vp.join(', ')+')</span><b>$'+fmt(vp.length*CFG.prices.VIP)+'</b></div>');
-  if(ST.gQty) lines.push('<div class="cart-item"><span>Gold Open ×'+ST.gQty+'</span><b>$'+fmt(ST.gQty*CFG.prices.GOLD)+'</b></div>');
-  if(ST.nQty) lines.push('<div class="cart-item"><span>General ×'+ST.nQty+'</span><b>$'+fmt(ST.nQty*CFG.prices.GENERAL)+'</b></div>');
-  document.getElementById('cart-lines').innerHTML=lines.length?lines.join(''):'<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div>';
-  if(window._updateStickyCart) window._updateStickyCart(ST.sel,ST.gQty,ST.nQty,total);
+  var itemCount=0;
+  if(vvCount){lines.push(sumLine('VVIP Platinum Suite x'+vvCount,fmt(vvCount*CFG.prices.VVIP)));itemCount+=vvCount;}
+  if(vpCount){lines.push(sumLine('VIP Gold Reserve x'+vpCount,fmt(vpCount*CFG.prices.VIP)));itemCount+=vpCount;}
+  if(ST.gQty){lines.push(sumLine('Gold Ballroom x'+ST.gQty,fmt(ST.gQty*CFG.prices.GOLD)));itemCount+=ST.gQty;}
+  if(ST.nQty){lines.push(sumLine('General Admission x'+ST.nQty,fmt(ST.nQty*CFG.prices.GENERAL)));itemCount+=ST.nQty;}
+  Object.keys(ST.merch).forEach(function(k){
+    if(ST.merch[k]>0){lines.push(sumLine(MERCH_NAMES[k]+' x'+ST.merch[k],fmt(ST.merch[k]*MERCH_PRICES[k])));itemCount+=ST.merch[k];}
+  });
+  var box=document.getElementById('sum-lines');
+  if(lines.length){
+    box.innerHTML=lines.join('');
+  } else {
+    box.innerHTML='<div class="sum-empty">Select tickets above to begin</div>';
+  }
+  var cnt=document.getElementById('sum-count');
+  if(cnt) cnt.textContent=itemCount+(itemCount===1?' item':' items');
+  // highlight active rows
+  ['vvip','vip','gold','general'].forEach(function(t){
+    var row=document.getElementById('trow-'+t);
+    if(row){
+      var active=(t==='vvip'&&vvCount>0)||(t==='vip'&&vpCount>0)||(t==='gold'&&ST.gQty>0)||(t==='general'&&ST.nQty>0);
+      row.classList.toggle('trow-active',active);
+    }
+  });
+  // show/hide seat map
+  var mapOpen=vvCount>0||vpCount>0;
+  var collapse=document.getElementById('seat-map-collapse');
+  if(collapse) collapse.classList.toggle('open',mapOpen);
+  if(window._updateStickyCart){var _vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});var _vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});window._updateStickyCart(ST.sel,ST.gQty+(_vv.length||ST.vvipQty),ST.nQty+(_vp.length||ST.vipQty),total);}
+}
+function sumLine(name,price){
+  return '<div class="sum-line"><span class="sum-line-name">'+name+'</span><span class="sum-line-price">$'+price+'</span></div>';
 }
 function showConfirmation(name,email,orderId){
   var panel=document.querySelector('.seat-right');
@@ -993,20 +952,22 @@ document.getElementById('svg-wrap').appendChild(buildSVG());
 renderCart();
 loadInventory();
 
-document.querySelectorAll('.qb').forEach(function(btn){
+document.querySelectorAll('.tqb').forEach(function(btn){
   btn.onclick=function(){
-    var k=btn.dataset.k,d=Number(btn.dataset.d);
-    if(k==='g') ST.gQty=Math.max(0,Math.min(200,ST.gQty+d));
-    else ST.nQty=Math.max(0,Math.min(200,ST.nQty+d));
-    document.getElementById('g-qty').textContent=ST.gQty;
-    document.getElementById('n-qty').textContent=ST.nQty;
+    var t=btn.dataset.t,d=Number(btn.dataset.d);
+    var el=document.getElementById('tq-'+t);
+    if(t==='vvip'){ST.vvipQty=Math.max(0,Math.min(38,ST.vvipQty+d));if(el)el.textContent=ST.vvipQty;}
+    else if(t==='vip'){ST.vipQty=Math.max(0,Math.min(75,ST.vipQty+d));if(el)el.textContent=ST.vipQty;}
+    else if(t==='gold'){ST.gQty=Math.max(0,Math.min(200,ST.gQty+d));if(el)el.textContent=ST.gQty;}
+    else if(t==='general'){ST.nQty=Math.max(0,Math.min(200,ST.nQty+d));if(el)el.textContent=ST.nQty;}
+    else if(ST.merch.hasOwnProperty(t)){ST.merch[t]=Math.max(0,Math.min(20,ST.merch[t]+d));if(el)el.textContent=ST.merch[t];}
     renderCart();
   };
 });
 document.getElementById('btn-checkout').onclick=checkout;
 
 window.scrollToSeating=function(){
-  document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'});
+  document.getElementById('tickets').scrollIntoView({behavior:'smooth'});
 };
 
 // ── ZOOM / PAN / ROTATE ──
