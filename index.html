@@ -799,8 +799,8 @@ function showConfirmation(name,email,orderId){
     checkSvg.appendChild(checkPath);
     checkCircle.appendChild(checkSvg);
 
-    var hd=el('div',{style:'font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fdf0cc;letter-spacing:.04em;margin-bottom:6px'},'Reservation Received');
-    var sub=el('div',{style:'font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(248,239,213,.65);line-height:1.6;margin-bottom:24px'});
+    var hd=el('div',{style:"font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fdf0cc;letter-spacing:.04em;margin-bottom:6px"},'Reservation Received');
+    var sub=el('div',{style:"font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(248,239,213,.65);line-height:1.6;margin-bottom:24px"});
     sub.textContent='Thank you, '+firstName+'. Your seats are held for 24 hours while we prepare your payment confirmation.';
 
     checkWrap.appendChild(checkCircle);
@@ -814,8 +814,8 @@ function showConfirmation(name,email,orderId){
 
     function detailRow(label,val){
       var row=el('div',{style:'display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(212,175,110,.1);font-size:12px'});
-      row.appendChild(el('span',{style:'color:rgba(248,239,213,.5);letter-spacing:.08em;font-family:'Montserrat',sans-serif;font-size:10px;text-transform:uppercase'},label));
-      row.appendChild(el('span',{style:'color:#fdf0cc;font-family:'Cormorant Garamond',serif;font-size:14px'},val));
+      row.appendChild(el('span',{style:"color:rgba(248,239,213,.5);letter-spacing:.08em;font-family:'Montserrat',sans-serif;font-size:10px;text-transform:uppercase"},label));
+      row.appendChild(el('span',{style:"color:#fdf0cc;font-family:'Cormorant Garamond',serif;font-size:14px"},val));
       return row;
     }
     box.appendChild(detailRow('Order ID', orderId));
@@ -823,16 +823,16 @@ function showConfirmation(name,email,orderId){
     box.appendChild(detailRow('Email', email));
     box.appendChild(detailRow('Tickets', lines.join(', ')));
     var totalRow=el('div',{style:'display:flex;justify-content:space-between;padding-top:10px;margin-top:4px'});
-    totalRow.appendChild(el('span',{style:'font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(248,239,213,.5);font-family:'Montserrat',sans-serif;align-self:center'},'Total'));
-    totalRow.appendChild(el('span',{style:'font-family:'Playfair Display',serif;font-size:20px;color:#d4af6e'},'$'+fmt(total)));
+    totalRow.appendChild(el('span',{style:"font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(248,239,213,.5);font-family:'Montserrat',sans-serif;align-self:center"},'Total'));
+    totalRow.appendChild(el('span',{style:"font-family:'Playfair Display',serif;font-size:20px;color:#d4af6e"},'$'+fmt(total)));
     box.appendChild(totalRow);
 
     // info message
-    var info=el('div',{style:'font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(248,239,213,.55);text-align:center;line-height:1.7;margin-bottom:20px'});
+    var info=el('div',{style:"font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(248,239,213,.55);text-align:center;line-height:1.7;margin-bottom:20px"});
     info.textContent='Payment instructions will be sent to '+email+' within 2 hours. For assistance call (847) 306-7606.';
 
     // new reservation button
-    var resetBtn=el('button',{style:'width:100%;padding:14px;border:1px solid rgba(212,175,110,.4);background:transparent;color:#d4af6e;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;cursor:pointer'},'Add Another Reservation');
+    var resetBtn=el('button',{style:"width:100%;padding:14px;border:1px solid rgba(212,175,110,.4);background:transparent;color:#d4af6e;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;cursor:pointer"},'Add Another Reservation');
     resetBtn.onclick=function(){location.reload();};
 
     panel.appendChild(checkWrap);
