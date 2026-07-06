@@ -162,6 +162,9 @@ footer a{color:var(--gold);text-decoration:none}
 /* ── ZOOM/PAN CHART ── */
 .chart-container{
   position:relative;
+  /* padding-bottom % = (420/760)*100 — universal aspect-ratio trick that works everywhere */
+  padding-bottom:55.26%;
+  height:0;
   background:
     radial-gradient(ellipse 80% 50% at 50% 98%, rgba(212,175,110,.20) 0%, transparent 55%),
     radial-gradient(ellipse 100% 100% at 50% 100%, #14102a 0%, #0f0e15 100%);
@@ -171,11 +174,10 @@ footer a{color:var(--gold);text-decoration:none}
   user-select:none;
   touch-action:none;
   cursor:grab;
-  aspect-ratio: 760/420;
-  max-height:520px;
 }
+@media(max-width:768px){.chart-container{padding-bottom:65%;}}
 .chart-container:active{cursor:grabbing}
-.chart-container svg{display:block;width:100%;transform-origin:0 0;will-change:transform}
+.chart-container svg{display:block;width:100%;height:100%;transform-origin:0 0;will-change:transform}
 .chart-controls{display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap}
 .cc-btn{padding:5px 12px;border:1px solid var(--border-bright);background:transparent;color:var(--gold);font-size:11px;letter-spacing:.1em;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.15s}
 .cc-btn:hover{background:rgba(201,169,110,.12)}
@@ -208,6 +210,42 @@ footer a{color:var(--gold);text-decoration:none}
   .event-meta{flex-direction:column;gap:20px}
   .pur-header-inner{flex-direction:column;align-items:flex-start;gap:12px}
 }
+
+/* ── CHATBOT ── */
+#chat-bubble{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+#chat-toggle{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));border:none;cursor:pointer;box-shadow:0 4px 20px rgba(212,175,110,.5);display:flex;align-items:center;justify-content:center;font-size:24px;transition:.2s;flex-shrink:0}
+#chat-toggle:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(212,175,110,.65)}
+#chat-panel{width:320px;max-height:480px;background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden;animation:slideUp .2s ease}
+#chat-panel.open{display:flex}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+#chat-header{background:linear-gradient(135deg,#1c1528,#2a1f3d);padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+#chat-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+#chat-header-info{flex:1}
+#chat-header-info strong{display:block;font-size:13px;color:var(--gold-pale);font-family:'Playfair Display',serif}
+#chat-header-info span{font-size:10px;color:#4ade80;letter-spacing:.08em}
+#chat-close{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;padding:4px}
+#chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:300px}
+.cmsg{max-width:85%;padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.5}
+.cmsg.bot{background:rgba(212,175,110,.1);border:1px solid rgba(212,175,110,.2);color:var(--text);border-radius:4px 12px 12px 12px;font-family:'Cormorant Garamond',serif;font-size:14px}
+.cmsg.user{background:linear-gradient(135deg,rgba(212,175,110,.25),rgba(212,175,110,.15));color:var(--gold-pale);align-self:flex-end;border-radius:12px 4px 12px 12px}
+#chat-quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.cqbtn{padding:5px 10px;font-size:11px;letter-spacing:.06em;border:1px solid rgba(212,175,110,.3);background:transparent;color:var(--gold);border-radius:20px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.15s}
+.cqbtn:hover{background:rgba(212,175,110,.12)}
+#chat-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--border);align-items:center}
+#chat-input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:20px;padding:8px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Montserrat',sans-serif}
+#chat-input::placeholder{color:var(--text-dim)}
+#chat-send,#chat-mic,#chat-cam{width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.15s;flex-shrink:0}
+#chat-send{background:var(--gold);color:var(--bg)}
+#chat-send:hover{background:var(--gold-bright)}
+#chat-mic{background:rgba(255,255,255,.08);color:var(--text-dim)}
+#chat-mic.active{background:rgba(239,68,68,.25);color:#ef4444;animation:pulse .8s infinite}
+#chat-cam{background:rgba(255,255,255,.08);color:var(--text-dim)}
+#chat-cam.active{background:rgba(74,222,128,.2);color:#4ade80}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+#cam-preview{width:100%;max-height:120px;object-fit:cover;display:none;border-bottom:1px solid var(--border)}
+#cam-preview.show{display:block}
+#chat-typing{font-size:12px;color:var(--text-dim);font-style:italic;padding:0 14px 6px;display:none}
+
 </style>
 </head>
 <body>
@@ -436,7 +474,7 @@ footer a{color:var(--gold);text-decoration:none}
           </div>
           <div class="chart-container" id="chart-container">
             <div class="seat-tip" id="seat-tip"></div>
-            <div id="svg-wrap" style="position:relative;transform-origin:center center;width:100%;height:100%"></div>
+            <div id="svg-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;transform-origin:center center"></div>
           </div>
         </div>
       </div>
@@ -649,7 +687,7 @@ function seatColor(id,t){
 }
 
 function buildSVG(){
-  var svg=svgEl('svg',{viewBox:'20 110 760 420',width:'100%',style:'display:block;width:100%;height:auto'});
+  var svg=svgEl('svg',{viewBox:'20 110 760 420',width:'100%',height:'100%',preserveAspectRatio:'xMidYMid meet',style:'display:block;width:100%;height:100%'});
 
   // Subtle zone fills for orientation
   svg.appendChild(svgEl('path',{d:bandPath(302,340,199,341),fill:'#c9a96e',opacity:'.05','pointer-events':'none'}));
@@ -1035,6 +1073,140 @@ async function loadInventory(){
     });
   }
   requestAnimationFrame(loop);
+
+/* ── CHATBOT GUIDE ── */
+(function(){
+  var KB = {
+    greet: "Welcome to the MAFS 2026 Gala! I'm your concierge. Ask me anything about tickets, seating, the evening's programme, or how to reserve your table.",
+    tickets: "We have four ticket tiers:\n\n✦ VVIP – $500/seat (50 available)\nFront-row fan arc, champagne reception, reserved namecard table, gift bag & priority valet.\n\n✦ VIP – $250/seat (100 available)\nArc seating with stage view, reserved seat with namecard, dinner & beverages.\n\n✦ Gold – $150/ticket (200 available)\nBallroom floor open seating, full dinner service, all programming.\n\n✦ General – $100/ticket (200 available)\nGeneral admission, dinner & refreshments, all programming.",
+    vvip: "VVIP is our Platinum Suite — the finest seats in the house. Front-row fan arc seating with a clear stage view, a champagne welcome reception, a reserved table with your namecard, an exclusive gift bag, and priority valet parking. Only 50 seats available at $500 each.",
+    vip: "VIP (Gold Reserve) offers arc seating with a perfect stage view, a reserved seat with your namecard, complimentary dinner & beverages, and the event programme. 100 seats at $250 each.",
+    gold: "Gold (Grand Ballroom) is open seating on the ballroom floor — great atmosphere, full dinner service, access to all programming, and the event programme. 200 tickets at $150 each.",
+    general: "General Admission (The Promenade) includes dinner & refreshments and access to all programming. 200 tickets at $100 each. First come, first served seating.",
+    date: "The MAFS Gala 2026 is on Saturday, December 12, 2026. Doors open at 6:00 PM with dinner service beginning at 7:30 PM.",
+    venue: "The gala is held at 1 E Bode Rd, Streamwood, IL 60107. Dress code is Black Tie.",
+    buy: "To buy tickets:\n1. Scroll up to 'Select Your Experience'\n2. Click your preferred tier (VVIP, VIP, Gold, or General)\n3. For VVIP/VIP — click individual seats on the fan arc map\n4. For Gold/General — click any available seat or use the +/- buttons\n5. Fill in your name, email, and phone\n6. Click 'Proceed to Payment'\nNeed help? Just ask!",
+    seating: "The interactive seat map lets you pick your exact seat. Purple dots = VVIP, pink = VIP, gold = Gold (first come first serve), grey = General (first come first serve). Green means selected, dark means sold.",
+    mission: "Every ticket directly funds MAFS programs supporting seniors, families, and youth across the Fox Suburbs — including elder care, family services, and youth development.",
+    contact: "For questions, call (847) 306-7606 or email info@mafsinc.com. Our team is happy to help with group reservations or accessibility needs.",
+    merch: "We also have event add-ons: a Commemorative Gala Programme ($25), MAFS 2026 Tote Bag ($35), Professional Photo Package ($75), and Limited Edition Gala Poster ($50). Add them in the purchase section!",
+    default: "Great question! For anything I can't answer, reach our team at (847) 306-7606 or info@mafsinc.com. I can help with: ticket prices, VVIP details, date & venue, how to buy, seating info, or our mission."
+  };
+
+  function match(q) {
+    q = q.toLowerCase();
+    if (/vvip|platinum|champagne|front.?row/.test(q)) return KB.vvip;
+    if (/vip|gold reserve|arc seat/.test(q)) return KB.vip;
+    if (/gold|ballroom floor|grand ballroom/.test(q)) return KB.gold;
+    if (/general|admission|promenade|cheapest|cheap/.test(q)) return KB.general;
+    if (/ticket|price|cost|how much|tier|package/.test(q)) return KB.tickets;
+    if (/when|date|time|december|doors/.test(q)) return KB.date;
+    if (/where|venue|address|location|streamwood|dress|attire/.test(q)) return KB.venue;
+    if (/buy|purchase|reserve|checkout|pay|how do/.test(q)) return KB.buy;
+    if (/seat|map|circle|click|select|pick/.test(q)) return KB.seating;
+    if (/mission|fund|support|community|program|senior|youth/.test(q)) return KB.mission;
+    if (/contact|call|email|phone|help|question/.test(q)) return KB.contact;
+    if (/merch|merchandise|programme|tote|photo|poster|add.?on/.test(q)) return KB.merch;
+    if (/hi|hello|hey|start|begin/.test(q)) return KB.greet;
+    return KB.default;
+  }
+
+  var panel = document.getElementById('chat-panel');
+  var msgs  = document.getElementById('chat-messages');
+  var input = document.getElementById('chat-input');
+  var mic   = document.getElementById('chat-mic');
+  var cam   = document.getElementById('chat-cam');
+  var typing= document.getElementById('chat-typing');
+  var preview = document.getElementById('cam-preview');
+  var recognition = null;
+  var camStream = null;
+
+  function addMsg(text, who) {
+    var d = document.createElement('div');
+    d.className = 'cmsg ' + who;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function botReply(text) {
+    typing.style.display = 'block';
+    setTimeout(function() {
+      typing.style.display = 'none';
+      addMsg(text, 'bot');
+    }, 600 + Math.min(text.length * 8, 900));
+  }
+
+  function send(q) {
+    if (!q.trim()) return;
+    addMsg(q, 'user');
+    input.value = '';
+    botReply(match(q));
+  }
+
+  document.getElementById('chat-toggle').onclick = function() {
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open') && msgs.children.length === 0) {
+      setTimeout(function(){ addMsg(KB.greet, 'bot'); }, 300);
+    }
+  };
+  document.getElementById('chat-close').onclick = function() { panel.classList.remove('open'); };
+  document.getElementById('chat-send').onclick = function() { send(input.value); };
+  input.onkeydown = function(e){ if(e.key==='Enter') send(input.value); };
+
+  document.querySelectorAll('.cqbtn').forEach(function(btn){
+    btn.onclick = function(){ send(btn.getAttribute('data-q')); };
+  });
+
+  // ── VOICE INPUT (Web Speech API) ──
+  mic.onclick = function() {
+    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      addMsg("Voice input isn't supported in this browser. Try Chrome or Edge.", 'bot');
+      return;
+    }
+    if (recognition && mic.classList.contains('active')) {
+      recognition.stop(); return;
+    }
+    recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    mic.classList.add('active');
+    recognition.start();
+    recognition.onresult = function(e) {
+      var transcript = e.results[0][0].transcript;
+      mic.classList.remove('active');
+      send(transcript);
+    };
+    recognition.onerror = function() { mic.classList.remove('active'); };
+    recognition.onend   = function() { mic.classList.remove('active'); };
+  };
+
+  // ── CAMERA TOGGLE ──
+  cam.onclick = function() {
+    if (camStream) {
+      camStream.getTracks().forEach(function(t){ t.stop(); });
+      camStream = null;
+      preview.classList.remove('show');
+      cam.classList.remove('active');
+      addMsg("Camera turned off.", 'bot');
+    } else {
+      navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false})
+        .then(function(stream) {
+          camStream = stream;
+          preview.srcObject = stream;
+          preview.classList.add('show');
+          cam.classList.add('active');
+          addMsg("Camera on! I can see you're ready to enjoy the gala experience. How can I help you today?", 'bot');
+        })
+        .catch(function() {
+          addMsg("Camera access was denied. You can still use the chat or voice input!", 'bot');
+        });
+    }
+  };
+})();
+
 })();
 
 })();
@@ -1193,5 +1365,36 @@ window.scrollToSeating=function(){
 
 })();
 </script>
+
+<!-- CHATBOT GUIDE -->
+<div id="chat-bubble">
+  <div id="chat-panel">
+    <div id="chat-header">
+      <div id="chat-avatar">✦</div>
+      <div id="chat-header-info">
+        <strong>Gala Concierge</strong>
+        <span>● Online · MAFS 2026</span>
+      </div>
+      <button id="chat-close" aria-label="Close chat">✕</button>
+    </div>
+    <video id="cam-preview" autoplay muted playsinline></video>
+    <div id="chat-messages"></div>
+    <div id="chat-typing">Concierge is typing…</div>
+    <div id="chat-quick">
+      <button class="cqbtn" data-q="How much are tickets?">Ticket prices</button>
+      <button class="cqbtn" data-q="What is VVIP?">What's VVIP?</button>
+      <button class="cqbtn" data-q="When is the gala?">Date & time</button>
+      <button class="cqbtn" data-q="How do I buy tickets?">How to buy</button>
+    </div>
+    <div id="chat-input-row">
+      <input id="chat-input" type="text" placeholder="Ask anything about the gala…" autocomplete="off">
+      <button id="chat-mic" title="Voice input">🎤</button>
+      <button id="chat-cam" title="Camera">📷</button>
+      <button id="chat-send" title="Send">➤</button>
+    </div>
+  </div>
+  <button id="chat-toggle" aria-label="Open gala guide">✦</button>
+</div>
+
 </body>
 </html>
