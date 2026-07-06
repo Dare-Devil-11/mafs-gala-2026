@@ -1,0 +1,324 @@
+<div id="mafs2026gala"></div>
+<script>
+(function(){
+'use strict';
+var CFG={
+  title:'2026 MAFS Gala',
+  subtitle:'Annual Gala & Fundraiser',
+  date:'Saturday, December 12, 2026 • 6:00 PM',
+  venue:'1 E Bode Rd, Streamwood, IL 60107',
+  appsScriptUrl:'https://script.google.com/macros/s/AKfycbyACQZf1eV47ibEB309TftUz6WauUJsYflITKzUla1KCBEjO9lcO4KGNK9KbcdkJBP2zw/exec',
+  paymentLinks:{VVIP:'PASTE_VVIP_PAYMENT_LINK_HERE',VIP:'PASTE_VIP_PAYMENT_LINK_HERE',GOLD:'PASTE_GOLD_PAYMENT_LINK_HERE',GENERAL:'PASTE_GENERAL_PAYMENT_LINK_HERE'},
+  prices:{VVIP:500,VIP:250,GOLD:150,GENERAL:100},
+  capacity:{GOLD:200,GENERAL:200}
+};
+
+var ARCS=[
+  {t:'VVIP',n:15,r:130,a0:215,a1:325},
+  {t:'VVIP',n:17,r:155,a0:212,a1:328},
+  {t:'VVIP',n:18,r:180,a0:209,a1:331},
+  {t:'VIP', n:22,r:208,a0:207,a1:333},
+  {t:'VIP', n:24,r:235,a0:205,a1:335},
+  {t:'VIP', n:26,r:262,a0:203,a1:337},
+  {t:'VIP', n:28,r:289,a0:201,a1:339}
+];
+var CX=400,CY=500,NS='http://www.w3.org/2000/svg';
+
+function r2(d){return d*Math.PI/180;}
+function px(r,a){return CX+r*Math.cos(r2(a));}
+function py(r,a){return CY+r*Math.sin(r2(a));}
+function f(v){return v.toFixed(1);}
+
+function bandPath(ri,ro,a0,a1){
+  return 'M'+f(px(ro,a0))+','+f(py(ro,a0))+
+    ' A'+ro+','+ro+' 0 0,1 '+f(px(ro,a1))+','+f(py(ro,a1))+
+    ' L'+f(px(ri,a1))+','+f(py(ri,a1))+
+    ' A'+ri+','+ri+' 0 0,0 '+f(px(ri,a0))+','+f(py(ri,a0))+' Z';
+}
+
+function svgEl(tag,attrs){
+  var el=document.createElementNS(NS,tag);
+  for(var k in attrs) el.setAttribute(k,attrs[k]);
+  return el;
+}
+
+var vi=0,pi=0;
+var ALL_ARCS=ARCS.map(function(arc){
+  var ids=[];
+  for(var i=0;i<arc.n;i++){
+    if(arc.t==='VVIP') ids.push('VVIP-'+(++vi<10?'0':'')+vi);
+    else ids.push('VIP-'+(++pi<10?'00':pi<100?'0':'')+pi);
+  }
+  return {arc:arc,ids:ids};
+});
+
+var ST={sel:new Set(),inv:{},gQty:0,nQty:0};
+var seatCircles={};
+
+function seatColor(id,tier){
+  if(ST.sel.has(id)) return '#22c55e';
+  var s=ST.inv[id]||'available';
+  if(s==='sold') return '#1e2333';
+  if(s==='locked') return '#4b5563';
+  return tier==='VVIP'?'#8b5cf6':'#ec4899';
+}
+
+function buildSVG(){
+  var svg=svgEl('svg',{viewBox:'-10 0 820 510',width:'100%',style:'display:block;max-height:430px'});
+
+  svg.appendChild(svgEl('path',{d:bandPath(302,338,199,341),fill:'#f5b82e',opacity:'.15','pointer-events':'none'}));
+  svg.appendChild(svgEl('path',{d:bandPath(344,378,197,343),fill:'#94a3b8',opacity:'.12','pointer-events':'none'}));
+
+  var gl=svgEl('text',{x:'400',y:'318',fill:'#a38520','font-size':'10','font-weight':'700','text-anchor':'middle','pointer-events':'none','letter-spacing':'1'});
+  gl.textContent='GOLD OPEN SEATING';
+  svg.appendChild(gl);
+  var nl=svgEl('text',{x:'400',y:'276',fill:'#6b7280','font-size':'10','font-weight':'700','text-anchor':'middle','pointer-events':'none','letter-spacing':'1'});
+  nl.textContent='GENERAL ADMISSION';
+  svg.appendChild(nl);
+
+  seatCircles={};
+  ALL_ARCS.forEach(function(entry){
+    var arc=entry.arc,ids=entry.ids;
+    ids.forEach(function(id,i){
+      var ratio=arc.n>1?i/(arc.n-1):0.5;
+      var a=arc.a0+(arc.a1-arc.a0)*ratio;
+      var x=px(arc.r,a),y=py(arc.r,a);
+      var rad=arc.t==='VVIP'?6:4.5;
+      var c=svgEl('circle',{cx:f(x),cy:f(y),r:rad,fill:seatColor(id,arc.t),'data-id':id,'data-tier':arc.t,style:'cursor:pointer;transition:fill .12s'});
+      var s=ST.inv[id]||'available';
+      if(s==='available'){
+        (function(cid,circle,t){
+          circle.onclick=function(){toggleSeat(cid);};
+          circle.onmouseenter=function(){if(!ST.sel.has(cid)) circle.setAttribute('fill','#34d399');};
+          circle.onmouseleave=function(){circle.setAttribute('fill',seatColor(cid,t));};
+        })(id,c,arc.t);
+      }
+      svg.appendChild(c);
+      seatCircles[id]=c;
+    });
+  });
+
+  svg.appendChild(svgEl('rect',{x:'300',y:'487',width:'200',height:'17',rx:'5',fill:'#0f172a'}));
+  var st=svgEl('text',{x:'400',y:'500',fill:'#93c5fd','font-size':'10','font-weight':'900','text-anchor':'middle','letter-spacing':'3','pointer-events':'none'});
+  st.textContent='S T A G E';
+  svg.appendChild(st);
+
+  return svg;
+}
+
+function updateColors(){
+  for(var id in seatCircles){
+    var c=seatCircles[id];
+    c.setAttribute('fill',seatColor(id,c.getAttribute('data-tier')));
+  }
+}
+
+function toggleSeat(id){
+  if(ST.sel.has(id)) ST.sel.delete(id); else ST.sel.add(id);
+  updateColors();
+  updateCart();
+}
+
+function calcTotal(){
+  var t=0;
+  ST.sel.forEach(function(id){t+=id.indexOf('VVIP')===0?CFG.prices.VVIP:CFG.prices.VIP;});
+  return t+ST.gQty*CFG.prices.GOLD+ST.nQty*CFG.prices.GENERAL;
+}
+
+function fmt(n){return n.toLocaleString();}
+
+function updateCart(){
+  var total=calcTotal();
+  var count=ST.sel.size+ST.gQty+ST.nQty;
+  document.getElementById('mg-cart-count').textContent=count;
+  document.getElementById('mg-cart-total').textContent=fmt(total);
+  document.getElementById('mg-total').textContent=fmt(total);
+  document.getElementById('mg-gqty').textContent=ST.gQty;
+  document.getElementById('mg-nqty').textContent=ST.nQty;
+  var lines=[];
+  var vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
+  var vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
+  if(vv.length) lines.push('<div class="cl"><span>VVIP &times;'+vv.length+' &times; $'+fmt(CFG.prices.VVIP)+'</span><b>$'+fmt(vv.length*CFG.prices.VVIP)+'</b></div><div class="cl-ids">'+vv.join(', ')+'</div>');
+  if(vp.length) lines.push('<div class="cl"><span>VIP &times;'+vp.length+' &times; $'+fmt(CFG.prices.VIP)+'</span><b>$'+fmt(vp.length*CFG.prices.VIP)+'</b></div><div class="cl-ids">'+vp.join(', ')+'</div>');
+  if(ST.gQty) lines.push('<div class="cl"><span>Gold Open &times;'+ST.gQty+' &times; $'+CFG.prices.GOLD+'</span><b>$'+fmt(ST.gQty*CFG.prices.GOLD)+'</b></div>');
+  if(ST.nQty) lines.push('<div class="cl"><span>General &times;'+ST.nQty+' &times; $'+CFG.prices.GENERAL+'</span><b>$'+fmt(ST.nQty*CFG.prices.GENERAL)+'</b></div>');
+  document.getElementById('mg-cart-lines').innerHTML=lines.length?lines.join(''):'<p style="color:#64748b;text-align:center;margin:16px 0">Cart empty</p>';
+}
+
+function showNotice(msg,type){
+  var el=document.getElementById('mg-notice');
+  el.textContent=msg;
+  el.style.display='block';
+  var map={error:['#fef2f2','#fca5a5','#991b1b'],warn:['#fffbeb','#fcd34d','#92400e'],info:['#eff6ff','#93c5fd','#1e40af']};
+  var c=map[type]||map.info;
+  el.style.background=c[0];el.style.borderColor=c[1];el.style.color=c[2];
+  setTimeout(function(){el.style.display='none';},5000);
+}
+
+async function checkout(){
+  var name=document.getElementById('mg-name').value.trim();
+  var email=document.getElementById('mg-email').value.trim();
+  var phone=document.getElementById('mg-phone').value.trim();
+  var total=calcTotal();
+  if(!name||!email||!phone){showNotice('Enter name, email, and phone.','warn');return;}
+  if(total<=0){showNotice('Select at least one ticket.','warn');return;}
+  var btn=document.getElementById('mg-checkout');
+  btn.disabled=true;btn.textContent='Processing...';
+  var orderId='MAFS-'+Date.now();
+  if(!CFG.appsScriptUrl.includes('PASTE_')){
+    try{
+      var res=await fetch(CFG.appsScriptUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'reserve',name:name,email:email,phone:phone,seatIds:Array.from(ST.sel),goldQty:ST.gQty,generalQty:ST.nQty,total:total})});
+      var d=await res.json();
+      if(!d.ok){showNotice(d.error+(d.unavailable?'\n'+d.unavailable.join(', '):''),'error');btn.disabled=false;btn.textContent='Checkout →';loadInventory();return;}
+      orderId=d.orderId;
+    }catch(e){console.warn(e);}
+  }
+  var vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
+  var vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
+  var link=vv.length?CFG.paymentLinks.VVIP:vp.length?CFG.paymentLinks.VIP:ST.gQty?CFG.paymentLinks.GOLD:CFG.paymentLinks.GENERAL;
+  if(link.includes('PASTE_')) showNotice('Order '+orderId+' logged. Paste your payment links to go live.','info');
+  else window.location.href=link+(link.includes('?')?'&':'?')+'order_id='+encodeURIComponent(orderId);
+  btn.disabled=false;btn.textContent='Checkout →';
+}
+
+async function loadInventory(){
+  if(CFG.appsScriptUrl.includes('PASTE_')) return;
+  try{
+    var res=await fetch(CFG.appsScriptUrl+'?action=inventory');
+    var d=await res.json();
+    if(d.ok) d.seats.forEach(function(s){ST.inv[s.seatId]=s.status;});
+  }catch(e){console.warn('Inventory load failed',e);}
+  updateColors();
+}
+
+var root=document.getElementById('mafs2026gala');
+root.innerHTML='<style>'
++'#mafs2026gala{font-family:Inter,system-ui,Arial,sans-serif;color:#0f172a;background:#f1f5f9;margin:0;padding:0}'
++'#mafs2026gala *{box-sizing:border-box}'
++'.mg-hdr{background:linear-gradient(135deg,#050a14,#0f1f3d 60%,#0a1628);color:#e2e8f0;padding:16px 20px;display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap}'
++'.mg-logo{width:160px;height:64px;border-radius:10px;background:linear-gradient(135deg,#3b1507,#a0522d);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:rgba(255,255,255,.5);letter-spacing:.1em;flex-shrink:0;box-shadow:0 6px 24px rgba(0,0,0,.4)}'
++'.mg-info h1{font-size:23px;font-weight:900;margin:0 0 3px;color:#f1f5f9}'
++'.mg-info p{margin:0;font-size:13px;opacity:.8;line-height:1.6}'
++'.mg-pill{border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:9px 16px;background:rgba(255,255,255,.05);text-align:right;white-space:nowrap}'
++'.mg-pill span{font-size:12px;opacity:.7}'
++'.mg-pill b{display:block;font-size:18px;font-weight:900;color:#f1f5f9}'
++'.mg-body{display:grid;grid-template-columns:1fr 370px}'
++'.mg-left{padding:18px;overflow:auto}'
++'.mg-right{background:#fff;border-left:1px solid #e2e8f0;padding:18px;display:flex;flex-direction:column;gap:12px}'
++'.card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04)}'
++'.card-head{padding:12px 16px;font-weight:800;font-size:15px;border-bottom:1px solid #f1f5f9;background:#fafafa}'
++'.legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:10px;font-size:12px}'
++'.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}'
++'.svg-wrap{padding:8px 14px}'
++'.oz-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}'
++'.oz{border:1px solid #e2e8f0;border-radius:10px;padding:12px}'
++'.oz.gold{border-color:rgba(245,184,46,.55)}'
++'.oz.gen{border-color:rgba(148,163,184,.55)}'
++'.oz h4{margin:0 0 3px;font-size:13px;font-weight:700}'
++'.oz p{margin:0 0 8px;font-size:11px;color:#64748b}'
++'.qty-row{display:flex;align-items:center;gap:7px}'
++'.qb{width:30px;height:30px;border-radius:7px;border:1px solid #cbd5e1;background:#fff;font-size:17px;cursor:pointer;font-weight:700;transition:.12s;line-height:1}'
++'.qb:hover{background:#f1f5f9}'
++'.qv{min-width:26px;text-align:center;font-weight:900;font-size:15px}'
++'.stats-bar{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #e2e8f0}'
++'.sb{text-align:center;padding:10px 4px;border-right:1px solid #e2e8f0}'
++'.sb:last-child{border-right:0}'
++'.sb b{display:block;font-size:15px;font-weight:900}'
++'.sb span{font-size:10px;color:#64748b}'
++'.tr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid #f1f5f9}'
++'.tr-name{font-weight:600;font-size:13px}'
++'.tr-sub{font-size:11px;color:#94a3b8}'
++'.tr-price{font-weight:900;font-size:15px}'
++'.inp-wrap{padding:0 16px 12px}'
++'.inp-wrap label{display:block;font-size:11px;font-weight:600;color:#64748b;margin:9px 0 3px}'
++'.inp-wrap input{width:100%;padding:9px 11px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;outline:none;transition:.15s}'
++'.inp-wrap input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}'
++'.cart-lines{padding:0 16px 12px;min-height:56px}'
++'.cl{display:flex;justify-content:space-between;font-size:12px;padding:3px 0}'
++'.cl-ids{font-size:10px;color:#94a3b8;padding-bottom:5px;border-bottom:1px solid #f1f5f9;word-break:break-all;line-height:1.5}'
++'.cart-total{display:flex;justify-content:space-between;padding:9px 16px;border-top:1px solid #e2e8f0;font-weight:900;font-size:14px}'
++'.notice{padding:9px 12px;border-radius:8px;border:1px solid;font-size:12px;margin:0 16px 8px;display:none}'
++'.cta{margin:0 16px 16px;width:calc(100% - 32px);background:#0f172a;color:#fff;padding:13px;border:0;border-radius:11px;font-size:15px;font-weight:900;cursor:pointer;transition:.2s;letter-spacing:.02em}'
++'.cta:hover{background:#1e293b}'
++'.cta:disabled{opacity:.6;cursor:not-allowed}'
++'.impact{background:linear-gradient(135deg,#050a14,#0f1f3d);color:#e2e8f0;padding:20px;margin:14px 0 0;border-radius:14px}'
++'.impact h3{margin:0 0 14px;font-size:16px}'
++'.ig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}'
++'.ic{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:12px;font-size:12px}'
++'.ic b{display:block;margin-bottom:3px}'
++'@media(max-width:900px){.mg-body{grid-template-columns:1fr}.mg-right{border-left:0;border-top:1px solid #e2e8f0}.oz-wrap{grid-template-columns:1fr}.ig{grid-template-columns:1fr}.mg-hdr{padding:12px 14px}.mg-logo{width:110px;height:44px;font-size:16px}.mg-info h1{font-size:19px}.stats-bar{grid-template-columns:repeat(3,1fr)}}'
++'</style>'
++'<div class="mg-hdr">'
++'<div class="mg-logo">MAFS</div>'
++'<div class="mg-info"><h1>'+CFG.title+'</h1><p>'+CFG.subtitle+'<br>'+CFG.date+'<br>'+CFG.venue+'</p></div>'
++'<div class="mg-pill"><span>Cart (<span id="mg-cart-count">0</span>)</span><b>$<span id="mg-cart-total">0</span></b></div>'
++'</div>'
++'<div class="mg-body">'
++'<div class="mg-left">'
++'<div class="card">'
++'<div class="legend">'
++'<span><i class="dot" style="background:#8b5cf6"></i>VVIP $500</span>'
++'<span><i class="dot" style="background:#ec4899"></i>VIP $250</span>'
++'<span><i class="dot" style="background:#f5b82e"></i>Gold $150</span>'
++'<span><i class="dot" style="background:#94a3b8"></i>General $100</span>'
++'<span><i class="dot" style="background:#22c55e"></i>Selected</span>'
++'<span><i class="dot" style="background:#1e2333"></i>Sold</span>'
++'</div>'
++'<div class="svg-wrap" id="mg-svg-wrap"></div>'
++'<div class="oz-wrap">'
++'<div class="oz gold"><h4>Gold Open Seating</h4><p>200 tickets &bull; $150 each</p><div class="qty-row"><button class="qb" data-key="g" data-d="-1">&#8722;</button><span class="qv" id="mg-gqty">0</span><button class="qb" data-key="g" data-d="1">+</button></div></div>'
++'<div class="oz gen"><h4>General Admission</h4><p>200 tickets &bull; $100 each</p><div class="qty-row"><button class="qb" data-key="n" data-d="-1">&#8722;</button><span class="qv" id="mg-nqty">0</span><button class="qb" data-key="n" data-d="1">+</button></div></div>'
++'</div>'
++'<div class="stats-bar">'
++'<div class="sb"><b>550</b><span>Total</span></div>'
++'<div class="sb"><b>50</b><span>VVIP</span></div>'
++'<div class="sb"><b>100</b><span>VIP</span></div>'
++'<div class="sb"><b>200</b><span>Gold</span></div>'
++'<div class="sb"><b>200</b><span>General</span></div>'
++'</div>'
++'</div>'
++'<div class="impact"><h3>Support MAFS Community Services</h3><div class="ig">'
++'<div class="ic"><b>Premium Experience</b>Fan-arc seating with full stage view for VVIP &amp; VIP guests.</div>'
++'<div class="ic"><b>Community Impact</b>Every ticket directly supports MAFS senior and family programs.</div>'
++'<div class="ic"><b>Secure Booking</b>Seats lock on reservation &bull; payment via Square or Stripe.</div>'
++'</div></div>'
++'</div>'
++'<div class="mg-right">'
++'<div class="card"><div class="card-head">1 &middot; Select Tickets</div>'
++'<div class="tr"><div><div class="tr-name">VVIP Reserved</div><div class="tr-sub">50 seats &bull; click seat on map</div></div><div class="tr-price">$500</div></div>'
++'<div class="tr"><div><div class="tr-name">VIP Reserved</div><div class="tr-sub">100 seats &bull; click seat on map</div></div><div class="tr-price">$250</div></div>'
++'<div class="tr"><div><div class="tr-name">Gold Open Seating</div><div class="tr-sub">200 tickets &bull; qty picker below map</div></div><div class="tr-price">$150</div></div>'
++'<div class="tr"><div><div class="tr-name">General Admission</div><div class="tr-sub">200 tickets &bull; qty picker below map</div></div><div class="tr-price">$100</div></div>'
++'</div>'
++'<div class="card"><div class="card-head">2 &middot; Buyer Info</div><div class="inp-wrap">'
++'<label for="mg-name">Full Name</label><input id="mg-name" placeholder="Jane Smith" autocomplete="name">'
++'<label for="mg-email">Email</label><input id="mg-email" type="email" placeholder="jane@email.com" autocomplete="email">'
++'<label for="mg-phone">Phone</label><input id="mg-phone" type="tel" placeholder="(312) 555-0100" autocomplete="tel">'
++'</div></div>'
++'<div class="card"><div class="card-head">3 &middot; Your Cart</div>'
++'<div class="cart-lines" id="mg-cart-lines"><p style="color:#64748b;text-align:center;margin:16px 0">Cart empty</p></div>'
++'<div class="cart-total"><span>Total</span><span>$<span id="mg-total">0</span></span></div>'
++'<div class="notice" id="mg-notice"></div>'
++'<button class="cta" id="mg-checkout">Checkout &#8594;</button>'
++'<p style="font-size:11px;color:#94a3b8;text-align:center;margin:0 16px 14px">Seats lock on submit &bull; payment via Square or Stripe</p>'
++'</div>'
++'</div>'
++'</div>';
+
+document.getElementById('mg-svg-wrap').appendChild(buildSVG());
+
+document.querySelectorAll('.qb').forEach(function(btn){
+  btn.onclick=function(){
+    var k=btn.dataset.key,d=Number(btn.dataset.d);
+    if(k==='g') ST.gQty=Math.max(0,Math.min(CFG.capacity.GOLD,ST.gQty+d));
+    else ST.nQty=Math.max(0,Math.min(CFG.capacity.GENERAL,ST.nQty+d));
+    updateCart();
+  };
+});
+
+document.getElementById('mg-checkout').onclick=checkout;
+
+loadInventory();
+updateCart();
+})();
+</script>
