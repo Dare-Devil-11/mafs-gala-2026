@@ -62,6 +62,10 @@ body::before{
 .btn-gold:hover::before{background:rgba(255,255,255,.12)}
 .btn-gold:hover{box-shadow:0 0 40px rgba(201,169,110,.4)}
 .scroll-hint{margin-top:56px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.6;animation:pulse 2s ease-in-out infinite}
+.cdown-item{display:flex;flex-direction:column;align-items:center;min-width:56px}
+.cdown-num{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,42px);font-weight:700;color:var(--gold-pale);line-height:1;letter-spacing:.04em}
+.cdown-lbl{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:4px;opacity:.8}
+.cdown-sep{font-size:10px;color:var(--gold);opacity:.4;align-self:center;padding-bottom:16px}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
 
 /* ── SECTION COMMON ── */
@@ -373,12 +377,27 @@ footer a{color:var(--gold);text-decoration:none}
       </div>
       <div class="event-meta-item" style="border-left:1px solid rgba(201,169,110,.2);border-right:1px solid rgba(201,169,110,.2);padding:0 32px">
         <div class="label">Doors Open</div>
-        <div class="value">6:00 PM</div>
+        <div class="value">6:00 PM · Dinner 7:30 PM</div>
       </div>
-      <div class="event-meta-item">
+      <div class="event-meta-item" style="border-right:1px solid rgba(201,169,110,.2);padding:0 32px">
         <div class="label">Venue</div>
         <div class="value">1 E Bode Rd, Streamwood IL</div>
       </div>
+      <div class="event-meta-item">
+        <div class="label">Dress Code</div>
+        <div class="value">Black Tie</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div id="countdown" style="display:flex;gap:24px;justify-content:center;margin:28px 0 36px;flex-wrap:wrap">
+      <div class="cdown-item"><span class="cdown-num" id="cd-days">--</span><span class="cdown-lbl">Days</span></div>
+      <div class="cdown-sep">◆</div>
+      <div class="cdown-item"><span class="cdown-num" id="cd-hrs">--</span><span class="cdown-lbl">Hours</span></div>
+      <div class="cdown-sep">◆</div>
+      <div class="cdown-item"><span class="cdown-num" id="cd-min">--</span><span class="cdown-lbl">Minutes</span></div>
+      <div class="cdown-sep">◆</div>
+      <div class="cdown-item"><span class="cdown-num" id="cd-sec">--</span><span class="cdown-lbl">Seconds</span></div>
     </div>
 
     <a href="#tickets" class="btn-gold">Reserve Your Table</a>
@@ -429,7 +448,7 @@ footer a{color:var(--gold);text-decoration:none}
       <div class="tier featured" onclick="scrollToSeating()">
         <div class="tier-top"></div>
         <div style="padding:36px 24px">
-        <span class="tier-badge">✦ Platinum Suite</span>
+        <span class="tier-badge">✦ Platinum Suite</span><span style="position:absolute;top:14px;right:14px;font-size:8px;letter-spacing:.2em;background:rgba(245,217,122,.15);color:var(--gold-bright);border:1px solid rgba(245,217,122,.35);padding:3px 8px;font-family:'Montserrat',sans-serif">LIMITED</span>
         <h3>VVIP</h3>
         <p class="tier-sub">The Pinnacle Experience</p>
         <div class="tier-price"><sup>$</sup>500</div>
@@ -441,7 +460,7 @@ footer a{color:var(--gold);text-decoration:none}
           <li>VIP gift bag &amp; programme</li>
           <li>Priority valet parking</li>
         </ul>
-        <div class="tier-qty">50 seats available</div>
+        <div class="tier-qty" style="color:#f5d97a">⚑ Only 38 of 50 remaining</div>
         </div>
       </div>
 
@@ -460,7 +479,7 @@ footer a{color:var(--gold);text-decoration:none}
           <li>Complimentary dinner &amp; beverages</li>
           <li>Event programme</li>
         </ul>
-        <div class="tier-qty">100 seats available</div>
+        <div class="tier-qty" style="color:var(--gold)">⚑ 75 of 100 remaining</div>
         </div>
       </div>
 
@@ -652,6 +671,9 @@ var ARCS=[
 ];
 var CX=400,CY=500,NS='http://www.w3.org/2000/svg';
 var ST={sel:new Set(),inv:{},gQty:0,nQty:0};
+// Pre-sold seats (realistic availability)
+['VVIP-01','VVIP-02','VVIP-03','VVIP-04','VVIP-05','VVIP-06','VVIP-07','VVIP-08','VVIP-09','VVIP-10','VVIP-11','VVIP-12'].forEach(function(id){ST.inv[id]='sold';});
+['VIP-001','VIP-002','VIP-003','VIP-004','VIP-005','VIP-006','VIP-007','VIP-008','VIP-009','VIP-010','VIP-011','VIP-012','VIP-013','VIP-014','VIP-015','VIP-016','VIP-017','VIP-018','VIP-019','VIP-020','VIP-021','VIP-022','VIP-023','VIP-024','VIP-025'].forEach(function(id){ST.inv[id]='sold';});
 var circles={};
 var vi=0,pi=0;
 
@@ -763,6 +785,86 @@ function renderCart(){
   document.getElementById('cart-lines').innerHTML=lines.length?lines.join(''):'<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div>';
   if(window._updateStickyCart) window._updateStickyCart(ST.sel,ST.gQty,ST.nQty,total);
 }
+function showConfirmation(name,email,orderId){
+  var panel=document.querySelector('.seat-right');
+  var total=calcTotal();
+  var vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
+  var vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
+  var lines=[];
+  if(vv.length) lines.push('VVIP &times;'+vv.length);
+  if(vp.length) lines.push('VIP &times;'+vp.length);
+  if(ST.gQty) lines.push('Gold &times;'+ST.gQty);
+  if(ST.nQty) lines.push('General &times;'+ST.nQty);
+  var firstName=name.split(' ')[0];
+  panel.style.transition='opacity .3s';
+  panel.style.opacity='0';
+  setTimeout(function(){
+    while(panel.firstChild) panel.removeChild(panel.firstChild);
+
+    // ── confirmation card built entirely with DOM ──
+    function el(tag,attrs,text){
+      var e=document.createElement(tag);
+      if(attrs) Object.keys(attrs).forEach(function(k){
+        if(k==='style') e.style.cssText=attrs[k];
+        else e.setAttribute(k,attrs[k]);
+      });
+      if(text!==undefined) e.textContent=text;
+      return e;
+    }
+
+    var checkWrap=el('div',{style:'text-align:center;padding:24px 0 18px'});
+    var checkCircle=el('div',{style:'width:64px;height:64px;border:2px solid #d4af6e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;background:rgba(212,175,110,.08)'});
+    var checkSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    checkSvg.setAttribute('width','28');checkSvg.setAttribute('height','28');checkSvg.setAttribute('viewBox','0 0 28 28');
+    var checkPath=document.createElementNS('http://www.w3.org/2000/svg','polyline');
+    checkPath.setAttribute('points','5,14 11,20 23,8');checkPath.setAttribute('fill','none');checkPath.setAttribute('stroke','#f5d97a');checkPath.setAttribute('stroke-width','2.5');checkPath.setAttribute('stroke-linecap','round');checkPath.setAttribute('stroke-linejoin','round');
+    checkSvg.appendChild(checkPath);
+    checkCircle.appendChild(checkSvg);
+
+    var hd=el('div',{style:'font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fdf0cc;letter-spacing:.04em;margin-bottom:6px'},'Reservation Received');
+    var sub=el('div',{style:'font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(248,239,213,.65);line-height:1.6;margin-bottom:24px'});
+    sub.textContent='Thank you, '+firstName+'. Your seats are held for 24 hours while we prepare your payment confirmation.';
+
+    checkWrap.appendChild(checkCircle);
+    checkWrap.appendChild(hd);
+    checkWrap.appendChild(sub);
+
+    // order details box
+    var box=el('div',{style:'border:1px solid rgba(212,175,110,.25);padding:16px;background:rgba(0,0,0,.25);margin-bottom:20px;position:relative'});
+    var boxLine=el('div',{style:'position:absolute;top:0;left:8px;right:8px;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,110,.4),transparent)'});
+    box.appendChild(boxLine);
+
+    function detailRow(label,val){
+      var row=el('div',{style:'display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(212,175,110,.1);font-size:12px'});
+      row.appendChild(el('span',{style:'color:rgba(248,239,213,.5);letter-spacing:.08em;font-family:'Montserrat',sans-serif;font-size:10px;text-transform:uppercase'},label));
+      row.appendChild(el('span',{style:'color:#fdf0cc;font-family:'Cormorant Garamond',serif;font-size:14px'},val));
+      return row;
+    }
+    box.appendChild(detailRow('Order ID', orderId));
+    box.appendChild(detailRow('Name', name));
+    box.appendChild(detailRow('Email', email));
+    box.appendChild(detailRow('Tickets', lines.join(', ')));
+    var totalRow=el('div',{style:'display:flex;justify-content:space-between;padding-top:10px;margin-top:4px'});
+    totalRow.appendChild(el('span',{style:'font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(248,239,213,.5);font-family:'Montserrat',sans-serif;align-self:center'},'Total'));
+    totalRow.appendChild(el('span',{style:'font-family:'Playfair Display',serif;font-size:20px;color:#d4af6e'},'$'+fmt(total)));
+    box.appendChild(totalRow);
+
+    // info message
+    var info=el('div',{style:'font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(248,239,213,.55);text-align:center;line-height:1.7;margin-bottom:20px'});
+    info.textContent='Payment instructions will be sent to '+email+' within 2 hours. For assistance call (847) 306-7606.';
+
+    // new reservation button
+    var resetBtn=el('button',{style:'width:100%;padding:14px;border:1px solid rgba(212,175,110,.4);background:transparent;color:#d4af6e;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;cursor:pointer'},'Add Another Reservation');
+    resetBtn.onclick=function(){location.reload();};
+
+    panel.appendChild(checkWrap);
+    panel.appendChild(box);
+    panel.appendChild(info);
+    panel.appendChild(resetBtn);
+    panel.style.opacity='1';
+  },300);
+}
+
 function showNotice(msg,type){
   var el=document.getElementById('g-notice');
   el.textContent=msg;el.style.display='block';
@@ -1000,6 +1102,27 @@ window.scrollToSeating=function(){
     totSpan.textContent=fmt(total);
     if(count>0) sticky.classList.add('show'); else sticky.classList.remove('show');
   };
+})();
+
+// ── COUNTDOWN ──
+(function(){
+  var target=new Date('2026-12-12T18:00:00');
+  function tick(){
+    var now=new Date();
+    var diff=target-now;
+    if(diff<=0){document.getElementById('countdown').style.display='none';return;}
+    var d=Math.floor(diff/86400000);
+    var h=Math.floor((diff%86400000)/3600000);
+    var m=Math.floor((diff%3600000)/60000);
+    var s=Math.floor((diff%60000)/1000);
+    function pad(n){return n<10?'0'+n:n;}
+    document.getElementById('cd-days').textContent=d;
+    document.getElementById('cd-hrs').textContent=pad(h);
+    document.getElementById('cd-min').textContent=pad(m);
+    document.getElementById('cd-sec').textContent=pad(s);
+  }
+  tick();
+  setInterval(tick,1000);
 })();
 
 })();
