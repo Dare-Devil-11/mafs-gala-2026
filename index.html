@@ -538,7 +538,9 @@ footer a{color:var(--gold);text-decoration:none}
         <div class="chart-controls">
           <button class="cc-btn" id="btn-zoom-in">＋ Zoom</button>
           <button class="cc-btn" id="btn-zoom-out">－ Zoom</button>
-          <button class="cc-btn" id="btn-reset">↺ Reset</button>
+          <button class="cc-btn" id="btn-rot-l">↺ Rotate</button>
+          <button class="cc-btn" id="btn-rot-r">↻ Rotate</button>
+          <button class="cc-btn" id="btn-reset">⊡ Reset</button>
           <span class="cc-hint">Drag to pan · Pinch to zoom</span>
         </div>
 
@@ -905,22 +907,47 @@ window.scrollToSeating=function(){
   document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'});
 };
 
-// ── ZOOM / PAN ──
+// ── ZOOM / PAN / ROTATE ──
 (function(){
   var container=document.getElementById('chart-container');
   var svgWrap=container.querySelector('#svg-wrap');
   if(!svgWrap) return;
-  var scale=1,ox=0,oy=0;
+  var scale=1,ox=0,oy=0,rot=0;
+  var MIN_SCALE=1,MAX_SCALE=4;
   var dragging=false,startX,startY,startOx,startOy;
   var pinchDist=null;
-  function apply(){svgWrap.style.transform='translate('+ox+'px,'+oy+'px) scale('+scale+')';}
-  svgWrap.style.transformOrigin='0 0';
+
+  function clampPan(){
+    var cw=container.offsetWidth,ch=container.offsetHeight;
+    var sw=svgWrap.offsetWidth*scale,sh=svgWrap.offsetHeight*scale;
+    var maxOx=Math.max(0,sw-cw)*0.5+cw*0.15;
+    var maxOy=Math.max(0,sh-ch)*0.5+ch*0.15;
+    ox=Math.max(-maxOx,Math.min(maxOx,ox));
+    oy=Math.max(-maxOy,Math.min(maxOy,oy));
+  }
+
+  function apply(){
+    clampPan();
+    svgWrap.style.transform='translate('+ox+'px,'+oy+'px) scale('+scale+') rotate('+rot+'deg)';
+  }
+  svgWrap.style.transformOrigin='center center';
+
   container.addEventListener('mousedown',function(e){
     dragging=true;startX=e.clientX;startY=e.clientY;startOx=ox;startOy=oy;e.preventDefault();
   });
-  window.addEventListener('mousemove',function(e){if(!dragging)return;ox=startOx+(e.clientX-startX);oy=startOy+(e.clientY-startY);apply();});
+  window.addEventListener('mousemove',function(e){
+    if(!dragging) return;
+    ox=startOx+(e.clientX-startX);oy=startOy+(e.clientY-startY);apply();
+  });
   window.addEventListener('mouseup',function(){dragging=false;});
-  container.addEventListener('wheel',function(e){e.preventDefault();var d=e.deltaY>0?-.15:.15;scale=Math.max(.5,Math.min(4,scale+d));apply();},{passive:false});
+
+  container.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var d=e.deltaY>0?-.12:.12;
+    scale=Math.max(MIN_SCALE,Math.min(MAX_SCALE,scale+d));
+    apply();
+  },{passive:false});
+
   container.addEventListener('touchstart',function(e){
     if(e.touches.length===1){dragging=true;startX=e.touches[0].clientX;startY=e.touches[0].clientY;startOx=ox;startOy=oy;}
     else if(e.touches.length===2){dragging=false;pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
@@ -928,13 +955,16 @@ window.scrollToSeating=function(){
   },{passive:false});
   container.addEventListener('touchmove',function(e){
     if(e.touches.length===1&&dragging){ox=startOx+(e.touches[0].clientX-startX);oy=startOy+(e.touches[0].clientY-startY);apply();}
-    else if(e.touches.length===2&&pinchDist!==null){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);scale=Math.max(.5,Math.min(4,scale*(d/pinchDist)));pinchDist=d;apply();}
+    else if(e.touches.length===2&&pinchDist!==null){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);scale=Math.max(MIN_SCALE,Math.min(MAX_SCALE,scale*(d/pinchDist)));pinchDist=d;apply();}
     e.preventDefault();
   },{passive:false});
   container.addEventListener('touchend',function(){dragging=false;pinchDist=null;});
-  document.getElementById('btn-zoom-in').onclick=function(){scale=Math.min(4,scale+.25);apply();};
-  document.getElementById('btn-zoom-out').onclick=function(){scale=Math.max(.5,scale-.25);apply();};
-  document.getElementById('btn-reset').onclick=function(){scale=1;ox=0;oy=0;apply();};
+
+  document.getElementById('btn-zoom-in').onclick=function(){scale=Math.min(MAX_SCALE,scale+.25);apply();};
+  document.getElementById('btn-zoom-out').onclick=function(){scale=Math.max(MIN_SCALE,scale-.25);apply();};
+  document.getElementById('btn-rot-l').onclick=function(){rot=(rot-15+360)%360;apply();};
+  document.getElementById('btn-rot-r').onclick=function(){rot=(rot+15)%360;apply();};
+  document.getElementById('btn-reset').onclick=function(){scale=1;ox=0;oy=0;rot=0;apply();};
 })();
 
 // ── STICKY CART ──
