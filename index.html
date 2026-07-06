@@ -758,7 +758,7 @@ function renderCart(){
   if(vp.length) lines.push('<div class="cart-item"><span>VIP ×'+vp.length+' ('+vp.join(', ')+')</span><b>$'+fmt(vp.length*CFG.prices.VIP)+'</b></div>');
   if(ST.gQty) lines.push('<div class="cart-item"><span>Gold Open ×'+ST.gQty+'</span><b>$'+fmt(ST.gQty*CFG.prices.GOLD)+'</b></div>');
   if(ST.nQty) lines.push('<div class="cart-item"><span>General ×'+ST.nQty+'</span><b>$'+fmt(ST.nQty*CFG.prices.GENERAL)+'</b></div>');
-  document.getElementById('cart-lines').innerHTML=lines.length?lines.join(''):'<div style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div>';
+  document.getElementById('cart-lines').innerHTML=lines.length?lines.join(''):'<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;color:var(--text-dim);font-size:14px;padding:6px 0">No tickets selected yet</div>';
   if(window._updateStickyCart) window._updateStickyCart(ST.sel,ST.gQty,ST.nQty,total);
 }
 function showNotice(msg,type){
