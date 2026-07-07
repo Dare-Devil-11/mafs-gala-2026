@@ -263,7 +263,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-svg-wrap svg{width:100%;max-width:640px;}
 .sc-section-path{cursor:pointer;transition:opacity .18s,filter .18s;stroke:rgba(7,5,3,.7);stroke-width:2;}
 .sc-section-path:hover{opacity:.82;filter:drop-shadow(0 0 10px rgba(201,168,76,.5));}
-.sc-section-path.sc-active{filter:drop-shadow(0 0 12px rgba(201,168,76,.75));}
+.sc-section-path.sc-active{filter:brightness(1.4) drop-shadow(0 0 12px rgba(201,168,76,.85));stroke:rgba(201,168,76,.9);stroke-width:3;}
 .sc-grid-view{display:none;}
 .sc-grid-view.active{display:block;}
 .sc-grid-head{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
@@ -302,9 +302,25 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-tier-divider{display:flex;align-items:center;gap:10px;padding:8px 0 4px;margin-top:4px;}
 .sc-tier-divider span{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--gold);white-space:nowrap;}
 .sc-tier-divider::before,.sc-tier-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);}
+/* section tabs */
+.sc-sec-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
+.sc-sec-tab{background:none;border:none;border-right:1px solid var(--border);padding:14px 8px;cursor:pointer;transition:background .2s,color .2s;color:var(--muted);font-family:'Cinzel Decorative',serif;text-align:center;}
+.sc-sec-tab:last-child{border-right:none;}
+.sc-sec-tab:hover{background:rgba(201,168,76,.08);color:var(--gold);}
+.sc-sec-tab.active{background:rgba(201,168,76,.12);color:var(--gold);border-bottom:2px solid var(--gold);}
+.sc-tab-lbl{display:block;font-size:.95rem;font-weight:700;letter-spacing:.08em;margin-bottom:3px;}
+.sc-tab-sub{display:block;font-size:.58rem;font-family:'Cinzel',serif;color:var(--muted);}
+.sc-sec-tab.active .sc-tab-sub{color:rgba(201,168,76,.65);}
+/* mini-map bar */
+.sc-minimap-bar{display:flex;align-items:center;gap:18px;padding:12px 20px;border-bottom:1px solid var(--border);background:rgba(7,5,3,.25);}
+.sc-minimap{width:110px;flex-shrink:0;}
+.sc-minimap svg{width:100%;display:block;}
+.sc-active-info{flex:1;min-width:0;}
+.sc-active-sec-name{font-family:'Cinzel Decorative',serif;font-size:.88rem;color:var(--gold);letter-spacing:.1em;}
+.sc-active-sec-sub{font-size:.7rem;color:var(--muted);margin-top:4px;line-height:1.5;}
 @media(max-width:900px){.sc-layout{grid-template-columns:1fr;}.sc-cart{position:static;}}
 @media(max-width:760px){.sc-tier-bar{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:640px){.sc-seat{font-size:.62rem;min-width:17px;min-height:17px;}.sc-rows{max-height:280px;}}
+@media(max-width:640px){.sc-seat{font-size:.62rem;min-width:17px;min-height:17px;}.sc-rows{max-height:280px;}.sc-minimap-bar{flex-direction:column;align-items:flex-start;}}
 </style>
 </head>
 <body>
@@ -549,26 +565,39 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
     </div>
     <div class="sc-layout">
       <div class="sc-viewer" id="scViewer">
-        <!-- MAP VIEW -->
-        <div id="scMapView">
-          <div class="sc-map-head">
-            <span class="sc-map-title">Venue Overview</span>
-            <span class="sc-map-hint">Click a section to select seats</span>
-          </div>
-          <div class="sc-svg-wrap">
+        <!-- SECTION TABS -->
+        <div class="sc-sec-tabs">
+          <button class="sc-sec-tab" data-sec="A" onclick="scOpen('A')">
+            <span class="sc-tab-lbl">§ A</span>
+            <span class="sc-tab-sub">187 seats</span>
+          </button>
+          <button class="sc-sec-tab" data-sec="B" onclick="scOpen('B')">
+            <span class="sc-tab-lbl">§ B</span>
+            <span class="sc-tab-sub">166 seats</span>
+          </button>
+          <button class="sc-sec-tab" data-sec="C" onclick="scOpen('C')">
+            <span class="sc-tab-lbl">§ C</span>
+            <span class="sc-tab-sub">156 seats</span>
+          </button>
+          <button class="sc-sec-tab" data-sec="D" onclick="scOpen('D')">
+            <span class="sc-tab-lbl">§ D</span>
+            <span class="sc-tab-sub">161 seats</span>
+          </button>
+        </div>
+        <!-- MINI MAP + ACTIVE SECTION INFO -->
+        <div class="sc-minimap-bar">
+          <div class="sc-minimap">
             <svg id="scVenueSvg" viewBox="0 0 700 510" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
-        </div>
-        <!-- GRID VIEW -->
-        <div id="scGridView" class="sc-grid-view">
-          <div class="sc-grid-head">
-            <button class="sc-back" onclick="scShowMap()">← Venue Map</button>
-            <span class="sc-grid-sec-name" id="scGridTitle">Section A</span>
-            <span class="sc-cnt" id="scSecCnt">0 selected</span>
+          <div class="sc-active-info">
+            <div class="sc-active-sec-name" id="scGridTitle">Section A</div>
+            <div class="sc-active-sec-sub">Click any seat below to select it. Switch sections using the tabs above, or click a section on the map.</div>
+            <div style="margin-top:8px"><span class="sc-cnt" id="scSecCnt">0 selected</span></div>
           </div>
-          <div class="sc-stage-bar">▶&nbsp;&nbsp;STAGE&nbsp;&nbsp;◀</div>
-          <div class="sc-rows" id="scRowsDiv"></div>
         </div>
+        <!-- ALWAYS-VISIBLE SEAT GRID -->
+        <div class="sc-stage-bar">▶&nbsp;&nbsp;STAGE&nbsp;&nbsp;◀</div>
+        <div class="sc-rows" id="scRowsDiv"></div>
       </div>
       <!-- CART -->
       <div class="sc-cart">
@@ -833,19 +862,24 @@ function buildMap(){
     h+=`<circle cx="${lp.x.toFixed(1)}" cy="${lp.y.toFixed(1)}" r="17" fill="rgba(7,5,3,.55)" stroke="rgba(255,215,0,.35)" stroke-width="1" pointer-events="none"/>`;
     h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="rgba(255,215,0,.97)" font-size="16" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${id}</text>`;
   });
-  // tier symbols scattered across all 4 sections × 4 tiers
+  // tier symbols in each section × tier band — dark on gold for contrast
   const symDefs=[
-    {r:118,sym:'★',col:'rgba(255,215,0,.72)',sz:11},
-    {r:171,sym:'●',col:'rgba(201,168,76,.65)',sz:10},
-    {r:241,sym:'▲',col:'rgba(184,150,60,.60)',sz:10},
-    {r:323,sym:'■',col:'rgba(138,122,90,.55)',sz:9}
+    {r:118,sym:'★',col:'rgba(7,5,3,.82)',sz:13},
+    {r:171,sym:'●',col:'rgba(7,5,3,.76)',sz:12},
+    {r:241,sym:'▲',col:'rgba(7,5,3,.72)',sz:11},
+    {r:323,sym:'■',col:'rgba(7,5,3,.68)',sz:10}
   ];
   const secMids={A:39.5,B:74.5,C:109.5,D:142.5};
   Object.values(secMids).forEach(midAng=>{
     symDefs.forEach(({r,sym,col,sz})=>{
       const p=pt(cx,cy,r,midAng);
-      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.38).toFixed(1)}" text-anchor="middle" fill="${col}" font-size="${sz}" pointer-events="none" style="font-family:inherit">${sym}</text>`;
+      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.38).toFixed(1)}" text-anchor="middle" fill="${col}" font-size="${sz}" pointer-events="none">${sym}</text>`;
     });
+  });
+  // tier name labels along the B/C center divider axis (90°)
+  [{r:118,t:'VVIP'},{r:171,t:'VIP'},{r:241,t:'Gold'},{r:323,t:'General'}].forEach(({r,t})=>{
+    const p=pt(cx,cy,r,90);
+    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y-5).toFixed(1)}" text-anchor="middle" fill="rgba(7,5,3,.72)" font-size="6.5" font-family="'Cinzel',serif" letter-spacing="0.09em" pointer-events="none">${t}</text>`;
   });
   // stage
   h+=`<rect x="215" y="468" width="270" height="26" rx="4" fill="rgba(201,168,76,.22)" stroke="rgba(201,168,76,.45)" stroke-width="1"/>`;
@@ -855,17 +889,11 @@ function buildMap(){
 function scOpen(id){
   curSec=id;
   document.getElementById('scGridTitle').textContent=SECTIONS[id].label;
-  document.getElementById('scMapView').style.display='none';
-  document.getElementById('scGridView').classList.add('active');
+  document.querySelectorAll('.sc-sec-tab').forEach(t=>t.classList.toggle('active',t.dataset.sec===id));
+  document.querySelectorAll('.sc-section-path').forEach(p=>p.classList.toggle('sc-active',p.dataset.sec===id));
   renderGrid(id);updateSecCnt(id);
-  document.querySelectorAll('.sc-section-path').forEach(p=>p.classList.remove('sc-active'));
-  const ap=document.getElementById('scp-'+id);if(ap)ap.classList.add('sc-active');
 }
-function scShowMap(){
-  document.getElementById('scMapView').style.display='block';
-  document.getElementById('scGridView').classList.remove('active');
-  curSec=null;
-}
+function scShowMap(){}
 function renderGrid(secId){
   const s=SECTIONS[secId];
   let h='';
@@ -919,7 +947,7 @@ function renderCart(){
 function scRemove(id){selSeats.delete(id);if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
 function scClearAll(){selSeats.clear();if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
 window.scOpen=scOpen;window.scShowMap=scShowMap;window.scToggle=scToggle;window.scRemove=scRemove;window.scClearAll=scClearAll;
-buildMap();renderCart();
+buildMap();scOpen('A');renderCart();
 })();
 
 /* MAGNETIC BUTTONS */
