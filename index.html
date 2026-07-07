@@ -241,6 +241,62 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
   footer{grid-template-columns:1fr 1fr;padding:56px 32px 32px;}.flb{padding:18px 32px;}
 }
 @media(max-width:640px){.tkg{grid-template-columns:1fr;}.spng{grid-template-columns:repeat(2,1fr);}.as{grid-template-columns:1fr;}.hf{padding:36px 22px 44px;}.cdu{flex:1 1 100%;}}
+/* ── SEATING CHART ── */
+.sc-sec{background:var(--bg);padding:96px 0;}
+.sc-head{text-align:center;margin-bottom:48px;}
+.sc-tier-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:40px;}
+.sc-tier-pill{display:flex;align-items:center;gap:10px;padding:10px 22px;border:1px solid var(--border);border-radius:50px;background:var(--surface);transition:border-color .2s;}
+.sc-tier-pill .sc-sh{font-size:1.1rem;}
+.sc-tier-pill .sc-tn{font-family:'Cinzel Decorative',serif;font-size:.68rem;letter-spacing:.1em;color:var(--gold);}
+.sc-tier-pill .sc-tp{font-size:.72rem;color:var(--muted);}
+.sc-tier-pill.vvip .sc-sh{color:#ffd700;}.sc-tier-pill.vip .sc-sh{color:#c9a84c;}.sc-tier-pill.gold .sc-sh{color:#b8963c;}.sc-tier-pill.gen .sc-sh{color:#8a7a5a;}
+.sc-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
+.sc-viewer{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.sc-map-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.sc-map-title{font-family:'Cinzel Decorative',serif;font-size:.78rem;letter-spacing:.1em;color:var(--gold);}
+.sc-map-hint{font-size:.72rem;color:var(--muted);}
+.sc-svg-wrap{padding:16px 20px 8px;display:flex;justify-content:center;}
+.sc-svg-wrap svg{width:100%;max-width:640px;}
+.sc-section-path{cursor:pointer;transition:opacity .18s,filter .18s;stroke:rgba(7,5,3,.7);stroke-width:2;}
+.sc-section-path:hover{opacity:.82;filter:drop-shadow(0 0 10px rgba(201,168,76,.5));}
+.sc-section-path.sc-active{filter:drop-shadow(0 0 12px rgba(201,168,76,.75));}
+.sc-grid-view{display:none;}
+.sc-grid-view.active{display:block;}
+.sc-grid-head{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.sc-back{background:none;border:1px solid var(--border);color:var(--gold);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.72rem;font-family:'Cinzel Decorative',serif;letter-spacing:.06em;transition:all .2s;}
+.sc-back:hover{background:var(--gold);color:var(--bg);}
+.sc-grid-sec-name{font-family:'Cinzel Decorative',serif;font-size:.82rem;color:var(--gold);letter-spacing:.1em;}
+.sc-stage-bar{background:linear-gradient(90deg,transparent,rgba(201,168,76,.18),transparent);border:1px solid rgba(201,168,76,.28);border-radius:6px;text-align:center;padding:7px;margin:0 20px 12px;font-family:'Cinzel Decorative',serif;font-size:.62rem;letter-spacing:.18em;color:rgba(201,168,76,.8);}
+.sc-rows{padding:0 20px 20px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:3px;}
+.sc-rows::-webkit-scrollbar{width:3px;}.sc-rows::-webkit-scrollbar-track{background:var(--bg);}.sc-rows::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+.sc-row{display:flex;align-items:center;gap:2px;flex-wrap:nowrap;}
+.sc-row-lbl{font-size:.58rem;color:var(--muted);width:24px;text-align:right;flex-shrink:0;font-family:'Cinzel',serif;}
+.sc-seat{font-size:.72rem;padding:2px;min-width:20px;min-height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:3px;transition:all .12s;user-select:none;border:1px solid transparent;line-height:1;}
+.sc-seat.vvip-s{color:#ffd700;background:rgba(255,215,0,.07);}.sc-seat.vip-s{color:#c9a84c;background:rgba(201,168,76,.07);}.sc-seat.gold-s{color:#b8963c;background:rgba(184,150,60,.07);}.sc-seat.gen-s{color:#8a7a5a;background:rgba(138,122,90,.07);}
+.sc-seat:hover{background:rgba(201,168,76,.22);border-color:var(--gold);}
+.sc-seat.sel{background:rgba(201,168,76,.38)!important;border-color:var(--gold)!important;box-shadow:0 0 5px rgba(201,168,76,.35);}
+.sc-cart{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:sticky;top:88px;}
+.sc-cart-h{padding:14px 18px;border-bottom:1px solid var(--border);font-family:'Cinzel Decorative',serif;font-size:.78rem;letter-spacing:.1em;color:var(--gold);display:flex;align-items:center;gap:8px;}
+.sc-cnt{background:rgba(201,168,76,.2);color:var(--gold);font-size:.62rem;padding:2px 7px;border-radius:10px;font-family:'Cinzel',serif;}
+.sc-cart-body{padding:14px 18px;min-height:100px;}
+.sc-cart-empty{color:var(--muted);font-size:.78rem;text-align:center;padding:20px 0;line-height:1.7;}
+.sc-cart-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.72rem;}
+.sc-ci-info{color:var(--text);}.sc-ci-tier{font-size:.62rem;color:var(--gold);margin-top:1px;}
+.sc-ci-right{display:flex;align-items:center;gap:6px;}
+.sc-ci-price{color:var(--gold);font-weight:700;}
+.sc-ci-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:0 3px;transition:color .15s;line-height:1;}
+.sc-ci-rm:hover{color:#e74c3c;}
+.sc-cart-totals{padding:14px 18px;border-top:1px solid var(--border);}
+.sc-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.sc-total-lbl{font-size:.75rem;color:var(--muted);}
+.sc-total-amt{font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold);}
+.sc-co-btn{display:block;width:100%;padding:11px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-family:'Cinzel Decorative',serif;font-size:.66rem;letter-spacing:.09em;border:none;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:7px;text-decoration:none;text-align:center;}
+.sc-co-btn:hover{background:linear-gradient(135deg,var(--gold2),var(--gold3));transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,168,76,.38);}
+.sc-clear-btn{display:block;width:100%;padding:9px;background:none;border:1px solid var(--border);color:var(--muted);font-size:.68rem;letter-spacing:.07em;border-radius:8px;cursor:pointer;transition:all .2s;font-family:'Cinzel',serif;}
+.sc-clear-btn:hover{border-color:var(--gold);color:var(--gold);}
+.sc-more{text-align:center;color:var(--muted);font-size:.68rem;padding:5px 0;}
+@media(max-width:900px){.sc-layout{grid-template-columns:1fr;}.sc-cart{position:static;}}
+@media(max-width:640px){.sc-tier-pill{padding:8px 14px;}.sc-seat{font-size:.62rem;min-width:17px;min-height:17px;}.sc-rows{max-height:280px;}}
 </style>
 </head>
 <body>
@@ -256,10 +312,11 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
   <ul class="nls">
     <li><a href="#about">About</a></li>
     <li><a href="#tickets">Tickets</a></li>
+    <li><a href="#seating">Seating</a></li>
     <li><a href="#schedule">Schedule</a></li>
     <li><a href="#sponsors">Sponsor</a></li>
   </ul>
-  <a href="#tickets" class="nt">Reserve Now</a>
+  <a href="#seating" class="nt">Select Seats</a>
 </nav>
 
 <!-- HERO -->
@@ -452,6 +509,63 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
   </div>
 </div>
 
+<!-- SEATING CHART -->
+<section class="sc-sec" id="seating">
+  <div class="container">
+    <div class="sc-head rv">
+      <div class="sec-label">Select Your Experience</div>
+      <h2>Interactive Seating Chart</h2>
+      <p style="color:var(--muted);max-width:540px;margin:12px auto 0;font-size:.88rem;line-height:1.7;">Click any section to explore individual seats. Select seats and proceed directly to checkout.</p>
+    </div>
+    <div class="sc-tier-bar">
+      <div class="sc-tier-pill vvip"><span class="sc-sh">★</span><div><div class="sc-tn">VVIP</div><div class="sc-tp">Rows 1–2 · $500/seat</div></div></div>
+      <div class="sc-tier-pill vip"><span class="sc-sh">●</span><div><div class="sc-tn">VIP</div><div class="sc-tp">Rows 3–5 · $250/seat</div></div></div>
+      <div class="sc-tier-pill gold"><span class="sc-sh">▲</span><div><div class="sc-tn">Gold</div><div class="sc-tp">Rows 6–10 · $150/seat</div></div></div>
+      <div class="sc-tier-pill gen"><span class="sc-sh">■</span><div><div class="sc-tn">General</div><div class="sc-tp">Rows 11–15 · $100/seat</div></div></div>
+    </div>
+    <div class="sc-layout">
+      <div class="sc-viewer" id="scViewer">
+        <!-- MAP VIEW -->
+        <div id="scMapView">
+          <div class="sc-map-head">
+            <span class="sc-map-title">Venue Overview</span>
+            <span class="sc-map-hint">Click a section to select seats</span>
+          </div>
+          <div class="sc-svg-wrap">
+            <svg id="scVenueSvg" viewBox="0 0 700 510" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+        </div>
+        <!-- GRID VIEW -->
+        <div id="scGridView" class="sc-grid-view">
+          <div class="sc-grid-head">
+            <button class="sc-back" onclick="scShowMap()">← Venue Map</button>
+            <span class="sc-grid-sec-name" id="scGridTitle">Section A</span>
+            <span class="sc-cnt" id="scSecCnt">0 selected</span>
+          </div>
+          <div class="sc-stage-bar">▶&nbsp;&nbsp;STAGE&nbsp;&nbsp;◀</div>
+          <div class="sc-rows" id="scRowsDiv"></div>
+        </div>
+      </div>
+      <!-- CART -->
+      <div class="sc-cart">
+        <div class="sc-cart-h">Your Seats <span class="sc-cnt" id="scTotalBadge">0</span></div>
+        <div class="sc-cart-body" id="scCartBody">
+          <div class="sc-cart-empty" id="scCartEmpty">No seats selected.<br>Click a section on the map to begin.</div>
+          <div id="scCartItems"></div>
+        </div>
+        <div class="sc-cart-totals" id="scCartTotals" style="display:none">
+          <div class="sc-total-row">
+            <span class="sc-total-lbl">Total</span>
+            <span class="sc-total-amt" id="scTotalAmt">$0</span>
+          </div>
+          <div id="scCoButtons"></div>
+          <button class="sc-clear-btn" onclick="scClearAll()">Clear All Seats</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- SCHEDULE -->
 <section class="sched" id="schedule">
   <div class="sci">
@@ -516,6 +630,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
     <ul class="fll">
       <li><a href="#about">About</a></li>
       <li><a href="#tickets">Tickets</a></li>
+      <li><a href="#seating">Seating Chart</a></li>
       <li><a href="#schedule">Schedule</a></li>
       <li><a href="#sponsors">Sponsors</a></li>
     </ul>
@@ -641,6 +756,124 @@ const cobs=new IntersectionObserver(es=>es.forEach(e=>{
   cobs.unobserve(e.target)
 }),{threshold:.5})
 document.querySelectorAll('.acnt').forEach(el=>cobs.observe(el))
+
+/* ── SEATING CHART ── */
+;(function(){
+const TIERS=[
+  {name:'VVIP',rows:[1,2],price:500,shape:'★',cls:'vvip-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU'},
+  {name:'VIP',rows:[3,4,5],price:250,shape:'●',cls:'vip-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD'},
+  {name:'Gold',rows:[6,7,8,9,10],price:150,shape:'▲',cls:'gold-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG'},
+  {name:'General',rows:[11,12,13,14,15],price:100,shape:'■',cls:'gen-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'}
+];
+const SECTIONS={
+  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:[7,7,11,11,11,14,14,14,14,14,14,14,14,14,14]},
+  B:{label:'Section B',fill:'rgba(184,150,60,.68)',seats:[8,8,10,10,10,12,12,12,12,12,12,12,12,12,12]},
+  C:{label:'Section C',fill:'rgba(168,134,44,.68)',seats:[8,8,10,10,10,11,11,11,11,11,11,11,11,11,11]},
+  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12]}
+};
+const LINKS={VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',Gold:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',General:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'};
+let selSeats=new Map();
+let curSec=null;
+function getTier(r){return TIERS.find(t=>t.rows.includes(r));}
+function pt(cx,cy,r,deg){const a=deg*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy-r*Math.sin(a)};}
+function arc(cx,cy,r1,r2,a1,a2){
+  const is=pt(cx,cy,r1,a1),ie=pt(cx,cy,r1,a2),os=pt(cx,cy,r2,a1),oe=pt(cx,cy,r2,a2);
+  const f=n=>n.toFixed(1);
+  return `M${f(is.x)} ${f(is.y)} A${r1} ${r1} 0 0 0 ${f(ie.x)} ${f(ie.y)} L${f(oe.x)} ${f(oe.y)} A${r2} ${r2} 0 0 1 ${f(os.x)} ${f(os.y)} Z`;
+}
+function buildMap(){
+  const svg=document.getElementById('scVenueSvg');
+  if(!svg)return;
+  const cx=350,cy=500,r1=95,r2=365;
+  const angs={A:[22,57],B:[57,92],C:[92,127],D:[127,158]};
+  const tierBands=[{r1:95,r2:142,fill:'rgba(255,215,0,.1)'},{r1:142,r2:200,fill:'rgba(201,168,76,.08)'},{r1:200,r2:282,fill:'rgba(184,150,60,.07)'},{r1:282,r2:365,fill:'rgba(138,122,90,.06)'}];
+  let h='';
+  // outer border arc
+  h+=`<path d="${arc(cx,cy,r1,r2,22,158)}" fill="rgba(201,168,76,.04)" stroke="rgba(201,168,76,.15)" stroke-width="1"/>`;
+  // tier bands
+  tierBands.forEach(t=>{h+=`<path d="${arc(cx,cy,t.r1,t.r2,22,158)}" fill="${t.fill}" stroke="none"/>`;});
+  // dividers
+  [57,92,127].forEach(deg=>{const p1=pt(cx,cy,r1,deg),p2=pt(cx,cy,r2,deg);h+=`<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="rgba(7,5,3,.65)" stroke-width="2"/>`;});
+  // section fills + labels
+  Object.entries(angs).forEach(([id,[a1,a2]])=>{
+    const s=SECTIONS[id],mid=(a1+a2)/2,lp=pt(cx,cy,(r1+r2)/2,mid);
+    h+=`<path id="scp-${id}" class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${s.fill}" data-sec="${id}" onclick="scOpen('${id}')"/>`;
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+5).toFixed(1)}" text-anchor="middle" fill="rgba(7,5,3,.92)" font-size="15" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${id}</text>`;
+  });
+  // tier labels
+  [{r:118,t:'VVIP',c:'rgba(255,215,0,.85)'},{r:171,t:'VIP',c:'rgba(201,168,76,.8)'},{r:241,t:'Gold',c:'rgba(184,150,60,.75)'},{r:323,t:'General',c:'rgba(138,122,90,.75)'}].forEach(({r,t,c})=>{
+    const p=pt(cx,cy,r,90);
+    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+3).toFixed(1)}" text-anchor="middle" fill="${c}" font-size="8" font-family="'Cinzel',serif" letter-spacing="0.12em" pointer-events="none">${t}</text>`;
+  });
+  // stage
+  h+=`<rect x="215" y="468" width="270" height="26" rx="4" fill="rgba(201,168,76,.22)" stroke="rgba(201,168,76,.45)" stroke-width="1"/>`;
+  h+=`<text x="350" y="486" text-anchor="middle" fill="rgba(201,168,76,.9)" font-size="9" font-family="'Cinzel Decorative',serif" letter-spacing="0.15em" pointer-events="none">STAGE</text>`;
+  svg.innerHTML=h;
+}
+function scOpen(id){
+  curSec=id;
+  document.getElementById('scGridTitle').textContent=SECTIONS[id].label;
+  document.getElementById('scMapView').style.display='none';
+  document.getElementById('scGridView').classList.add('active');
+  renderGrid(id);updateSecCnt(id);
+  document.querySelectorAll('.sc-section-path').forEach(p=>p.classList.remove('sc-active'));
+  const ap=document.getElementById('scp-'+id);if(ap)ap.classList.add('sc-active');
+}
+function scShowMap(){
+  document.getElementById('scMapView').style.display='block';
+  document.getElementById('scGridView').classList.remove('active');
+  curSec=null;
+}
+function renderGrid(secId){
+  const s=SECTIONS[secId];
+  let h='';
+  s.seats.forEach((cnt,idx)=>{
+    const row=idx+1,tier=getTier(row);
+    h+=`<div class="sc-row"><div class="sc-row-lbl">R${row}</div>`;
+    for(let st=1;st<=cnt;st++){
+      const sid=`${secId}-${row}-${st}`,isSel=selSeats.has(sid);
+      h+=`<div class="sc-seat ${tier.cls}${isSel?' sel':''}" data-id="${sid}" data-tier="${tier.name}" data-price="${tier.price}" onclick="scToggle(this)">${tier.shape}</div>`;
+    }
+    h+='</div>';
+  });
+  document.getElementById('scRowsDiv').innerHTML=h;
+}
+function scToggle(el){
+  const id=el.dataset.id;
+  if(selSeats.has(id)){selSeats.delete(id);el.classList.remove('sel');}
+  else{const p=id.split('-');selSeats.set(id,{sec:p[0],row:+p[1],seat:+p[2],tier:el.dataset.tier,price:+el.dataset.price});el.classList.add('sel');}
+  if(curSec)updateSecCnt(curSec);renderCart();
+}
+function updateSecCnt(sid){
+  const n=[...selSeats.keys()].filter(k=>k.startsWith(sid+'-')).length;
+  const el=document.getElementById('scSecCnt');if(el)el.textContent=n+' selected';
+}
+function renderCart(){
+  const total=[...selSeats.values()].reduce((a,s)=>a+s.price,0),cnt=selSeats.size;
+  const badge=document.getElementById('scTotalBadge');if(badge)badge.textContent=cnt;
+  const empty=document.getElementById('scCartEmpty'),items=document.getElementById('scCartItems'),totals=document.getElementById('scCartTotals');
+  if(!empty||!items||!totals)return;
+  if(!cnt){empty.style.display='block';items.innerHTML='';totals.style.display='none';return;}
+  empty.style.display='none';totals.style.display='block';
+  const amt=document.getElementById('scTotalAmt');if(amt)amt.textContent='$'+total.toLocaleString();
+  const all=[...selSeats.entries()];
+  let ih='';
+  all.slice(0,9).forEach(([k,v])=>{ih+=`<div class="sc-cart-item"><div><div class="sc-ci-info">§${v.sec} · Row ${v.row} · Seat ${v.seat}</div><div class="sc-ci-tier">${v.tier}</div></div><div class="sc-ci-right"><span class="sc-ci-price">$${v.price}</span><button class="sc-ci-rm" onclick="scRemove('${k}')">×</button></div></div>`;});
+  if(all.length>9)ih+=`<div class="sc-more">+${all.length-9} more seats selected</div>`;
+  items.innerHTML=ih;
+  const byT={};
+  selSeats.forEach(v=>{if(!byT[v.tier])byT[v.tier]={cnt:0,tot:0};byT[v.tier].cnt++;byT[v.tier].tot+=v.price;});
+  let ch='';
+  ['VVIP','VIP','Gold','General'].forEach(t=>{
+    if(byT[t])ch+=`<a class="sc-co-btn" href="${LINKS[t]}" target="_blank" rel="noopener">${t} · ${byT[t].cnt} seat${byT[t].cnt>1?'s':''} · $${byT[t].tot}</a>`;
+  });
+  const cob=document.getElementById('scCoButtons');if(cob)cob.innerHTML=ch;
+}
+function scRemove(id){selSeats.delete(id);if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
+function scClearAll(){selSeats.clear();if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
+window.scOpen=scOpen;window.scShowMap=scShowMap;window.scToggle=scToggle;window.scRemove=scRemove;window.scClearAll=scClearAll;
+buildMap();renderCart();
+})();
 
 /* MAGNETIC BUTTONS */
 document.querySelectorAll('.bp').forEach(btn=>{
