@@ -244,12 +244,16 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 /* ── SEATING CHART ── */
 .sc-sec{background:var(--bg);padding:96px 0;}
 .sc-head{text-align:center;margin-bottom:48px;}
-.sc-tier-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:40px;}
-.sc-tier-pill{display:flex;align-items:center;gap:10px;padding:10px 22px;border:1px solid var(--border);border-radius:50px;background:var(--surface);transition:border-color .2s;}
-.sc-tier-pill .sc-sh{font-size:1.1rem;}
-.sc-tier-pill .sc-tn{font-family:'Cinzel Decorative',serif;font-size:.68rem;letter-spacing:.1em;color:var(--gold);}
-.sc-tier-pill .sc-tp{font-size:.72rem;color:var(--muted);}
-.sc-tier-pill.vvip .sc-sh{color:#ffd700;}.sc-tier-pill.vip .sc-sh{color:#c9a84c;}.sc-tier-pill.gold .sc-sh{color:#b8963c;}.sc-tier-pill.gen .sc-sh{color:#8a7a5a;}
+.sc-tier-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px;max-width:860px;margin-left:auto;margin-right:auto;}
+.sc-tier-pill{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 14px;border:1px solid var(--border);border-radius:16px;background:var(--surface);transition:border-color .25s,transform .25s,box-shadow .25s;text-align:center;cursor:default;}
+.sc-tier-pill:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 28px rgba(201,168,76,.18);}
+.sc-tier-pill .sc-sh{font-size:2.2rem;line-height:1;display:block;filter:drop-shadow(0 2px 6px currentColor);}
+.sc-tier-pill .sc-tn{font-family:'Cinzel Decorative',serif;font-size:.7rem;letter-spacing:.12em;color:var(--gold);margin-top:2px;}
+.sc-tier-pill .sc-tp{font-size:.68rem;color:var(--muted);line-height:1.6;}
+.sc-tier-pill.vvip{border-color:rgba(255,215,0,.25);background:rgba(255,215,0,.04);}.sc-tier-pill.vvip .sc-sh{color:#ffd700;}
+.sc-tier-pill.vip{border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.04);}.sc-tier-pill.vip .sc-sh{color:#c9a84c;}
+.sc-tier-pill.gold{border-color:rgba(184,150,60,.18);background:rgba(184,150,60,.03);}.sc-tier-pill.gold .sc-sh{color:#b8963c;}
+.sc-tier-pill.gen{border-color:rgba(138,122,90,.15);}.sc-tier-pill.gen .sc-sh{color:#8a7a5a;}
 .sc-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
 .sc-viewer{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 .sc-map-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
@@ -295,8 +299,12 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-clear-btn{display:block;width:100%;padding:9px;background:none;border:1px solid var(--border);color:var(--muted);font-size:.68rem;letter-spacing:.07em;border-radius:8px;cursor:pointer;transition:all .2s;font-family:'Cinzel',serif;}
 .sc-clear-btn:hover{border-color:var(--gold);color:var(--gold);}
 .sc-more{text-align:center;color:var(--muted);font-size:.68rem;padding:5px 0;}
+.sc-tier-divider{display:flex;align-items:center;gap:10px;padding:8px 0 4px;margin-top:4px;}
+.sc-tier-divider span{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--gold);white-space:nowrap;}
+.sc-tier-divider::before,.sc-tier-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);}
 @media(max-width:900px){.sc-layout{grid-template-columns:1fr;}.sc-cart{position:static;}}
-@media(max-width:640px){.sc-tier-pill{padding:8px 14px;}.sc-seat{font-size:.62rem;min-width:17px;min-height:17px;}.sc-rows{max-height:280px;}}
+@media(max-width:760px){.sc-tier-bar{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.sc-seat{font-size:.62rem;min-width:17px;min-height:17px;}.sc-rows{max-height:280px;}}
 </style>
 </head>
 <body>
@@ -518,10 +526,26 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
       <p style="color:var(--muted);max-width:540px;margin:12px auto 0;font-size:.88rem;line-height:1.7;">Click any section to explore individual seats. Select seats and proceed directly to checkout.</p>
     </div>
     <div class="sc-tier-bar">
-      <div class="sc-tier-pill vvip"><span class="sc-sh">★</span><div><div class="sc-tn">VVIP</div><div class="sc-tp">Rows 1–2 · $500/seat</div></div></div>
-      <div class="sc-tier-pill vip"><span class="sc-sh">●</span><div><div class="sc-tn">VIP</div><div class="sc-tp">Rows 3–5 · $250/seat</div></div></div>
-      <div class="sc-tier-pill gold"><span class="sc-sh">▲</span><div><div class="sc-tn">Gold</div><div class="sc-tp">Rows 6–10 · $150/seat</div></div></div>
-      <div class="sc-tier-pill gen"><span class="sc-sh">■</span><div><div class="sc-tn">General</div><div class="sc-tp">Rows 11–15 · $100/seat</div></div></div>
+      <div class="sc-tier-pill vvip">
+        <span class="sc-sh">★</span>
+        <div class="sc-tn">VVIP</div>
+        <div class="sc-tp">$500 / seat<br>Rows 1–2</div>
+      </div>
+      <div class="sc-tier-pill vip">
+        <span class="sc-sh">●</span>
+        <div class="sc-tn">VIP</div>
+        <div class="sc-tp">$250 / seat<br>Rows 3–5</div>
+      </div>
+      <div class="sc-tier-pill gold">
+        <span class="sc-sh">▲</span>
+        <div class="sc-tn">Gold</div>
+        <div class="sc-tp">$150 / seat<br>Rows 6–10</div>
+      </div>
+      <div class="sc-tier-pill gen">
+        <span class="sc-sh">■</span>
+        <div class="sc-tn">General</div>
+        <div class="sc-tp">$100 / seat<br>Rows 11–15</div>
+      </div>
     </div>
     <div class="sc-layout">
       <div class="sc-viewer" id="scViewer">
@@ -794,16 +818,34 @@ function buildMap(){
   tierBands.forEach(t=>{h+=`<path d="${arc(cx,cy,t.r1,t.r2,22,158)}" fill="${t.fill}" stroke="none"/>`;});
   // dividers
   [57,92,127].forEach(deg=>{const p1=pt(cx,cy,r1,deg),p2=pt(cx,cy,r2,deg);h+=`<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="rgba(7,5,3,.65)" stroke-width="2"/>`;});
+  // tier boundary arcs (subtle divider lines between tier rings)
+  [142,200,282].forEach(br=>{
+    const bp1=pt(cx,cy,br,22),bp2=pt(cx,cy,br,158);
+    const f=n=>n.toFixed(1);
+    h+=`<path d="M${f(bp1.x)} ${f(bp1.y)} A${br} ${br} 0 0 0 ${f(bp2.x)} ${f(bp2.y)}" fill="none" stroke="rgba(201,168,76,.18)" stroke-width="1" stroke-dasharray="3,4"/>`;
+  });
   // section fills + labels
   Object.entries(angs).forEach(([id,[a1,a2]])=>{
-    const s=SECTIONS[id],mid=(a1+a2)/2,lp=pt(cx,cy,(r1+r2)/2,mid);
+    const s=SECTIONS[id],mid=(a1+a2)/2;
+    const lp=pt(cx,cy,(r1+r2)/2,mid);
     h+=`<path id="scp-${id}" class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${s.fill}" data-sec="${id}" onclick="scOpen('${id}')"/>`;
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+5).toFixed(1)}" text-anchor="middle" fill="rgba(7,5,3,.92)" font-size="15" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${id}</text>`;
+    // section letter with dark circle bg
+    h+=`<circle cx="${lp.x.toFixed(1)}" cy="${lp.y.toFixed(1)}" r="17" fill="rgba(7,5,3,.55)" stroke="rgba(255,215,0,.35)" stroke-width="1" pointer-events="none"/>`;
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="rgba(255,215,0,.97)" font-size="16" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${id}</text>`;
   });
-  // tier labels
-  [{r:118,t:'VVIP',c:'rgba(255,215,0,.85)'},{r:171,t:'VIP',c:'rgba(201,168,76,.8)'},{r:241,t:'Gold',c:'rgba(184,150,60,.75)'},{r:323,t:'General',c:'rgba(138,122,90,.75)'}].forEach(({r,t,c})=>{
-    const p=pt(cx,cy,r,90);
-    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+3).toFixed(1)}" text-anchor="middle" fill="${c}" font-size="8" font-family="'Cinzel',serif" letter-spacing="0.12em" pointer-events="none">${t}</text>`;
+  // tier symbols scattered across all 4 sections × 4 tiers
+  const symDefs=[
+    {r:118,sym:'★',col:'rgba(255,215,0,.72)',sz:11},
+    {r:171,sym:'●',col:'rgba(201,168,76,.65)',sz:10},
+    {r:241,sym:'▲',col:'rgba(184,150,60,.60)',sz:10},
+    {r:323,sym:'■',col:'rgba(138,122,90,.55)',sz:9}
+  ];
+  const secMids={A:39.5,B:74.5,C:109.5,D:142.5};
+  Object.values(secMids).forEach(midAng=>{
+    symDefs.forEach(({r,sym,col,sz})=>{
+      const p=pt(cx,cy,r,midAng);
+      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.38).toFixed(1)}" text-anchor="middle" fill="${col}" font-size="${sz}" pointer-events="none" style="font-family:inherit">${sym}</text>`;
+    });
   });
   // stage
   h+=`<rect x="215" y="468" width="270" height="26" rx="4" fill="rgba(201,168,76,.22)" stroke="rgba(201,168,76,.45)" stroke-width="1"/>`;
@@ -827,8 +869,13 @@ function scShowMap(){
 function renderGrid(secId){
   const s=SECTIONS[secId];
   let h='';
+  let lastTierName='';
   s.seats.forEach((cnt,idx)=>{
     const row=idx+1,tier=getTier(row);
+    if(tier.name!==lastTierName){
+      h+=`<div class="sc-tier-divider"><span>${tier.shape} ${tier.name} · $${tier.price}/seat · Rows ${tier.rows[0]}–${tier.rows[tier.rows.length-1]}</span></div>`;
+      lastTierName=tier.name;
+    }
     h+=`<div class="sc-row"><div class="sc-row-lbl">R${row}</div>`;
     for(let st=1;st<=cnt;st++){
       const sid=`${secId}-${row}-${st}`,isSel=selSeats.has(sid);
