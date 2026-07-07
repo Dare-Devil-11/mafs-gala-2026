@@ -242,7 +242,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 }
 @media(max-width:640px){.tkg{grid-template-columns:1fr;}.spng{grid-template-columns:repeat(2,1fr);}.as{grid-template-columns:1fr;}.hf{padding:36px 22px 44px;}.cdu{flex:1 1 100%;}}
 /* ── SEATING CHART ── */
-.sc-sec{background:var(--bg);padding:96px 0;}
+.sc-sec{background:#FAF6EE;padding:96px 0;--surface:#fff;--border:rgba(26,21,16,.14);--muted:rgba(26,21,16,.44);--text:#1a1510;--radius:12px;}
 .sc-head{text-align:center;margin-bottom:48px;}
 .sc-tier-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px;max-width:860px;margin-left:auto;margin-right:auto;}
 .sc-tier-pill{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 14px;border:1px solid var(--border);border-radius:16px;background:var(--surface);transition:border-color .25s,transform .25s,box-shadow .25s;text-align:center;cursor:default;}
@@ -254,8 +254,8 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-tier-pill.vip{border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.04);}.sc-tier-pill.vip .sc-sh{color:#c9a84c;}
 .sc-tier-pill.gold{border-color:rgba(184,150,60,.18);background:rgba(184,150,60,.03);}.sc-tier-pill.gold .sc-sh{color:#b8963c;}
 .sc-tier-pill.gen{border-color:rgba(138,122,90,.15);}.sc-tier-pill.gen .sc-sh{color:#8a7a5a;}
-.sc-layout{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;}
-.sc-viewer{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.sc-layout{display:flex;flex-direction:column;gap:20px;}
+.sc-viewer{background:#fff;border:1px solid rgba(26,21,16,.14);border-radius:12px;overflow:hidden;}
 .sc-map-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .sc-map-title{font-family:'Cinzel Decorative',serif;font-size:.78rem;letter-spacing:.1em;color:var(--gold);}
 .sc-map-hint{font-size:.72rem;color:var(--muted);}
@@ -303,8 +303,8 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-tier-divider span{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--gold);white-space:nowrap;}
 .sc-tier-divider::before,.sc-tier-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);}
 /* large fan map */
-.sc-fanmap-wrap{padding:20px 16px 8px;display:flex;justify-content:center;background:rgba(7,5,3,.3);}
-.sc-fanmap-wrap svg{width:100%;max-width:520px;display:block;cursor:default;}
+.sc-fanmap-wrap{padding:32px 24px 20px;display:flex;justify-content:center;background:#EDE7DC;}
+.sc-fanmap-wrap svg{width:100%;max-width:800px;display:block;cursor:default;}
 .sc-active-bar{padding:10px 20px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;min-height:42px;}
 /* section tabs */
 .sc-sec-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
@@ -322,9 +322,88 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-active-info{flex:1;min-width:0;}
 .sc-active-sec-name{font-family:'Cinzel Decorative',serif;font-size:.88rem;color:var(--gold);letter-spacing:.1em;}
 .sc-active-sec-sub{font-size:.7rem;color:var(--muted);margin-top:4px;line-height:1.5;}
-@media(max-width:900px){.sc-layout{grid-template-columns:1fr;}.sc-cart{position:static;}}
+@media(max-width:900px){.sc-lower-row{grid-template-columns:1fr;}.sc-cart{position:static;}}
 @media(max-width:760px){.sc-tier-bar{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:640px){.sc-seat{font-size:.62rem;min-width:17px;min-height:17px;}.sc-rows{max-height:280px;}.sc-minimap-bar{flex-direction:column;align-items:flex-start;}}
+/* ── LIGHT SEATING OVERRIDES ── */
+.sc-head h2{color:#1a1510;}.sc-head p{color:rgba(26,21,16,.55);}
+.sc-head .sec-label{color:var(--emerald);}
+.sc-tier-pill{background:#fff;border-color:rgba(26,21,16,.12);}
+.sc-tier-pill .sc-tp{color:rgba(26,21,16,.5);}
+.sc-sec-tabs{border-bottom:1px solid rgba(26,21,16,.14);}
+.sc-sec-tab{color:rgba(26,21,16,.42);border-right-color:rgba(26,21,16,.12);}
+.sc-sec-tab:hover{background:rgba(201,168,76,.1);color:#1a1510;}
+.sc-sec-tab.active{background:rgba(201,168,76,.13);color:var(--gold);border-bottom:2px solid var(--gold);}
+.sc-tab-sub{color:rgba(26,21,16,.38);}
+.sc-sec-tab.active .sc-tab-sub{color:rgba(201,168,76,.65);}
+.sc-active-bar{border-bottom:1px solid rgba(26,21,16,.12);}
+.sc-active-sec-name{color:var(--gold);}
+.sc-cnt{background:rgba(201,168,76,.18);color:#7a5c1e;}
+.sc-stage-bar{background:linear-gradient(90deg,transparent,rgba(201,168,76,.14),transparent);border:1px solid rgba(201,168,76,.32);color:rgba(26,21,16,.65);margin:0 16px 12px;border-radius:6px;}
+.sc-row-lbl{color:rgba(26,21,16,.4);}
+.sc-rows::-webkit-scrollbar-track{background:#EDE7DC;}
+.sc-rows::-webkit-scrollbar-thumb{background:var(--gold);}
+.sc-seat.vvip-s{color:#8b6000;background:rgba(255,215,0,.1);}
+.sc-seat.vip-s{color:#7a5210;background:rgba(201,168,76,.1);}
+.sc-seat.gold-s{color:#5e4214;background:rgba(184,150,60,.1);}
+.sc-seat.gen-s{color:#3e3118;background:rgba(138,122,90,.1);}
+.sc-seat:hover{background:rgba(201,168,76,.28);border-color:var(--gold);}
+.sc-seat.sel{background:rgba(201,168,76,.4)!important;border-color:var(--gold)!important;}
+.sc-tier-divider span{color:#7a5c1e;}
+.sc-tier-divider::before,.sc-tier-divider::after{background:linear-gradient(90deg,transparent,rgba(26,21,16,.18),transparent);}
+.sc-cart{background:#fff;border:1px solid rgba(26,21,16,.14);border-radius:12px;}
+.sc-cart-h{border-bottom:1px solid rgba(26,21,16,.12);}
+.sc-cart-empty{color:rgba(26,21,16,.42);}
+.sc-cart-item{border-bottom-color:rgba(26,21,16,.06);}
+.sc-ci-info{color:#1a1510;}
+.sc-cart-totals{border-top:1px solid rgba(26,21,16,.12);}
+.sc-total-lbl{color:rgba(26,21,16,.42);}
+.sc-clear-btn{border-color:rgba(26,21,16,.14);color:rgba(26,21,16,.42);}
+.sc-clear-btn:hover{border-color:var(--gold);color:var(--gold);}
+.sc-co-btn{color:#fff;}
+.sc-minimap-bar{background:#EDE7DC;}
+.sc-section-path{stroke:rgba(26,21,16,.3);stroke-width:1.5;}
+.sc-section-path.sc-active{filter:brightness(1.1) drop-shadow(0 0 14px rgba(201,168,76,.65));stroke:rgba(201,168,76,.9);stroke-width:3;}
+/* kiosk: lower-row seats+cart */
+.sc-lower-row{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+.sc-seats-panel{background:#fff;border:1px solid rgba(26,21,16,.14);border-radius:12px;overflow:hidden;}
+/* ── SEAT SELECTION MODAL ── */
+.seat-modal-ov{display:none;position:fixed;inset:0;z-index:9000;background:rgba(250,246,238,.97);overflow-y:auto;}
+.seat-modal-ov .sm-wrap{max-width:1100px;margin:0 auto;padding:36px 24px 60px;}
+.seat-modal-ov .sm-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.seat-modal-ov .sm-title{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:#1a1510;letter-spacing:.04em;}
+.seat-modal-ov .sm-tier-lbl{font-family:'Josefin Sans',sans-serif;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.seat-modal-ov .sm-close{background:none;border:1px solid rgba(26,21,16,.22);color:#1a1510;padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'Josefin Sans',sans-serif;font-size:.63rem;letter-spacing:.16em;transition:all .2s;}
+.seat-modal-ov .sm-close:hover{background:rgba(26,21,16,.06);}
+.seat-modal-ov .sm-legend{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px;}
+.seat-modal-ov .sm-legend-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 10px;border:1px solid rgba(26,21,16,.12);border-radius:10px;text-align:center;background:#fff;}
+.seat-modal-ov .sm-layout{display:grid;grid-template-columns:1fr 278px;gap:16px;align-items:start;}
+.seat-modal-ov .sm-viewer{background:#fff;border:1px solid rgba(26,21,16,.14);border-radius:12px;overflow:hidden;}
+.seat-modal-ov .sm-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(26,21,16,.1);}
+.seat-modal-ov .m-tab{background:none;border:none;border-right:1px solid rgba(26,21,16,.1);padding:12px 6px;cursor:pointer;transition:background .16s;font-family:'Cinzel Decorative',serif;color:rgba(26,21,16,.4);text-align:center;}
+.seat-modal-ov .m-tab.active{background:rgba(201,168,76,.1);color:var(--gold);border-bottom:2.5px solid var(--gold);margin-bottom:-1px;}
+.seat-modal-ov .sm-map-wrap{background:#ede7dc;padding:22px 16px 12px;display:flex;justify-content:center;}
+.seat-modal-ov .sm-map-wrap svg{width:100%;max-width:620px;display:block;}
+.seat-modal-ov .sm-active-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 18px;border-bottom:1px solid rgba(26,21,16,.08);min-height:39px;}
+.seat-modal-ov .sm-grid-title{font-family:'Cinzel Decorative',serif;font-size:.8rem;color:var(--gold);}
+.seat-modal-ov .sm-cnt{background:rgba(201,168,76,.15);color:#7a5c1e;font-size:.58rem;padding:2px 8px;border-radius:10px;}
+.seat-modal-ov .sm-stage-bar{padding:7px 20px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.1),transparent);border-bottom:1px solid rgba(26,21,16,.08);text-align:center;font-family:'Cinzel Decorative',serif;font-size:.52rem;letter-spacing:.2em;color:rgba(26,21,16,.45);}
+.seat-modal-ov .sm-rows{padding:0 14px 16px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:1px;}
+.seat-modal-ov .sm-cart{background:#fff;border:1px solid rgba(26,21,16,.14);border-radius:12px;overflow:hidden;position:sticky;top:20px;}
+.seat-modal-ov .sm-cart-hdr{padding:13px 16px;border-bottom:1px solid rgba(26,21,16,.1);font-family:'Cinzel Decorative',serif;font-size:.7rem;color:var(--gold);display:flex;align-items:center;gap:8px;}
+.seat-modal-ov .sm-cart-badge{background:rgba(201,168,76,.18);color:#7a5c1e;font-size:.58rem;padding:2px 7px;border-radius:10px;}
+.seat-modal-ov .sm-cart-body{padding:13px 16px;min-height:78px;}
+.seat-modal-ov .sm-cart-empty{color:rgba(26,21,16,.4);font-size:.73rem;text-align:center;padding:18px 0;line-height:1.85;}
+.seat-modal-ov .sm-cart-totals{padding:13px 16px;border-top:1px solid rgba(26,21,16,.1);}
+.seat-modal-ov .sm-co-btn{display:block;padding:10px;background:linear-gradient(135deg,var(--gold),#a07820);color:#fff;font-family:'Cinzel Decorative',serif;font-size:.62rem;letter-spacing:.07em;border-radius:8px;text-decoration:none;text-align:center;margin-bottom:7px;transition:opacity .2s;}
+.seat-modal-ov .sm-co-btn:hover{opacity:.87;}
+.seat-modal-ov .sm-email-btn{display:block;padding:8px;border:1px solid rgba(26,21,16,.16);color:rgba(26,21,16,.52);font-family:'Josefin Sans',sans-serif;font-size:.58rem;letter-spacing:.13em;border-radius:8px;text-decoration:none;text-align:center;margin-bottom:7px;transition:all .2s;}
+.seat-modal-ov .sm-email-btn:hover{background:rgba(26,21,16,.04);}
+@media(max-width:768px){
+  .seat-modal-ov .sm-layout{grid-template-columns:1fr;}
+  .seat-modal-ov .sm-cart{position:static;}
+  .seat-modal-ov .sm-legend{grid-template-columns:repeat(2,1fr);}
+}
 </style>
 </head>
 <body>
@@ -465,7 +544,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <li>Program booklet</li>
           <li>General seating</li>
         </ul>
-        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+        <button class="tbtn" onclick="openSeatModal('General')">Reserve Seat</button>
       </div>
 
       <div class="tc rv d2">
@@ -482,7 +561,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <li>Cocktail hour access</li>
           <li>Recognition in program</li>
         </ul>
-        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+        <button class="tbtn" onclick="openSeatModal('Gold')">Reserve Seat</button>
       </div>
 
       <div class="tc rv d3">
@@ -500,7 +579,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <li>Meet &amp; greet with speakers</li>
           <li>Gift bag</li>
         </ul>
-        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+        <button class="tbtn" onclick="openSeatModal('VIP')">Reserve Seat</button>
       </div>
 
       <div class="tc ft rv d4">
@@ -520,7 +599,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <li>Full-page program ad</li>
           <li>Year-round recognition</li>
         </ul>
-        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+        <button class="tbtn" onclick="openSeatModal('VVIP')">Reserve Seat</button>
       </div>
 
     </div>
@@ -597,11 +676,14 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <span class="sc-active-sec-name" id="scGridTitle">Select a section above or click the map</span>
           <span class="sc-cnt" id="scSecCnt"></span>
         </div>
-        <!-- SEAT GRID -->
-        <div class="sc-stage-bar">▶&nbsp;&nbsp;STAGE&nbsp;&nbsp;◀</div>
-        <div class="sc-rows" id="scRowsDiv"></div>
       </div>
-      <!-- CART -->
+      <!-- LOWER ROW: Seat Grid + Cart -->
+      <div class="sc-lower-row">
+        <div class="sc-seats-panel">
+          <div class="sc-stage-bar">▶&nbsp;&nbsp;STAGE&nbsp;&nbsp;◀</div>
+          <div class="sc-rows" id="scRowsDiv"></div>
+        </div>
+        <!-- CART -->
       <div class="sc-cart">
         <div class="sc-cart-h">Your Seats <span class="sc-cnt" id="scTotalBadge">0</span></div>
         <div class="sc-cart-body" id="scCartBody">
@@ -617,6 +699,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <button class="sc-clear-btn" onclick="scClearAll()">Clear All Seats</button>
         </div>
       </div>
+      </div><!-- end sc-lower-row -->
     </div>
   </div>
 </section>
@@ -858,13 +941,18 @@ function buildMap(){
       h+=`<path class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${secId}" onclick="scOpen('${secId}')" />`;
       h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
     });
-    // section letter label outside the fan
-    const lp=pt(cx,cy,378,midA);
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+5).toFixed(1)}" text-anchor="middle" fill="rgba(255,220,80,.95)" font-size="13" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${secId}</text>`;
+    // section letter label outside the fan — dark on light bg
+    const lp=pt(cx,cy,382,midA);
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="#5a3e14" font-size="17" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${secId}</text>`;
   });
-  // stage bar
-  h+=`<rect x="215" y="468" width="270" height="26" rx="4" fill="rgba(201,168,76,.2)" stroke="rgba(201,168,76,.4)" stroke-width="1"/>`;
-  h+=`<text x="350" y="486" text-anchor="middle" fill="rgba(201,168,76,.9)" font-size="9" font-family="'Cinzel Decorative',serif" letter-spacing="0.15em" pointer-events="none">STAGE</text>`;
+  // stage — large, prominent kiosk display
+  h+=`<defs><linearGradient id="stgG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
+  h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#stgG)" stroke="#C9A84C" stroke-width="1.8"/>`;
+  h+=`<text x="350" y="480" text-anchor="middle" fill="#7a5218" font-size="14" font-weight="700" font-family="'Cinzel Decorative',serif" letter-spacing="0.22em" pointer-events="none">STAGE</text>`;
+  // spotlight lines from stage to fan
+  ['195','268','350','432','505'].forEach(x=>{
+    h+=`<line x1="${x}" y1="455" x2="${x}" y2="410" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.25"/>`;
+  });
   svg.innerHTML=h;
 }
 function scOpen(id){
@@ -928,6 +1016,146 @@ function renderCart(){
 function scRemove(id){selSeats.delete(id);if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
 function scClearAll(){selSeats.clear();if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
 window.scOpen=scOpen;window.scShowMap=scShowMap;window.scToggle=scToggle;window.scRemove=scRemove;window.scClearAll=scClearAll;
+
+/* ── SEAT SELECTION MODAL ── */
+let mCurSec=null,mSelSeats=new Map();
+function mPt(cx,cy,r,deg){const a=deg*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy-r*Math.sin(a)};}
+function mArc(cx,cy,r1,r2,a1,a2){
+  const is=mPt(cx,cy,r1,a1),ie=mPt(cx,cy,r1,a2),os=mPt(cx,cy,r2,a1),oe=mPt(cx,cy,r2,a2);
+  const f=n=>n.toFixed(1);
+  return `M${f(is.x)} ${f(is.y)} A${r1} ${r1} 0 0 0 ${f(ie.x)} ${f(ie.y)} L${f(oe.x)} ${f(oe.y)} A${r2} ${r2} 0 0 1 ${f(os.x)} ${f(os.y)} Z`;
+}
+function mBuildMap(){
+  const svg=document.getElementById('mVenueSvg');if(!svg)return;
+  const cx=350,cy=500,G=3,RG=5;
+  const secAngs={A:[22+G/2,57-G/2],B:[57+G/2,92-G/2],C:[92+G/2,127-G/2],D:[127+G/2,158-G/2]};
+  const tierSegs=[
+    {r1:95,r2:142-RG,sym:'★',sz:13,fill:'rgba(201,168,76,.96)',symCol:'rgba(7,5,3,.88)'},
+    {r1:142+RG,r2:200-RG,sym:'●',sz:12,fill:'rgba(168,130,45,.9)',symCol:'rgba(7,5,3,.82)'},
+    {r1:200+RG,r2:282-RG,sym:'▲',sz:11,fill:'rgba(120,90,28,.86)',symCol:'rgba(255,210,80,.9)'},
+    {r1:282+RG,r2:365,sym:'■',sz:10,fill:'rgba(70,50,14,.82)',symCol:'rgba(201,168,76,.9)'}
+  ];
+  let h='';
+  Object.entries(secAngs).forEach(([sid,[a1,a2]])=>{
+    const midA=(a1+a2)/2;
+    tierSegs.forEach(({r1,r2,sym,sz,fill,symCol})=>{
+      const midR=(r1+r2)/2,p=mPt(cx,cy,midR,midA);
+      h+=`<path class="m-sec-path" d="${mArc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${sid}" onclick="mOpenSec('${sid}')" style="cursor:pointer;stroke:rgba(26,21,16,.25);stroke-width:1.5;transition:filter .16s"/>`;
+      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
+    });
+    const lp=mPt(cx,cy,382,midA);
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="#5a3e14" font-size="17" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${sid}</text>`;
+  });
+  h+=`<defs><linearGradient id="mStgG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
+  h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#mStgG)" stroke="#C9A84C" stroke-width="1.8"/>`;
+  h+=`<text x="350" y="480" text-anchor="middle" fill="#7a5218" font-size="14" font-weight="700" font-family="'Cinzel Decorative',serif" letter-spacing="0.22em" pointer-events="none">STAGE</text>`;
+  ['195','268','350','432','505'].forEach(x=>{h+=`<line x1="${x}" y1="455" x2="${x}" y2="410" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.25"/>`;});
+  svg.innerHTML=h;
+}
+function mOpenSec(id){
+  mCurSec=id;
+  const gt=document.getElementById('mGridTitle');if(gt)gt.textContent=SECTIONS[id].label;
+  document.querySelectorAll('.m-sec-path').forEach(p=>{
+    const on=p.dataset.sec===id;
+    p.style.filter=on?'brightness(1.12) drop-shadow(0 0 8px rgba(201,168,76,.55))':'none';
+    p.style.strokeWidth=on?'3':'1.5';
+    p.style.stroke=on?'rgba(201,168,76,.85)':'rgba(26,21,16,.25)';
+  });
+  document.querySelectorAll('.m-tab').forEach(t=>t.classList.toggle('active',t.dataset.sec===id));
+  mRenderGrid(id);mUpdateCnt(id);
+}
+function mGetTier(r){return TIERS.find(t=>t.rows.includes(r));}
+function mRenderGrid(secId){
+  const s=SECTIONS[secId];let h='',last='';
+  s.seats.forEach((cnt,idx)=>{
+    const row=idx+1,tier=mGetTier(row);
+    if(tier.name!==last){
+      h+=`<div style="padding:7px 0 3px;font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.1em;color:#7a5c1e;border-top:1px solid rgba(26,21,16,.07);margin-top:4px;">${tier.shape} ${tier.name} · $${tier.price}/seat · Rows ${tier.rows[0]}–${tier.rows[tier.rows.length-1]}</div>`;
+      last=tier.name;
+    }
+    h+=`<div style="display:flex;align-items:center;gap:2px;flex-wrap:nowrap;margin-bottom:1px;"><div style="font-size:.54rem;color:rgba(26,21,16,.35);width:21px;text-align:right;flex-shrink:0;font-family:'Cinzel',serif;">R${row}</div>`;
+    for(let st=1;st<=cnt;st++){
+      const sid=`m-${secId}-${row}-${st}`,isSel=mSelSeats.has(sid);
+      h+=`<div onclick="mToggleSeat(this)" data-id="${sid}" data-tier="${tier.name}" data-price="${tier.price}" style="font-size:.67rem;padding:2px;min-width:18px;min-height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:3px;transition:all .1s;user-select:none;border:1px solid ${isSel?'var(--gold)':'transparent'};background:${isSel?'rgba(201,168,76,.38)':'rgba(201,168,76,.1)'};color:#7a5218;">${tier.shape}</div>`;
+    }
+    h+='</div>';
+  });
+  document.getElementById('mRowsDiv').innerHTML=h;
+}
+function mUpdateCnt(sid){
+  const n=[...mSelSeats.keys()].filter(k=>k.startsWith('m-'+sid+'-')).length;
+  const el=document.getElementById('mSecCnt');if(el)el.textContent=n>0?n+' selected':'';
+}
+function mRenderCart(){
+  const items=[...mSelSeats.entries()];
+  const badge=document.getElementById('mCartBadge');if(badge)badge.textContent=items.length;
+  const emptyEl=document.getElementById('mCartEmpty'),itemsEl=document.getElementById('mCartItems'),totalsEl=document.getElementById('mCartTotals');
+  if(!emptyEl)return;
+  if(!items.length){emptyEl.style.display='block';if(itemsEl)itemsEl.innerHTML='';if(totalsEl)totalsEl.style.display='none';return;}
+  emptyEl.style.display='none';if(totalsEl)totalsEl.style.display='block';
+  let total=0,ih='';
+  items.forEach(([id,{tier,price}])=>{
+    const pts=id.split('-');const sec=pts[1],row=pts[2],seat=pts[3];
+    total+=price;
+    ih+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(26,21,16,.06);font-size:.69rem;"><div><div style="color:#1a1510;">§${sec} · R${row} · S${seat}</div><div style="font-size:.58rem;color:var(--gold);margin-top:1px;">${tier}</div></div><div style="display:flex;align-items:center;gap:5px;"><span style="color:var(--gold);font-weight:700;">$${price}</span><button onclick="mRemoveSeat('${id}')" style="background:none;border:none;color:rgba(26,21,16,.34);cursor:pointer;font-size:.9rem;padding:0 3px;">×</button></div></div>`;
+  });
+  if(itemsEl)itemsEl.innerHTML=ih;
+  const totAmt=document.getElementById('mTotalAmt');if(totAmt)totAmt.textContent='$'+total.toLocaleString();
+  const byT={};
+  items.forEach(([id,{tier,price}])=>{
+    if(!byT[tier])byT[tier]={cnt:0,tot:0,seats:[]};
+    byT[tier].cnt++;byT[tier].tot+=price;
+    const pts=id.split('-');byT[tier].seats.push('§'+pts[1]+' R'+pts[2]+' S'+pts[3]);
+  });
+  let ch='';
+  ['VVIP','VIP','Gold','General'].forEach(t=>{
+    if(!byT[t])return;
+    const seatList=byT[t].seats.join(', ');
+    const subj=encodeURIComponent('MAFS Gala 2026 – Seat Selection: '+t);
+    const body=encodeURIComponent('MAFS Gala 2026 – Seat Reservation\n\nTier: '+t+'\nSeats: '+seatList+'\nTotal: $'+byT[t].tot+'\nDate: '+new Date().toLocaleString()+'\n\nPlease confirm reservation for this guest.\n\nMAFS Annual Gala · August 29, 2026');
+    ch+=`<a class="sm-co-btn" href="${LINKS[t]}" target="_blank" rel="noopener" onclick="mLogSeats('${t}',\`${seatList}\`,${byT[t].tot})">Checkout ${t} · ${byT[t].cnt} seat${byT[t].cnt>1?'s':''} · $${byT[t].tot}</a>`;
+    ch+=`<a class="sm-email-btn" href="mailto:karana@umasinc.com?subject=${subj}&body=${body}">✉ Email Receipt — ${t}</a>`;
+  });
+  const cob=document.getElementById('mCoButtons');if(cob)cob.innerHTML=ch;
+}
+function mToggleSeat(el){
+  const id=el.dataset.id;
+  if(mSelSeats.has(id)){mSelSeats.delete(id);}else{mSelSeats.set(id,{tier:el.dataset.tier,price:+el.dataset.price});}
+  const parts=id.split('-');mRenderGrid(parts[1]);mUpdateCnt(parts[1]);mRenderCart();
+}
+function mRemoveSeat(id){
+  mSelSeats.delete(id);const parts=id.split('-');
+  if(mCurSec===parts[1])mRenderGrid(parts[1]);
+  mUpdateCnt(parts[1]);mRenderCart();
+}
+function mLogSeats(tier,seats,total){
+  try{
+    const log=JSON.parse(localStorage.getItem('mafs_gala_log')||'[]');
+    log.push({ts:new Date().toISOString(),tier,seats,total});
+    localStorage.setItem('mafs_gala_log',JSON.stringify(log));
+  }catch(e){}
+}
+function openSeatModal(tierName){
+  const modal=document.getElementById('seatModal');if(!modal)return;
+  modal.style.display='block';document.body.style.overflow='hidden';
+  const lbl=document.getElementById('mTierLabel');if(lbl)lbl.textContent=tierName+' Tickets';
+  const tabs=document.getElementById('mSecTabs');
+  if(tabs)tabs.innerHTML=['A','B','C','D'].map(s=>`<button class="m-tab" data-sec="${s}" onclick="mOpenSec('${s}')"><span style="display:block;font-size:.88rem;font-weight:700;letter-spacing:.06em;margin-bottom:2px;">§${s}</span><span style="display:block;font-size:.53rem;font-family:'Cinzel',serif;color:rgba(26,21,16,.35);">${SECTIONS[s].seats.reduce((a,b)=>a+b,0)} seats</span></button>`).join('');
+  mSelSeats.clear();mBuildMap();mOpenSec('A');mRenderCart();
+  setTimeout(()=>{
+    const tierObj=TIERS.find(t=>t.name===tierName);if(!tierObj)return;
+    const rowsDiv=document.getElementById('mRowsDiv');if(!rowsDiv)return;
+    const all=rowsDiv.querySelectorAll('div');
+    for(const d of all){if(d.textContent.trim().startsWith(tierObj.shape+' '+tierName)){d.scrollIntoView({behavior:'smooth',block:'nearest'});break;}}
+  },280);
+}
+function closeSeatModal(){
+  const modal=document.getElementById('seatModal');if(modal)modal.style.display='none';
+  document.body.style.overflow='';
+}
+window.mOpenSec=mOpenSec;window.mToggleSeat=mToggleSeat;window.mRemoveSeat=mRemoveSeat;
+window.mLogSeats=mLogSeats;window.openSeatModal=openSeatModal;window.closeSeatModal=closeSeatModal;
+
 buildMap();scOpen('A');renderCart();
 })();
 
@@ -940,5 +1168,50 @@ document.querySelectorAll('.bp').forEach(btn=>{
   btn.addEventListener('mouseleave',()=>{anime({targets:btn,translateX:0,translateY:0,duration:550,easing:'easeOutElastic(1,.6)'})})
 })
 </script>
+
+<!-- SEAT SELECTION MODAL -->
+<div class="seat-modal-ov" id="seatModal">
+  <div class="sm-wrap">
+    <div class="sm-hdr">
+      <div>
+        <div class="sm-tier-lbl" id="mTierLabel">Select Your Seat</div>
+        <div class="sm-title">Choose Your Seat</div>
+      </div>
+      <button class="sm-close" onclick="closeSeatModal()">✕ &nbsp;CLOSE</button>
+    </div>
+    <div class="sm-legend">
+      <div class="sm-legend-item"><span style="font-size:1.55rem;color:#8b6000;">★</span><div style="font-family:'Cinzel Decorative',serif;font-size:.63rem;letter-spacing:.1em;color:var(--gold);margin-top:2px;">VVIP</div><div style="font-size:.58rem;color:rgba(26,21,16,.46);line-height:1.65;">$500/seat<br>Rows 1–2</div></div>
+      <div class="sm-legend-item"><span style="font-size:1.55rem;color:#7a5210;">●</span><div style="font-family:'Cinzel Decorative',serif;font-size:.63rem;letter-spacing:.1em;color:var(--gold);margin-top:2px;">VIP</div><div style="font-size:.58rem;color:rgba(26,21,16,.46);line-height:1.65;">$250/seat<br>Rows 3–5</div></div>
+      <div class="sm-legend-item"><span style="font-size:1.55rem;color:#5e4214;">▲</span><div style="font-family:'Cinzel Decorative',serif;font-size:.63rem;letter-spacing:.1em;color:var(--gold);margin-top:2px;">Gold</div><div style="font-size:.58rem;color:rgba(26,21,16,.46);line-height:1.65;">$150/seat<br>Rows 6–10</div></div>
+      <div class="sm-legend-item"><span style="font-size:1.55rem;color:#3e3118;">■</span><div style="font-family:'Cinzel Decorative',serif;font-size:.63rem;letter-spacing:.1em;color:var(--gold);margin-top:2px;">General</div><div style="font-size:.58rem;color:rgba(26,21,16,.46);line-height:1.65;">$100/seat<br>Rows 11–15</div></div>
+    </div>
+    <div class="sm-layout">
+      <div class="sm-viewer">
+        <div class="sm-tabs" id="mSecTabs"></div>
+        <div class="sm-map-wrap"><svg id="mVenueSvg" viewBox="15 110 670 400" xmlns="http://www.w3.org/2000/svg"></svg></div>
+        <div class="sm-active-bar">
+          <span class="sm-grid-title" id="mGridTitle">Select a section above</span>
+          <span class="sm-cnt" id="mSecCnt"></span>
+        </div>
+        <div class="sm-stage-bar">▶ &nbsp;STAGE&nbsp; ◀</div>
+        <div class="sm-rows" id="mRowsDiv"></div>
+      </div>
+      <div class="sm-cart">
+        <div class="sm-cart-hdr">Your Seats <span class="sm-cart-badge" id="mCartBadge">0</span></div>
+        <div class="sm-cart-body">
+          <div class="sm-cart-empty" id="mCartEmpty">No seats selected.<br>Click a section on the map,<br>then choose your seat.</div>
+          <div id="mCartItems"></div>
+        </div>
+        <div class="sm-cart-totals" id="mCartTotals" style="display:none;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-size:.7rem;color:rgba(26,21,16,.4);">Total</span>
+            <span style="font-family:'Cinzel Decorative',serif;font-size:.98rem;color:var(--gold);" id="mTotalAmt">$0</span>
+          </div>
+          <div id="mCoButtons"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
