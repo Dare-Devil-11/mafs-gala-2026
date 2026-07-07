@@ -302,6 +302,10 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-tier-divider{display:flex;align-items:center;gap:10px;padding:8px 0 4px;margin-top:4px;}
 .sc-tier-divider span{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--gold);white-space:nowrap;}
 .sc-tier-divider::before,.sc-tier-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);}
+/* large fan map */
+.sc-fanmap-wrap{padding:20px 16px 8px;display:flex;justify-content:center;background:rgba(7,5,3,.3);}
+.sc-fanmap-wrap svg{width:100%;max-width:520px;display:block;cursor:default;}
+.sc-active-bar{padding:10px 20px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;min-height:42px;}
 /* section tabs */
 .sc-sec-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
 .sc-sec-tab{background:none;border:none;border-right:1px solid var(--border);padding:14px 8px;cursor:pointer;transition:background .2s,color .2s;color:var(--muted);font-family:'Cinzel Decorative',serif;text-align:center;}
@@ -584,18 +588,16 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
             <span class="sc-tab-sub">161 seats</span>
           </button>
         </div>
-        <!-- MINI MAP + ACTIVE SECTION INFO -->
-        <div class="sc-minimap-bar">
-          <div class="sc-minimap">
-            <svg id="scVenueSvg" viewBox="0 0 700 510" xmlns="http://www.w3.org/2000/svg"></svg>
-          </div>
-          <div class="sc-active-info">
-            <div class="sc-active-sec-name" id="scGridTitle">Section A</div>
-            <div class="sc-active-sec-sub">Click any seat below to select it. Switch sections using the tabs above, or click a section on the map.</div>
-            <div style="margin-top:8px"><span class="sc-cnt" id="scSecCnt">0 selected</span></div>
-          </div>
+        <!-- 16-SEGMENT FAN MAP — primary view -->
+        <div class="sc-fanmap-wrap">
+          <svg id="scVenueSvg" viewBox="15 110 670 400" xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
-        <!-- ALWAYS-VISIBLE SEAT GRID -->
+        <!-- ACTIVE SECTION INFO + SEAT COUNT -->
+        <div class="sc-active-bar">
+          <span class="sc-active-sec-name" id="scGridTitle">Select a section above or click the map</span>
+          <span class="sc-cnt" id="scSecCnt"></span>
+        </div>
+        <!-- SEAT GRID -->
         <div class="sc-stage-bar">▶&nbsp;&nbsp;STAGE&nbsp;&nbsp;◀</div>
         <div class="sc-rows" id="scRowsDiv"></div>
       </div>
@@ -837,52 +839,31 @@ function arc(cx,cy,r1,r2,a1,a2){
 function buildMap(){
   const svg=document.getElementById('scVenueSvg');
   if(!svg)return;
-  const cx=350,cy=500,r1=95,r2=365;
-  const angs={A:[22,57],B:[57,92],C:[92,127],D:[127,158]};
-  const tierBands=[{r1:95,r2:142,fill:'rgba(255,215,0,.1)'},{r1:142,r2:200,fill:'rgba(201,168,76,.08)'},{r1:200,r2:282,fill:'rgba(184,150,60,.07)'},{r1:282,r2:365,fill:'rgba(138,122,90,.06)'}];
-  let h='';
-  // outer border arc
-  h+=`<path d="${arc(cx,cy,r1,r2,22,158)}" fill="rgba(201,168,76,.04)" stroke="rgba(201,168,76,.15)" stroke-width="1"/>`;
-  // tier bands
-  tierBands.forEach(t=>{h+=`<path d="${arc(cx,cy,t.r1,t.r2,22,158)}" fill="${t.fill}" stroke="none"/>`;});
-  // dividers
-  [57,92,127].forEach(deg=>{const p1=pt(cx,cy,r1,deg),p2=pt(cx,cy,r2,deg);h+=`<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="rgba(7,5,3,.65)" stroke-width="2"/>`;});
-  // tier boundary arcs (subtle divider lines between tier rings)
-  [142,200,282].forEach(br=>{
-    const bp1=pt(cx,cy,br,22),bp2=pt(cx,cy,br,158);
-    const f=n=>n.toFixed(1);
-    h+=`<path d="M${f(bp1.x)} ${f(bp1.y)} A${br} ${br} 0 0 0 ${f(bp2.x)} ${f(bp2.y)}" fill="none" stroke="rgba(201,168,76,.18)" stroke-width="1" stroke-dasharray="3,4"/>`;
-  });
-  // section fills + labels
-  Object.entries(angs).forEach(([id,[a1,a2]])=>{
-    const s=SECTIONS[id],mid=(a1+a2)/2;
-    const lp=pt(cx,cy,(r1+r2)/2,mid);
-    h+=`<path id="scp-${id}" class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${s.fill}" data-sec="${id}" onclick="scOpen('${id}')"/>`;
-    // section letter with dark circle bg
-    h+=`<circle cx="${lp.x.toFixed(1)}" cy="${lp.y.toFixed(1)}" r="17" fill="rgba(7,5,3,.55)" stroke="rgba(255,215,0,.35)" stroke-width="1" pointer-events="none"/>`;
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="rgba(255,215,0,.97)" font-size="16" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${id}</text>`;
-  });
-  // tier symbols in each section × tier band — dark on gold for contrast
-  const symDefs=[
-    {r:118,sym:'★',col:'rgba(7,5,3,.82)',sz:13},
-    {r:171,sym:'●',col:'rgba(7,5,3,.76)',sz:12},
-    {r:241,sym:'▲',col:'rgba(7,5,3,.72)',sz:11},
-    {r:323,sym:'■',col:'rgba(7,5,3,.68)',sz:10}
+  const cx=350,cy=500;
+  // 3° gap between sections, 5px radial gap between tiers → 16 distinct segments
+  const G=3, RG=5;
+  const secAngs={A:[22+G/2,57-G/2],B:[57+G/2,92-G/2],C:[92+G/2,127-G/2],D:[127+G/2,158-G/2]};
+  const tierSegs=[
+    {r1:95,      r2:142-RG, sym:'★',sz:13,fill:'rgba(201,168,76,.96)', symCol:'rgba(7,5,3,.88)', name:'VVIP'},
+    {r1:142+RG,  r2:200-RG, sym:'●',sz:12,fill:'rgba(168,130,45,.9)',  symCol:'rgba(7,5,3,.82)', name:'VIP'},
+    {r1:200+RG,  r2:282-RG, sym:'▲',sz:11,fill:'rgba(120,90,28,.86)',  symCol:'rgba(255,210,80,.9)', name:'Gold'},
+    {r1:282+RG,  r2:365,    sym:'■',sz:10,fill:'rgba(70,50,14,.82)',   symCol:'rgba(201,168,76,.9)', name:'General'}
   ];
-  const secMids={A:39.5,B:74.5,C:109.5,D:142.5};
-  Object.values(secMids).forEach(midAng=>{
-    symDefs.forEach(({r,sym,col,sz})=>{
-      const p=pt(cx,cy,r,midAng);
-      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.38).toFixed(1)}" text-anchor="middle" fill="${col}" font-size="${sz}" pointer-events="none">${sym}</text>`;
+  let h='';
+  // draw 16 individual arc segments (4 sections × 4 tiers)
+  Object.entries(secAngs).forEach(([secId,[a1,a2]])=>{
+    const midA=(a1+a2)/2;
+    tierSegs.forEach(({r1,r2,sym,sz,fill,symCol})=>{
+      const midR=(r1+r2)/2, p=pt(cx,cy,midR,midA);
+      h+=`<path class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${secId}" onclick="scOpen('${secId}')" />`;
+      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
     });
+    // section letter label outside the fan
+    const lp=pt(cx,cy,378,midA);
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+5).toFixed(1)}" text-anchor="middle" fill="rgba(255,220,80,.95)" font-size="13" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${secId}</text>`;
   });
-  // tier name labels along the B/C center divider axis (90°)
-  [{r:118,t:'VVIP'},{r:171,t:'VIP'},{r:241,t:'Gold'},{r:323,t:'General'}].forEach(({r,t})=>{
-    const p=pt(cx,cy,r,90);
-    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y-5).toFixed(1)}" text-anchor="middle" fill="rgba(7,5,3,.72)" font-size="6.5" font-family="'Cinzel',serif" letter-spacing="0.09em" pointer-events="none">${t}</text>`;
-  });
-  // stage
-  h+=`<rect x="215" y="468" width="270" height="26" rx="4" fill="rgba(201,168,76,.22)" stroke="rgba(201,168,76,.45)" stroke-width="1"/>`;
+  // stage bar
+  h+=`<rect x="215" y="468" width="270" height="26" rx="4" fill="rgba(201,168,76,.2)" stroke="rgba(201,168,76,.4)" stroke-width="1"/>`;
   h+=`<text x="350" y="486" text-anchor="middle" fill="rgba(201,168,76,.9)" font-size="9" font-family="'Cinzel Decorative',serif" letter-spacing="0.15em" pointer-events="none">STAGE</text>`;
   svg.innerHTML=h;
 }
