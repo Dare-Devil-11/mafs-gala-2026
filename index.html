@@ -2,1399 +2,654 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2026 MAFS Annual Gala — An Evening of Elegance</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAFS Annual Gala 2026 — Metropolitan Asian Family Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Josefin+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#d4af6e;--gold-bright:#f5d97a;--gold-pale:#fdf0cc;
-  --bg:#0f0e15;--bg2:#16141f;--surface:#1c1a27;--surface2:#221f2e;
-  --text:#f8efd5;--text-dim:rgba(248,239,213,.65);
-  --border:rgba(212,175,110,.32);--border-bright:rgba(212,175,110,.65);
-  --emerald:#1c4535;--radius:3px;
+  --black:#070503;--deep:#0f0c08;--surface:#1a1510;
+  --gold:#c9a84c;--gold2:#e2c872;--gold3:#f0de9a;
+  --cream:#f5ede0;--ivory:#faf5ec;
+  --td:#f0e6d0;--tl:#1a1510;
+  --md:rgba(240,230,208,.5);--ml:rgba(26,21,16,.5);
+  --bg:rgba(201,168,76,.2);--bg2:rgba(201,168,76,.45);
+  --emerald:#2a6b5a;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cormorant Garamond',serif;background:var(--black);color:var(--td);overflow-x:hidden;cursor:none;}
 
-/* ── BACKGROUND PATTERN ── */
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40 4L76 40 40 76 4 40Z' fill='none' stroke='%23c9a96e' stroke-width='.4' opacity='.25'/%3E%3Cpath d='M40 16L64 40 40 64 16 40Z' fill='none' stroke='%23c9a96e' stroke-width='.3' opacity='.15'/%3E%3Ccircle cx='40' cy='40' r='2' fill='%23c9a96e' opacity='.12'/%3E%3C/svg%3E");
-  opacity:.12;pointer-events:none;z-index:0;
+/* CURSOR */
+#cd{width:6px;height:6px;background:var(--gold);position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%) rotate(45deg);}
+#cr{width:32px;height:32px;border:1px solid rgba(201,168,76,.5);position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%) rotate(45deg);transition:width .2s,height .2s,opacity .2s;}
+body.cx #cr{width:48px;height:48px;opacity:.3;}
+
+/* ART DECO DIVIDER */
+.adv{display:flex;align-items:center;justify-content:center;}
+.adl{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold));}
+.adr{flex:1;height:1px;background:linear-gradient(to left,transparent,var(--gold));}
+.adg{color:var(--gold);padding:0 10px;font-size:13px;line-height:1;}
+.adg.s{font-size:8px;padding:0 5px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 80px;display:flex;align-items:center;justify-content:space-between;transition:padding .4s,background .5s,border-color .4s;border-bottom:1px solid transparent;}
+nav.sc{padding:16px 80px;background:rgba(7,5,3,.96);backdrop-filter:blur(20px);border-color:var(--bg);}
+.nb{display:flex;align-items:center;gap:14px;text-decoration:none;}
+.nl{height:40px;width:auto;filter:brightness(0) invert(1);}
+.nls{display:flex;gap:40px;list-style:none;}
+.nls a{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(240,230,208,.45);text-decoration:none;transition:color .2s;}
+.nls a:hover{color:var(--gold);}
+.nt{font-family:'Josefin Sans',sans-serif;padding:10px 28px;border:1px solid var(--gold);color:var(--gold);font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;transition:background .2s,color .2s;}
+.nt:hover{background:var(--gold);color:var(--black);}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--black);background-image:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(201,168,76,.022) 40px,rgba(201,168,76,.022) 41px),repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(201,168,76,.022) 40px,rgba(201,168,76,.022) 41px);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 80px 80px;text-align:center;}
+#hc{position:absolute;inset:0;width:100%;height:100%;}
+.hi{position:relative;z-index:2;max-width:860px;margin:0 auto;}
+
+/* Art Deco frame */
+.hf{border:1px solid rgba(201,168,76,.38);padding:60px 72px 68px;position:relative;background:rgba(7,5,3,.15);backdrop-filter:blur(6px);}
+.hf::before{content:'';position:absolute;inset:9px;border:1px solid rgba(201,168,76,.1);pointer-events:none;}
+.hfc{position:absolute;width:26px;height:26px;border-color:var(--gold);border-style:solid;}
+.hfc.tl{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.hfc.tr{top:-1px;right:-1px;border-width:2px 2px 0 0;}
+.hfc.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px;}
+.hfc.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+
+.hey{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;}
+.hh{font-family:'Cinzel Decorative',cursive;font-size:clamp(38px,7.5vw,92px);font-weight:700;line-height:1.05;color:var(--gold);letter-spacing:2px;margin-bottom:12px;text-shadow:0 0 60px rgba(201,168,76,.2);}
+.hs{font-family:'Cinzel Decorative',cursive;font-size:clamp(14px,2.2vw,26px);font-weight:400;color:var(--td);letter-spacing:7px;margin-bottom:28px;opacity:0;}
+.hth{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,1.8vw,21px);font-style:italic;font-weight:300;color:var(--md);margin-bottom:36px;opacity:0;}
+.hd{display:flex;align-items:center;justify-content:center;gap:20px;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(240,230,208,.45);margin-bottom:44px;opacity:0;flex-wrap:wrap;}
+.hsep{color:var(--gold);opacity:.6;}
+.hct{display:flex;gap:18px;justify-content:center;opacity:0;flex-wrap:wrap;}
+
+/* BUTTONS */
+.bp{font-family:'Josefin Sans',sans-serif;padding:16px 52px;background:var(--gold);color:var(--black);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;display:inline-block;position:relative;overflow:hidden;transition:transform .25s;}
+.bp::before{content:'';position:absolute;inset:0;background:var(--gold2);transform:translateX(-105%);transition:transform .3s ease;}
+.bp:hover::before{transform:translateX(0);}
+.bp:hover{transform:translateY(-2px);}
+.bp span{position:relative;z-index:1;}
+.bo{font-family:'Josefin Sans',sans-serif;padding:16px 52px;border:1px solid rgba(240,230,208,.3);color:rgba(240,230,208,.7);font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;display:inline-block;transition:border-color .2s,color .2s;}
+.bo:hover{border-color:var(--gold);color:var(--gold);}
+
+.sh{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.3;}
+.sl{width:1px;height:48px;background:linear-gradient(var(--gold),transparent);animation:sb 2.5s ease infinite;}
+.st{font-family:'Josefin Sans',sans-serif;font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);}
+@keyframes sb{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* COUNTDOWN */
+.cdown{background:var(--deep);padding:80px;border-top:1px solid var(--bg);border-bottom:1px solid var(--bg);}
+.cdi{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:center;}
+.cdu{text-align:center;flex:1;padding:28px 0;border-right:1px solid var(--bg);}
+.cdu:last-child{border-right:none;}
+.cdn{font-family:'Cinzel Decorative',cursive;font-size:clamp(44px,7vw,80px);font-weight:400;color:var(--gold);line-height:1;margin-bottom:12px;text-shadow:0 0 30px rgba(201,168,76,.18);}
+.cdl{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--md);}
+.cdgm{font-size:10px;color:var(--gold);opacity:.45;padding:0 18px;flex-shrink:0;}
+
+/* MARQUEE */
+.mq{background:var(--gold);padding:14px 0;overflow:hidden;white-space:nowrap;}
+.mqt{display:inline-block;animation:mqa 40s linear infinite;}
+.mqt span{display:inline-block;padding:0 36px;font-family:'Josefin Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--black);}
+.mqt span::after{content:'◆';margin-left:36px;font-size:7px;opacity:.55;}
+@keyframes mqa{to{transform:translateX(-50%);}}
+
+/* ABOUT */
+.about{background:var(--cream);color:var(--tl);padding:120px 80px;}
+.ai{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;}
+.atg{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:24px;display:flex;align-items:center;gap:16px;}
+.atg::before{content:'';width:32px;height:1px;background:var(--emerald);}
+.ah{font-family:'Cinzel Decorative',cursive;font-size:clamp(22px,2.8vw,38px);font-weight:400;line-height:1.28;margin-bottom:32px;color:var(--tl);}
+.ap{font-size:17px;color:var(--ml);line-height:1.9;font-weight:300;}
+.ap+.ap{margin-top:16px;}
+.as{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px;}
+.asc{border:1px solid rgba(201,168,76,.3);padding:26px 22px;background:rgba(201,168,76,.04);position:relative;}
+.asc::before,.asc::after{content:'';position:absolute;width:13px;height:13px;border-color:var(--gold);border-style:solid;}
+.asc::before{top:0;left:0;border-width:1.5px 0 0 1.5px;}
+.asc::after{bottom:0;right:0;border-width:0 1.5px 1.5px 0;}
+.asn{font-family:'Cinzel Decorative',cursive;font-size:40px;font-weight:400;color:var(--tl);line-height:1;margin-bottom:8px;}
+.asl{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ml);}
+
+/* About visual */
+.av{background:var(--black);min-height:540px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.avg{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 28px,rgba(201,168,76,.04) 28px,rgba(201,168,76,.04) 29px),repeating-linear-gradient(-45deg,transparent,transparent 28px,rgba(201,168,76,.04) 28px,rgba(201,168,76,.04) 29px);}
+.avr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.avri{position:absolute;border:1px solid rgba(201,168,76,.07);border-radius:50%;animation:rs linear infinite;}
+.avri:nth-child(1){width:160px;height:160px;animation-duration:18s;}
+.avri:nth-child(2){width:280px;height:280px;animation-duration:38s;animation-direction:reverse;}
+.avri:nth-child(3){width:400px;height:400px;animation-duration:60s;}
+.avri:nth-child(4){width:520px;height:520px;animation-duration:90s;animation-direction:reverse;}
+@keyframes rs{to{transform:rotate(360deg);}}
+.avc{position:relative;z-index:2;text-align:center;}
+.avy{font-family:'Cinzel Decorative',cursive;font-size:96px;font-weight:400;color:var(--gold);opacity:.11;line-height:1;}
+.avm{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:6px;text-transform:uppercase;color:rgba(201,168,76,.35);margin-top:6px;}
+
+/* TICKETS */
+.tks{background:var(--black);background-image:repeating-linear-gradient(45deg,transparent,transparent 50px,rgba(201,168,76,.016) 50px,rgba(201,168,76,.016) 51px),repeating-linear-gradient(-45deg,transparent,transparent 50px,rgba(201,168,76,.016) 50px,rgba(201,168,76,.016) 51px);padding:120px 80px;}
+.tki{max-width:1200px;margin:0 auto;}
+.tkh{text-align:center;margin-bottom:68px;}
+.tkl{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.65;margin-bottom:18px;}
+.tkt{font-family:'Cinzel Decorative',cursive;font-size:clamp(26px,3.8vw,50px);font-weight:400;color:var(--td);}
+.tkg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+
+/* Ticket card */
+.tc{background:var(--deep);border:1px solid var(--bg);padding:36px 26px 40px;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:border-color .35s,transform .4s cubic-bezier(.16,1,.3,1);cursor:none;}
+.tc:hover{border-color:rgba(201,168,76,.6);transform:translateY(-8px);}
+.tc.ft{border-color:rgba(201,168,76,.45);background:rgba(201,168,76,.038);}
+.tc::before,.tc::after{content:'';position:absolute;width:16px;height:16px;border-color:rgba(201,168,76,.45);border-style:solid;transition:border-color .35s;}
+.tc::before{top:0;left:0;border-width:1.5px 0 0 1.5px;}
+.tc::after{bottom:0;right:0;border-width:0 1.5px 1.5px 0;}
+.tc:hover::before,.tc:hover::after,.tc.ft::before,.tc.ft::after{border-color:var(--gold);}
+.tcr{position:absolute;width:16px;height:16px;border-color:rgba(201,168,76,.45);border-style:solid;transition:border-color .35s;}
+.tcr.tr{top:0;right:0;border-width:1.5px 1.5px 0 0;}
+.tcr.bl{bottom:0;left:0;border-width:0 0 1.5px 1.5px;}
+.tc:hover .tcr,.tc.ft .tcr{border-color:var(--gold);}
+.tsh{position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(201,168,76,.05) 50%,transparent 70%);transform:translateX(-100%);transition:transform .7s ease;}
+.tc:hover .tsh{transform:translateX(100%);}
+.fb{position:absolute;top:0;right:0;background:var(--gold);color:var(--black);font-family:'Josefin Sans',sans-serif;font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 13px;}
+.ttr{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:.65;margin-bottom:10px;}
+.tn{font-family:'Cinzel Decorative',cursive;font-size:18px;font-weight:400;color:var(--td);margin-bottom:10px;}
+.tp{font-family:'Cinzel Decorative',cursive;font-size:50px;font-weight:400;color:var(--gold);line-height:1;margin-bottom:6px;text-shadow:0 0 22px rgba(201,168,76,.14);}
+.tsb{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--md);margin-bottom:24px;}
+.tdv{width:100%;height:1px;background:var(--bg);margin-bottom:20px;}
+.tpl{list-style:none;flex:1;}
+.tpl li{font-size:14px;color:var(--md);padding:6px 0;border-bottom:1px solid rgba(240,230,208,.055);display:flex;align-items:center;gap:9px;}
+.tpl li::before{content:'◆';font-size:7px;color:var(--gold);opacity:.65;flex-shrink:0;}
+.tbtn{display:block;margin-top:26px;padding:12px 0;text-align:center;border:1px solid rgba(201,168,76,.4);color:var(--gold);font-family:'Josefin Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;cursor:none;transition:background .2s,color .2s,border-color .2s;}
+.tbtn:hover,.tc.ft .tbtn{background:var(--gold);color:var(--black);border-color:var(--gold);}
+.tc.ft .tbtn:hover{background:var(--gold2);}
+
+/* IMPACT */
+.impact{background:var(--cream);color:var(--tl);padding:96px 80px;border-top:1px solid rgba(201,168,76,.18);border-bottom:1px solid rgba(201,168,76,.18);}
+.impi{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.impb{padding:0 44px;border-right:1px solid rgba(26,21,16,.1);text-align:center;}
+.impb:first-child{padding-left:0;}
+.impb:last-child{border-right:none;padding-right:0;}
+.impn{font-family:'Cinzel Decorative',cursive;font-size:58px;font-weight:400;color:var(--tl);line-height:1;margin-bottom:10px;}
+.imps{font-size:26px;}
+.impl{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ml);line-height:1.6;}
+.impl strong{display:block;color:var(--emerald);margin-bottom:4px;}
+
+/* SCHEDULE */
+.sched{background:var(--black);padding:120px 80px;}
+.sci{max-width:800px;margin:0 auto;}
+.scl{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.sch{font-family:'Cinzel Decorative',cursive;font-size:clamp(22px,3.2vw,42px);font-weight:400;color:var(--td);margin-bottom:60px;}
+.tll{position:relative;}
+.tll::before{content:'';position:absolute;left:112px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent);}
+.tli{display:grid;grid-template-columns:112px 1fr;gap:44px;padding:30px 0;border-bottom:1px solid var(--bg);position:relative;}
+.tlt{font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);text-align:right;padding-right:36px;padding-top:4px;}
+.tld{position:absolute;left:112px;top:34px;width:8px;height:8px;background:var(--gold);transform:translate(-50%,0) rotate(45deg);box-shadow:0 0 0 3px rgba(201,168,76,.12),0 0 0 6px rgba(201,168,76,.05);}
+.tln{font-family:'Cinzel Decorative',cursive;font-size:15px;font-weight:400;color:var(--td);margin-bottom:7px;}
+.tlde{font-size:15px;color:var(--md);line-height:1.7;}
+
+/* SPONSORS */
+.spons{background:var(--deep);border-top:1px solid var(--bg);border-bottom:1px solid var(--bg);padding:96px 80px;text-align:center;}
+.spni{max-width:900px;margin:0 auto;}
+.spnh{font-family:'Cinzel Decorative',cursive;font-size:clamp(20px,2.8vw,34px);font-weight:400;color:var(--td);margin-bottom:14px;}
+.spns{font-size:16px;color:var(--md);margin-bottom:48px;font-style:italic;}
+.spng{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+.spnb{height:70px;border:1px solid var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--md);transition:border-color .2s,color .2s;cursor:none;position:relative;}
+.spnb::before,.spnb::after{content:'';position:absolute;width:12px;height:12px;border-color:rgba(201,168,76,.25);border-style:solid;transition:border-color .2s;}
+.spnb::before{top:0;left:0;border-width:1px 0 0 1px;}
+.spnb::after{bottom:0;right:0;border-width:0 1px 1px 0;}
+.spnb:hover{border-color:var(--gold);color:var(--gold);}
+.spnb:hover::before,.spnb:hover::after{border-color:var(--gold);}
+.spnn{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--md);margin-top:28px;font-style:italic;}
+.spnn a{color:var(--gold);text-decoration:none;}
+
+/* FINAL CTA */
+.fcta{background:var(--black);background-image:repeating-linear-gradient(45deg,transparent,transparent 50px,rgba(201,168,76,.018) 50px,rgba(201,168,76,.018) 51px),repeating-linear-gradient(-45deg,transparent,transparent 50px,rgba(201,168,76,.018) 50px,rgba(201,168,76,.018) 51px);padding:160px 80px;text-align:center;}
+.fci{max-width:680px;margin:0 auto;}
+.fct{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.55;margin-bottom:30px;}
+.fch{font-family:'Cinzel Decorative',cursive;font-size:clamp(30px,4.5vw,68px);font-weight:400;color:var(--td);line-height:1.1;margin-bottom:22px;}
+.fch em{font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--gold);}
+.fcs{font-size:17px;color:var(--md);max-width:420px;margin:0 auto 48px;line-height:1.8;font-style:italic;}
+.fcc{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.fcd{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(240,230,208,.2);margin-top:36px;}
+
+/* FOOTER */
+footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 36px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;}
+.fli{margin-bottom:14px;}
+.flg{height:38px;width:auto;filter:brightness(0) invert(1);opacity:.6;}
+.flo{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.45);margin-top:10px;margin-bottom:12px;}
+.flt{font-size:14px;color:var(--md);line-height:1.75;}
+.flh{font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.4);margin-bottom:18px;}
+.fll{list-style:none;}
+.fll li{margin-bottom:11px;}
+.fll a{font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(240,230,208,.3);text-decoration:none;transition:color .2s;}
+.fll a:hover{color:var(--gold);}
+.flb{background:var(--black);border-top:1px solid var(--bg);padding:18px 80px;display:flex;justify-content:space-between;font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.15);}
+
+/* REVEALS */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1);}
+.rv.in{opacity:1;transform:translateY(0);}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav,nav.sc{padding:20px 32px;}.nls{display:none;}
+  .hero{padding:100px 32px 80px;}.hf{padding:44px 32px 52px;}
+  .cdown{padding:56px 24px;}.cdi{flex-wrap:wrap;gap:0;}.cdu{flex:1 1 50%;border-right:none;border-bottom:1px solid var(--bg);}
+  .about{padding:80px 32px;}.ai{grid-template-columns:1fr;}.av{min-height:280px;}
+  .tks{padding:80px 32px;}.tkg{grid-template-columns:1fr 1fr;}
+  .impact{padding:60px 32px;}.impi{grid-template-columns:1fr 1fr;}.impb{padding:22px;border:none;border-bottom:1px solid rgba(26,21,16,.1);}
+  .sched{padding:80px 32px;}.tll::before{left:80px;}.tli{grid-template-columns:80px 1fr;gap:22px;}.tlt{padding-right:18px;}.tld{left:80px;}
+  .spons{padding:60px 32px;}.spng{grid-template-columns:repeat(3,1fr);}
+  .fcta{padding:96px 32px;}
+  footer{grid-template-columns:1fr 1fr;padding:56px 32px 32px;}.flb{padding:18px 32px;}
 }
-
-/* ── PARTICLES ── */
-.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.p{position:absolute;border-radius:50%;background:var(--gold);animation:rise linear infinite}
-@keyframes rise{0%{transform:translateY(0) scale(1);opacity:.6}100%{transform:translateY(-100vh) scale(.3);opacity:0}}
-
-/* ── HERO ── */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%,#231d38 0%,#130f1e 55%,var(--bg) 100%)}
-.hero-frame{position:relative;z-index:2;text-align:center;padding:60px 40px;max-width:860px;width:100%}
-.hero-frame::before,.hero-frame::after{
-  content:'';position:absolute;width:70px;height:70px;
-  border-color:var(--gold);border-style:solid;border-width:1px;
-}
-.hero-frame::before{top:0;left:0;border-right:0;border-bottom:0}
-.hero-frame::after{bottom:0;right:0;border-left:0;border-top:0}
-.corner-tl,.corner-tr,.corner-bl,.corner-br{
-  position:absolute;width:70px;height:70px;z-index:3;
-  border-color:var(--gold);border-style:solid;
-}
-.corner-tr{top:0;right:0;border-width:1px 1px 0 0}
-.corner-bl{bottom:0;left:0;border-width:0 0 1px 1px}
-.eyebrow{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:300;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:28px}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(52px,10vw,110px);font-weight:900;line-height:.9;color:var(--gold-pale);text-shadow:0 0 80px rgba(201,169,110,.35);margin-bottom:8px}
-.hero h1 .year{display:block;font-size:.46em;font-weight:400;font-style:italic;color:var(--gold);letter-spacing:.08em}
-.deco{display:flex;align-items:center;gap:16px;justify-content:center;margin:24px auto}
-.deco-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);max-width:140px}
-.deco-diamond{width:10px;height:10px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
-.deco-diamond-sm{width:6px;height:6px;border:1px solid var(--gold);transform:rotate(45deg);flex-shrink:0}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,22px);font-weight:300;font-style:italic;color:var(--text-dim);margin-bottom:32px;letter-spacing:.06em}
-.event-meta{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-.event-meta-item{text-align:center}
-.event-meta-item .label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
-.event-meta-item .value{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--text)}
-.btn-gold{display:inline-block;padding:15px 44px;border:1px solid var(--gold);color:var(--bg);background:linear-gradient(135deg,var(--gold-bright),var(--gold));font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:.3s;position:relative;overflow:hidden}
-.btn-gold::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:.3s}
-.btn-gold:hover::before{background:rgba(255,255,255,.12)}
-.btn-gold:hover{box-shadow:0 0 40px rgba(201,169,110,.4)}
-.scroll-hint{margin-top:56px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.6;animation:pulse 2s ease-in-out infinite}
-.cdown-item{display:flex;flex-direction:column;align-items:center;min-width:56px}
-.cdown-num{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,42px);font-weight:700;color:var(--gold-pale);line-height:1;letter-spacing:.04em}
-.cdown-lbl{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:4px;opacity:.8}
-.cdown-sep{font-size:10px;color:var(--gold);opacity:.4;align-self:center;padding-bottom:16px}
-@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
-
-/* ── SECTION COMMON ── */
-section{position:relative;z-index:1}
-.sec-inner{max-width:1180px;margin:0 auto;padding:0 24px}
-.sec-hdr{text-align:center;padding:80px 24px 56px;max-width:700px;margin:0 auto}
-.sec-hdr .over{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.sec-hdr h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--gold-pale);line-height:1.1;margin-bottom:18px}
-.sec-hdr p{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--text-dim);line-height:1.7;font-style:italic}
-
-/* ── ABOUT STRIP ── */
-.about{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);padding:80px 0}
-.about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:900px;margin:0 auto}
-.about-item{text-align:center;padding:40px 28px;border:1px solid var(--border)}
-.about-item:nth-child(2){border-left:1px solid var(--border-bright)}
-.about-item .icon{font-size:28px;margin-bottom:16px;display:block}
-.about-item h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-pale);margin-bottom:10px}
-.about-item p{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text-dim);line-height:1.7}
-
-/* ── PURCHASE SECTION ── */
-.purchase{background:var(--bg);padding-bottom:80px}
-.pur-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 24px}
-.pur-header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.pur-event-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold-pale)}
-.pur-event-detail{font-size:11px;letter-spacing:.08em;color:var(--text-dim);margin-top:4px;font-family:'Montserrat',sans-serif}
-.pur-avail-pill{font-size:10px;letter-spacing:.15em;text-transform:uppercase;border:1px solid rgba(74,222,128,.35);color:#4ade80;padding:5px 14px;white-space:nowrap;flex-shrink:0}
-.pur-body{max-width:1200px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
-/* ticket rows */
-.pur-group-lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:0}
-.trow{display:flex;border:1px solid var(--border);border-top:0;position:relative;transition:.2s;background:var(--bg2)}
-.trow:first-of-type{border-top:1px solid var(--border)}
-.trow:hover{background:rgba(212,175,110,.04)}
-.trow.trow-active{background:rgba(212,175,110,.07);border-color:rgba(212,175,110,.45)}
-.trow-accent{width:4px;flex-shrink:0}
-.trow-body{flex:1;padding:18px 20px;display:flex;align-items:center;gap:16px}
-.trow-info{flex:1;min-width:0}
-.trow-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-pale);margin-bottom:3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.trow-badge{font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:rgba(245,217,122,.12);color:var(--gold-bright);border:1px solid rgba(245,217,122,.3);padding:2px 7px;font-family:'Montserrat',sans-serif;flex-shrink:0}
-.trow-desc{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text-dim);line-height:1.5;margin-bottom:4px}
-.trow-avail{font-size:10px;letter-spacing:.08em;color:var(--gold);font-family:'Montserrat',sans-serif}
-.trow-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0}
-.trow-price{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);white-space:nowrap}
-.trow-price span{font-size:11px;color:var(--text-dim);font-family:'Montserrat',sans-serif;letter-spacing:.05em}
-.trow-qty{display:flex;align-items:center;gap:0;border:1px solid var(--border)}
-.tqb{width:34px;height:34px;border:0;background:transparent;color:var(--gold-pale);font-size:18px;cursor:pointer;transition:.15s;line-height:1;font-family:'Montserrat',sans-serif}
-.tqb:hover{background:rgba(212,175,110,.15)}
-.tqv{min-width:36px;text-align:center;font-weight:700;font-size:15px;color:var(--text);border-left:1px solid var(--border);border-right:1px solid var(--border);height:34px;line-height:34px;font-family:'Montserrat',sans-serif}
-/* merch rows */
-.mrow{display:flex;border:1px solid var(--border);border-top:0;background:var(--bg2);transition:.2s}
-.mrow:first-of-type{border-top:1px solid var(--border)}
-.mrow:hover{background:rgba(212,175,110,.04)}
-.mrow-icon{width:72px;height:72px;flex-shrink:0;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:26px;border-right:1px solid var(--border)}
-.mrow-body{flex:1;padding:14px 18px;display:flex;align-items:center;gap:12px}
-.mrow-info{flex:1;min-width:0}
-.mrow-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold-pale);margin-bottom:2px}
-.mrow-desc{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--text-dim)}
-.mrow-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
-.mrow-price{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold)}
-/* seat map collapse */
-.seat-map-collapse{border:1px solid rgba(212,175,110,.25);margin-top:0;border-top:0;overflow:hidden;max-height:0;transition:max-height .4s ease;background:rgba(0,0,0,.2)}
-.seat-map-collapse.open{max-height:780px}
-.seat-map-inner{padding:20px}
-/* order summary panel */
-.pur-right{position:sticky;top:20px}
-.pur-summary{background:var(--bg2);border:1px solid var(--border);padding:0;overflow:hidden}
-.pur-sum-hdr{background:var(--surface);padding:16px 20px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;justify-content:space-between;align-items:center}
-.pur-sum-body{padding:16px 20px}
-.sum-line{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.sum-line:last-child{border-bottom:0}
-.sum-line-name{color:var(--text-dim);font-family:'Cormorant Garamond',serif;font-size:14px}
-.sum-line-price{color:var(--text);font-family:'Playfair Display',serif;font-size:15px}
-.sum-empty{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);font-size:14px;text-align:center;padding:16px 0}
-.pur-sum-total{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-top:1px solid rgba(212,175,110,.35);background:var(--surface)}
-.pur-sum-total-lbl{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-dim);font-family:'Montserrat',sans-serif}
-.pur-sum-total-val{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold)}
-.pur-form-wrap{padding:16px 20px;border-top:1px solid var(--border)}
-.pur-input{width:100%;padding:11px 13px;background:rgba(0,0,0,.4);border:1px solid rgba(212,175,110,.18);border-bottom:1px solid rgba(212,175,110,.32);color:var(--text);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:.2s;margin-bottom:10px;letter-spacing:.02em}
-.pur-input::placeholder{color:rgba(248,239,213,.3)}
-.pur-input:focus{border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,110,.2)}
-.pur-input-lbl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;display:block}
-.pur-checkout-wrap{padding:0 20px 20px}
-.pur-secure{font-size:10px;letter-spacing:.06em;color:var(--text-dim);text-align:center;margin-top:10px;font-family:'Cormorant Garamond',serif;font-style:italic}
-
-/* seating chart styles moved to purchase section */
-
-/* form/cart styles moved to purchase section */
-
-/* ── FOOTER ── */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:48px 24px;text-align:center}
-footer .ft-logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--gold);letter-spacing:.1em;margin-bottom:14px}
-footer p{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text-dim);line-height:1.8}
-footer a{color:var(--gold);text-decoration:none}
-
-/* ── ZOOM/PAN CHART ── */
-.chart-container{
-  position:relative;
-  /* padding-bottom % = (420/760)*100 — universal aspect-ratio trick that works everywhere */
-  padding-bottom:55.26%;
-  height:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 98%, rgba(212,175,110,.20) 0%, transparent 55%),
-    radial-gradient(ellipse 100% 100% at 50% 100%, #14102a 0%, #0f0e15 100%);
-  border:1px solid rgba(201,169,110,.2);
-  box-shadow:inset 0 -1px 0 rgba(201,169,110,.15), inset 0 0 40px rgba(0,0,0,.5);
-  overflow:hidden;
-  user-select:none;
-  touch-action:none;
-  cursor:grab;
-}
-@media(max-width:768px){.chart-container{padding-bottom:65%;}}
-.chart-container:active{cursor:grabbing}
-.chart-container svg{display:block;width:100%;height:100%;transform-origin:0 0;will-change:transform}
-.chart-controls{display:flex;gap:6px;margin-bottom:8px;align-items:center;flex-wrap:wrap}
-.cc-btn{padding:5px 12px;border:1px solid var(--border-bright);background:transparent;color:var(--gold);font-size:11px;letter-spacing:.1em;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.15s}
-.cc-btn:hover{background:rgba(201,169,110,.12)}
-.cc-hint{font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--text-dim);margin-left:auto}
-/* ── STICKY CART FOOTER ── */
-.sticky-cart{position:fixed;bottom:0;left:0;right:0;background:rgba(10,9,15,.96);border-top:1px solid var(--border-bright);padding:12px 24px;display:flex;align-items:center;gap:20px;z-index:999;transform:translateY(100%);transition:transform .3s;backdrop-filter:blur(12px)}
-.sticky-cart.show{transform:translateY(0)}
-.sc-summary{flex:1;min-width:0}
-.sc-count{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold-pale)}
-.sc-items{font-size:11px;color:var(--text-dim);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sc-total{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);white-space:nowrap}
-.sc-btn{padding:13px 28px;background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:var(--bg);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border:0;cursor:pointer;white-space:nowrap;transition:.3s;flex-shrink:0}
-.sc-btn:hover{box-shadow:0 0 24px rgba(201,169,110,.5)}
-/* ── STEP FLOW ── */
-.step-pill{display:inline-flex;align-items:center;gap:8px;padding:4px 14px;border:1px solid var(--border);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.step-num{width:20px;height:20px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
-/* ── SEAT TOOLTIP ── */
-.seat-tip{position:absolute;background:var(--bg);border:1px solid var(--gold);padding:6px 10px;font-size:11px;color:var(--gold-pale);pointer-events:none;z-index:10;display:none;white-space:nowrap;font-family:'Cormorant Garamond',serif}
-/* ── RESPONSIVE ── */
-@media(max-width:960px){
-  .pur-body{grid-template-columns:1fr;gap:24px}
-  .pur-right{position:static}
-  .about-grid{grid-template-columns:1fr}
-  .about-item:nth-child(2){border-left:1px solid var(--border)}
-}
-@media(max-width:600px){
-  .trow-body{flex-direction:column;align-items:flex-start;gap:12px}
-  .trow-right{flex-direction:row;align-items:center;width:100%;justify-content:space-between}
-  .hero h1{font-size:52px}
-  .event-meta{flex-direction:column;gap:20px}
-  .pur-header-inner{flex-direction:column;align-items:flex-start;gap:12px}
-}
-
-/* ── CHATBOT ── */
-#chat-bubble{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-#chat-toggle{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));border:none;cursor:pointer;box-shadow:0 4px 20px rgba(212,175,110,.5);display:flex;align-items:center;justify-content:center;font-size:24px;transition:.2s;flex-shrink:0}
-#chat-toggle:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(212,175,110,.65)}
-#chat-panel{width:320px;max-height:480px;background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden;animation:slideUp .2s ease}
-#chat-panel.open{display:flex}
-@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-#chat-header{background:linear-gradient(135deg,#1c1528,#2a1f3d);padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
-#chat-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-#chat-header-info{flex:1}
-#chat-header-info strong{display:block;font-size:13px;color:var(--gold-pale);font-family:'Playfair Display',serif}
-#chat-header-info span{font-size:10px;color:#4ade80;letter-spacing:.08em}
-#chat-close{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;padding:4px}
-#chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:300px}
-.cmsg{max-width:85%;padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.5}
-.cmsg.bot{background:rgba(212,175,110,.1);border:1px solid rgba(212,175,110,.2);color:var(--text);border-radius:4px 12px 12px 12px;font-family:'Cormorant Garamond',serif;font-size:14px}
-.cmsg.user{background:linear-gradient(135deg,rgba(212,175,110,.25),rgba(212,175,110,.15));color:var(--gold-pale);align-self:flex-end;border-radius:12px 4px 12px 12px}
-#chat-quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
-.cqbtn{padding:5px 10px;font-size:11px;letter-spacing:.06em;border:1px solid rgba(212,175,110,.3);background:transparent;color:var(--gold);border-radius:20px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.15s}
-.cqbtn:hover{background:rgba(212,175,110,.12)}
-#chat-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--border);align-items:center}
-#chat-input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:20px;padding:8px 14px;color:var(--text);font-size:13px;outline:none;font-family:'Montserrat',sans-serif}
-#chat-input::placeholder{color:var(--text-dim)}
-#chat-send,#chat-mic,#chat-cam{width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.15s;flex-shrink:0}
-#chat-send{background:var(--gold);color:var(--bg)}
-#chat-send:hover{background:var(--gold-bright)}
-#chat-mic{background:rgba(255,255,255,.08);color:var(--text-dim)}
-#chat-mic.active{background:rgba(239,68,68,.25);color:#ef4444;animation:pulse .8s infinite}
-#chat-cam{background:rgba(255,255,255,.08);color:var(--text-dim)}
-#chat-cam.active{background:rgba(74,222,128,.2);color:#4ade80}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
-#cam-preview{width:100%;max-height:120px;object-fit:cover;display:none;border-bottom:1px solid var(--border)}
-#cam-preview.show{display:block}
-#chat-typing{font-size:12px;color:var(--text-dim);font-style:italic;padding:0 14px 6px;display:none}
-
+@media(max-width:640px){.tkg{grid-template-columns:1fr;}.spng{grid-template-columns:repeat(2,1fr);}.as{grid-template-columns:1fr;}.hf{padding:36px 22px 44px;}.cdu{flex:1 1 100%;}}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════ HERO ══════════════════ -->
-<section class="hero" id="top">
-  <div class="particles" id="particles"></div>
-<canvas id="fw-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55"></canvas>
+<div id="cd"></div>
+<div id="cr"></div>
 
-  <!-- art deco border corners -->
-  <div style="position:absolute;top:30px;left:30px;right:30px;bottom:30px;border:1px solid rgba(201,169,110,.18);pointer-events:none;z-index:1"></div>
-  <div style="position:absolute;top:36px;left:36px;right:36px;bottom:36px;border:1px solid rgba(201,169,110,.08);pointer-events:none;z-index:1"></div>
+<!-- NAV -->
+<nav id="nav">
+  <a class="nb" href="#">
+    <img class="nl" src="https://assets.cdn.filesafe.space/0N1nDaqfrcejQQ0HmVIt/media/68add399d09ce33ee13f1cf2.png" alt="Metropolitan Asian Family Services">
+  </a>
+  <ul class="nls">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tickets">Tickets</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#sponsors">Sponsor</a></li>
+  </ul>
+  <a href="#tickets" class="nt">Reserve Now</a>
+</nav>
 
-  <div class="hero-frame">
-    <div class="corner-tl" style="top:0;left:0;border-width:1px 0 0 1px"></div>
-    <div class="corner-tr"></div>
-    <div class="corner-bl"></div>
-    <div class="corner-br" style="bottom:0;right:0;border-width:0 1px 1px 0"></div>
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hc"></canvas>
+  <div class="hi">
+    <div class="hf">
+      <div class="hfc tl"></div><div class="hfc tr"></div>
+      <div class="hfc bl"></div><div class="hfc br"></div>
 
-    <p class="eyebrow">Muslim Association of the Fox Suburbs &nbsp;·&nbsp; An Evening of Elegance</p>
+      <div class="hey" id="hey">Metropolitan Asian Family Services Presents</div>
 
-    <h1>
-      <span class="year">The</span>
-      MAFS GALA
-      <span class="year" style="font-size:.35em;letter-spacing:.18em;margin-top:4px;display:block;color:rgba(240,230,200,.5)">2026</span>
-    </h1>
+      <div class="adv" style="margin-bottom:26px;opacity:0;" id="hd1">
+        <span class="adr"></span><span class="adg">◆</span><span class="adg s">◆</span><span class="adg">◆</span><span class="adl"></span>
+      </div>
 
-    <div class="deco">
-      <div class="deco-line"></div>
-      <div class="deco-diamond-sm"></div>
-      <div class="deco-diamond"></div>
-      <div class="deco-diamond-sm"></div>
-      <div class="deco-line"></div>
+      <h1 class="hh" id="hhh">MAFS<br>Annual Gala</h1>
+      <div class="hs" id="hhs">2 &nbsp; 0 &nbsp; 2 &nbsp; 6</div>
+
+      <div class="adv" style="margin:26px 0;opacity:0;" id="hd2">
+        <span class="adr"></span><span class="adg s">◆</span><span class="adg">◆</span><span class="adg s">◆</span><span class="adl"></span>
+      </div>
+
+      <p class="hth" id="hth">"A Night of Splendor &amp; Impact"</p>
+
+      <div class="hd" id="hdt">
+        <span>Saturday, November 14, 2026</span>
+        <span class="hsep">◆</span>
+        <span>6:00 PM – 11:00 PM CST</span>
+        <span class="hsep">◆</span>
+        <span>The Grand Ballroom · Chicago, IL</span>
+      </div>
+
+      <div class="hct" id="hcta">
+        <a href="#tickets" class="bp"><span>Reserve Your Seat</span></a>
+        <a href="#about" class="bo">Our Story</a>
+      </div>
     </div>
-
-    <p class="hero-sub">A Night of Jazz, Charity &amp; Unforgettable Moments</p>
-
-    <div class="event-meta">
-      <div class="event-meta-item">
-        <div class="label">Date</div>
-        <div class="value">Saturday, December 12 · 2026</div>
-      </div>
-      <div class="event-meta-item" style="border-left:1px solid rgba(201,169,110,.2);border-right:1px solid rgba(201,169,110,.2);padding:0 32px">
-        <div class="label">Doors Open</div>
-        <div class="value">6:00 PM · Dinner 7:30 PM</div>
-      </div>
-      <div class="event-meta-item" style="border-right:1px solid rgba(201,169,110,.2);padding:0 32px">
-        <div class="label">Venue</div>
-        <div class="value">1 E Bode Rd, Streamwood IL</div>
-      </div>
-      <div class="event-meta-item">
-        <div class="label">Dress Code</div>
-        <div class="value">Black Tie</div>
-      </div>
-    </div>
-
-    <!-- Countdown -->
-    <div id="countdown" style="display:flex;gap:24px;justify-content:center;margin:28px 0 36px;flex-wrap:wrap">
-      <div class="cdown-item"><span class="cdown-num" id="cd-days">--</span><span class="cdown-lbl">Days</span></div>
-      <div class="cdown-sep">◆</div>
-      <div class="cdown-item"><span class="cdown-num" id="cd-hrs">--</span><span class="cdown-lbl">Hours</span></div>
-      <div class="cdown-sep">◆</div>
-      <div class="cdown-item"><span class="cdown-num" id="cd-min">--</span><span class="cdown-lbl">Minutes</span></div>
-      <div class="cdown-sep">◆</div>
-      <div class="cdown-item"><span class="cdown-num" id="cd-sec">--</span><span class="cdown-lbl">Seconds</span></div>
-    </div>
-
-    <a href="#tickets" class="btn-gold">Reserve Your Table</a>
-
-    <div class="scroll-hint" style="margin-top:40px">✦ &nbsp; Scroll to Explore &nbsp; ✦</div>
   </div>
+  <div class="sh"><span class="st">Scroll</span><div class="sl"></div></div>
 </section>
 
-<!-- ══════════════════ ABOUT ══════════════════ -->
-<section class="about">
-  <div class="sec-inner">
-    <div class="sec-hdr">
-      <p class="over">The Occasion</p>
-      <h2>Where Community Meets Elegance</h2>
-      <p>Join us for an extraordinary evening celebrating faith, fellowship, and the transformative power of community service. Every ticket purchased directly funds MAFS programs supporting seniors, families, and youth across the Fox Suburbs.</p>
-    </div>
-    <div class="about-grid">
-      <div class="about-item">
-        <span class="icon">🎷</span>
-        <h3>Live Entertainment</h3>
-        <p>An evening of jazz, fine dining, and curated performances in the spirit of the Roaring Twenties.</p>
-      </div>
-      <div class="about-item">
-        <span class="icon">✦</span>
-        <h3>Community Impact</h3>
-        <p>Every dollar raised directly supports MAFS senior care, youth programs, and family services.</p>
-      </div>
-      <div class="about-item">
-        <span class="icon">🥂</span>
-        <h3>A Night to Remember</h3>
-        <p>Champagne reception, silent auction, gourmet dinner, and an atmosphere of pure 1920s glamour.</p>
-      </div>
-    </div>
+<!-- COUNTDOWN -->
+<div class="cdown">
+  <div class="cdi">
+    <div class="cdu"><div class="cdn" id="cd-d">--</div><div class="cdl">Days</div></div>
+    <div class="cdgm">◆</div>
+    <div class="cdu"><div class="cdn" id="cd-h">--</div><div class="cdl">Hours</div></div>
+    <div class="cdgm">◆</div>
+    <div class="cdu"><div class="cdn" id="cd-m">--</div><div class="cdl">Minutes</div></div>
+    <div class="cdgm">◆</div>
+    <div class="cdu"><div class="cdn" id="cd-s">--</div><div class="cdl">Seconds</div></div>
   </div>
-</section>
-
-<!-- ══════════════════ PURCHASE ══════════════════ -->
-<section class="purchase" id="tickets">
-
-  <!-- Event header bar -->
-  <div class="pur-header">
-    <div class="pur-header-inner">
-      <div>
-        <div class="pur-event-name">MAFS Annual Gala 2026 &mdash; An Evening of Elegance</div>
-        <div class="pur-event-detail">Sat, Dec 12 2026 &nbsp;·&nbsp; Doors 6:00 PM · Dinner 7:30 PM &nbsp;·&nbsp; 1 E Bode Rd, Streamwood IL &nbsp;·&nbsp; Black Tie</div>
-      </div>
-      <div class="pur-avail-pill">● Tickets Available</div>
-    </div>
-  </div>
-
-  <div class="pur-body" id="purchase-body">
-
-    <!-- ── LEFT COLUMN ── -->
-    <div class="pur-left" id="pur-left">
-
-      <!-- TICKETS -->
-      <div class="pur-group-lbl" style="margin-bottom:0">Tickets</div>
-
-      <!-- VVIP -->
-      <div class="trow trow-vvip" id="trow-vvip">
-        <div class="trow-accent" style="background:linear-gradient(to bottom,#c4b5fd,#7c3aed)"></div>
-        <div class="trow-body">
-          <div class="trow-info">
-            <div class="trow-name">VVIP &mdash; Platinum Suite <span class="trow-badge">LIMITED</span></div>
-            <div class="trow-desc">Front-row fan arc · Champagne reception · Reserved table with namecard · Gift bag · Priority valet</div>
-            <div class="trow-avail">⚑ 38 of 50 remaining &nbsp;·&nbsp; Select exact seat on map below</div>
-          </div>
-          <div class="trow-right">
-            <div class="trow-price">$500 <span>/ seat</span></div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="vvip" data-d="-1">−</button>
-              <span class="tqv" id="tq-vvip">0</span>
-              <button class="tqb" data-t="vvip" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- VIP -->
-      <div class="trow trow-vip" id="trow-vip">
-        <div class="trow-accent" style="background:linear-gradient(to bottom,#f9a8d4,#be185d)"></div>
-        <div class="trow-body">
-          <div class="trow-info">
-            <div class="trow-name">VIP &mdash; Gold Reserve</div>
-            <div class="trow-desc">Arc seating with full stage view · Reserved namecard seat · Dinner &amp; beverages · Event programme</div>
-            <div class="trow-avail">⚑ 75 of 100 remaining &nbsp;·&nbsp; Select exact seat on map below</div>
-          </div>
-          <div class="trow-right">
-            <div class="trow-price">$250 <span>/ seat</span></div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="vip" data-d="-1">−</button>
-              <span class="tqv" id="tq-vip">0</span>
-              <button class="tqb" data-t="vip" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gold -->
-      <div class="trow" id="trow-gold">
-        <div class="trow-accent" style="background:linear-gradient(to bottom,var(--gold-bright),var(--gold))"></div>
-        <div class="trow-body">
-          <div class="trow-info">
-            <div class="trow-name">Gold &mdash; Grand Ballroom</div>
-            <div class="trow-desc">Open ballroom floor seating · Full dinner service · Access to all event programming</div>
-            <div class="trow-avail">200 seats · First come first serve · Click any gold seat on the map</div>
-          </div>
-          <div class="trow-right">
-            <div class="trow-price">$150 <span>/ ticket</span></div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="gold" data-d="-1">−</button>
-              <span class="tqv" id="tq-gold">0</span>
-              <button class="tqb" data-t="gold" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- General -->
-      <div class="trow" id="trow-general">
-        <div class="trow-accent" style="background:linear-gradient(to bottom,#94a3b8,#475569)"></div>
-        <div class="trow-body">
-          <div class="trow-info">
-            <div class="trow-name">General &mdash; The Promenade</div>
-            <div class="trow-desc">General admission entry · Dinner &amp; refreshments · Full event access</div>
-            <div class="trow-avail">200 seats · First come first serve · Click any grey seat on the map</div>
-          </div>
-          <div class="trow-right">
-            <div class="trow-price">$100 <span>/ ticket</span></div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="general" data-d="-1">−</button>
-              <span class="tqv" id="tq-general">0</span>
-              <button class="tqb" data-t="general" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SEAT MAP (slides in when VVIP or VIP > 0) -->
-      <div class="seat-map-collapse open" id="seat-map-collapse">
-        <div class="seat-map-inner">
-          <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px">
-            <span style="width:20px;height:20px;border:1px solid var(--gold);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">✦</span>
-            Choose Your Exact Seat (Optional — seats auto-assigned if skipped)
-          </div>
-          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding:8px 12px;border:1px solid rgba(212,175,110,.15);background:rgba(0,0,0,.2)">
-            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#a78bfa;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VVIP $500</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#f472b6;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>VIP $250</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#c9a96e;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Gold $150</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#64748b;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>General $100</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#4ade80;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Selected</span>
-            <span style="font-size:11px;color:var(--text-dim)"><i style="background:#1e2333;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle"></i>Sold</span>
-          </div>
-          <div class="chart-controls">
-            <button class="cc-btn" id="btn-zoom-in">＋ Zoom</button>
-            <button class="cc-btn" id="btn-zoom-out">－ Zoom</button>
-            <button class="cc-btn" id="btn-rot-l">↺ Rotate</button>
-            <button class="cc-btn" id="btn-rot-r">↻ Rotate</button>
-            <button class="cc-btn" id="btn-reset">⊡ Reset</button>
-            <span class="cc-hint">Drag to pan · Pinch to zoom</span>
-          </div>
-          <div class="chart-container" id="chart-container">
-            <div class="seat-tip" id="seat-tip"></div>
-            <div id="svg-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;transform-origin:center center"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MERCH -->
-      <div class="pur-group-lbl" style="margin-top:32px;margin-bottom:0">Add-Ons &amp; Merchandise</div>
-
-      <div class="mrow">
-        <div class="mrow-icon">📖</div>
-        <div class="mrow-body">
-          <div class="mrow-info">
-            <div class="mrow-name">Commemorative Gala Programme</div>
-            <div class="mrow-desc">Full-colour 48-page keepsake · Event schedule, donor recognition &amp; photos</div>
-          </div>
-          <div class="mrow-right">
-            <div class="mrow-price">$25</div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="m_prog" data-d="-1">−</button>
-              <span class="tqv" id="tq-m_prog">0</span>
-              <button class="tqb" data-t="m_prog" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mrow">
-        <div class="mrow-icon">🛍️</div>
-        <div class="mrow-body">
-          <div class="mrow-info">
-            <div class="mrow-name">MAFS Gala 2026 Tote Bag</div>
-            <div class="mrow-desc">Limited edition canvas tote · Art deco gold print · Exclusive to gala attendees</div>
-          </div>
-          <div class="mrow-right">
-            <div class="mrow-price">$35</div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="m_tote" data-d="-1">−</button>
-              <span class="tqv" id="tq-m_tote">0</span>
-              <button class="tqb" data-t="m_tote" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mrow">
-        <div class="mrow-icon">📸</div>
-        <div class="mrow-body">
-          <div class="mrow-info">
-            <div class="mrow-name">Professional Photo Package</div>
-            <div class="mrow-desc">High-res digital gallery · 3 printed 5×7 portraits · Delivered within 2 weeks</div>
-          </div>
-          <div class="mrow-right">
-            <div class="mrow-price">$75</div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="m_photo" data-d="-1">−</button>
-              <span class="tqv" id="tq-m_photo">0</span>
-              <button class="tqb" data-t="m_photo" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mrow">
-        <div class="mrow-icon">🖼️</div>
-        <div class="mrow-body">
-          <div class="mrow-info">
-            <div class="mrow-name">Limited Edition Gala Poster</div>
-            <div class="mrow-desc">18×24 art deco print · Signed &amp; numbered · Hand-delivered at the event</div>
-          </div>
-          <div class="mrow-right">
-            <div class="mrow-price">$50</div>
-            <div class="trow-qty">
-              <button class="tqb" data-t="m_poster" data-d="-1">−</button>
-              <span class="tqv" id="tq-m_poster">0</span>
-              <button class="tqb" data-t="m_poster" data-d="1">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /pur-left -->
-
-    <!-- ── RIGHT COLUMN: Order Summary ── -->
-    <div class="pur-right" id="pur-right">
-      <div class="pur-summary" id="pur-summary">
-
-        <div class="pur-sum-hdr">
-          Order Summary
-          <span id="sum-count" style="font-size:11px;color:var(--text-dim);letter-spacing:.05em;text-transform:none;font-family:'Cormorant Garamond',serif;font-style:italic">0 items</span>
-        </div>
-
-        <div class="pur-sum-body" id="sum-lines">
-          <div class="sum-empty">Select tickets above to begin</div>
-        </div>
-
-        <div class="pur-sum-total">
-          <span class="pur-sum-total-lbl">Total</span>
-          <span class="pur-sum-total-val">$<span id="cart-total">0</span></span>
-        </div>
-
-        <div class="pur-form-wrap">
-          <label class="pur-input-lbl" for="g-name">Full Name</label>
-          <input class="pur-input" id="g-name" type="text" placeholder="Jane Smith" autocomplete="name">
-          <label class="pur-input-lbl" for="g-email">Email Address</label>
-          <input class="pur-input" id="g-email" type="email" placeholder="jane@email.com" autocomplete="email">
-          <label class="pur-input-lbl" for="g-phone">Phone Number</label>
-          <input class="pur-input" id="g-phone" type="tel" placeholder="(312) 555-0100" autocomplete="tel">
-        </div>
-
-        <div id="g-notice" style="display:none;margin:0 20px 12px;padding:10px 14px;font-size:12px;border:1px solid;font-family:'Cormorant Garamond',serif;font-style:italic"></div>
-
-        <div class="pur-checkout-wrap">
-          <button class="btn-checkout" id="btn-checkout">Proceed to Payment &rarr;</button>
-          <div class="pur-secure">🔒 &nbsp; Seats held 24 hours &nbsp;·&nbsp; Secure checkout</div>
-        </div>
-
-      </div>
-    </div><!-- /pur-right -->
-
-  </div><!-- /pur-body -->
-</section>
-
-<!-- ══════════════════ FOOTER ══════════════════ -->
-<footer>
-  <div class="ft-logo">MAFS</div>
-  <div class="deco" style="margin:16px auto;max-width:300px">
-    <div class="deco-line"></div>
-    <div class="deco-diamond-sm"></div>
-    <div class="deco-diamond"></div>
-    <div class="deco-diamond-sm"></div>
-    <div class="deco-line"></div>
-  </div>
-  <p>Muslim Association of the Fox Suburbs<br>
-  1 E Bode Rd, Streamwood, IL 60107<br>
-  <a href="tel:8473067606">(847) 306-7606</a> &nbsp;·&nbsp;
-  <a href="mailto:info@mafsinc.com">info@mafsinc.com</a></p>
-  <p style="margin-top:20px;font-size:12px;opacity:.4">© 2026 MAFS. All rights reserved.</p>
-</footer>
-
-<script>
-(function(){
-'use strict';
-// ── CONFIG ──
-var CFG={
-  appsScriptUrl:'PASTE_SCRIPT_URL_HERE',
-  paymentLinks:{VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',GOLD:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',GENERAL:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'},
-  prices:{VVIP:500,VIP:250,GOLD:150,GENERAL:100},
-  capacity:{GOLD:200,GENERAL:200}
-};
-
-var ARCS=[
-  {t:'VVIP',n:15,r:130,a0:215,a1:325},
-  {t:'VVIP',n:17,r:155,a0:212,a1:328},
-  {t:'VVIP',n:18,r:180,a0:209,a1:331},
-  {t:'VIP', n:22,r:208,a0:207,a1:333},
-  {t:'VIP', n:24,r:235,a0:205,a1:335},
-  {t:'VIP', n:26,r:262,a0:203,a1:337},
-  {t:'VIP', n:28,r:289,a0:201,a1:339},
-  {t:'GOLD',n:62,r:310,a0:199,a1:341},
-  {t:'GOLD',n:68,r:322,a0:198,a1:342},
-  {t:'GOLD',n:70,r:334,a0:197,a1:343},
-  {t:'GEN', n:62,r:352,a0:197,a1:343},
-  {t:'GEN', n:68,r:364,a0:196,a1:344},
-  {t:'GEN', n:70,r:376,a0:195,a1:345}
-];
-var CX=400,CY=500,NS='http://www.w3.org/2000/svg';
-var ST={sel:new Set(),inv:{},vvipQty:0,vipQty:0,gQty:0,nQty:0,merch:{m_prog:0,m_tote:0,m_photo:0,m_poster:0}};
-var MERCH_PRICES={m_prog:25,m_tote:35,m_photo:75,m_poster:50};
-var MERCH_NAMES={m_prog:'Gala Programme',m_tote:'Tote Bag',m_photo:'Photo Package',m_poster:'Gala Poster'};
-// Pre-sold seats
-['VVIP-01','VVIP-02','VVIP-03','VVIP-04','VVIP-05','VVIP-06','VVIP-07','VVIP-08','VVIP-09','VVIP-10','VVIP-11','VVIP-12'].forEach(function(id){ST.inv[id]='sold';});
-['VIP-001','VIP-002','VIP-003','VIP-004','VIP-005','VIP-006','VIP-007','VIP-008','VIP-009','VIP-010','VIP-011','VIP-012','VIP-013','VIP-014','VIP-015','VIP-016','VIP-017','VIP-018','VIP-019','VIP-020','VIP-021','VIP-022','VIP-023','VIP-024','VIP-025'].forEach(function(id){ST.inv[id]='sold';});
-var circles={};
-var vi=0,pi=0,gi=0,ni=0;
-
-var ALL_ARCS=ARCS.map(function(arc){
-  var ids=[];
-  for(var i=0;i<arc.n;i++){
-    if(arc.t==='VVIP') ids.push('VVIP-'+(++vi<10?'0':'')+vi);
-    else if(arc.t==='VIP') ids.push('VIP-'+(++pi<10?'00':pi<100?'0':'')+pi);
-    else if(arc.t==='GOLD') ids.push('GOLD-'+(++gi<10?'00':gi<100?'0':'')+gi);
-    else ids.push('GEN-'+(++ni<10?'00':ni<100?'0':'')+ni);
-  }
-  return {arc:arc,ids:ids};
-});
-
-function r2d(d){return d*Math.PI/180;}
-function px(r,a){return CX+r*Math.cos(r2d(a));}
-function py(r,a){return CY+r*Math.sin(r2d(a));}
-function f(v){return v.toFixed(1);}
-function svgEl(tag,attrs){
-  var el=document.createElementNS(NS,tag);
-  for(var k in attrs) el.setAttribute(k,attrs[k]);
-  return el;
-}
-function bandPath(ri,ro,a0,a1){
-  return 'M'+f(px(ro,a0))+','+f(py(ro,a0))+
-    ' A'+ro+','+ro+' 0 0,1 '+f(px(ro,a1))+','+f(py(ro,a1))+
-    ' L'+f(px(ri,a1))+','+f(py(ri,a1))+
-    ' A'+ri+','+ri+' 0 0,0 '+f(px(ri,a0))+','+f(py(ri,a0))+' Z';
-}
-function seatColor(id,t){
-  if(ST.sel.has(id)) return '#4ade80';
-  var s=ST.inv[id]||'available';
-  if(s==='sold') return '#1e2333';
-  if(s==='locked') return '#3b3550';
-  if(t==='VVIP') return '#a78bfa';
-  if(t==='VIP')  return '#f472b6';
-  if(t==='GOLD') return '#c9a96e';
-  return '#64748b';
-}
-
-function buildSVG(){
-  var svg=svgEl('svg',{viewBox:'20 110 760 420',width:'100%',height:'100%',preserveAspectRatio:'xMidYMid meet',style:'display:block;width:100%;height:100%'});
-
-  // Subtle zone fills for orientation
-  svg.appendChild(svgEl('path',{d:bandPath(302,340,199,341),fill:'#c9a96e',opacity:'.05','pointer-events':'none'}));
-  svg.appendChild(svgEl('path',{d:bandPath(348,380,196,344),fill:'#64748b',opacity:'.04','pointer-events':'none'}));
-
-  circles={};
-  ALL_ARCS.forEach(function(entry){
-    var arc=entry.arc,ids=entry.ids;
-    ids.forEach(function(id,i){
-      var ratio=arc.n>1?i/(arc.n-1):0.5;
-      var a=arc.a0+(arc.a1-arc.a0)*ratio;
-      var x=px(arc.r,a),y=py(arc.r,a);
-      var rad=arc.t==='VVIP'?6:arc.t==='VIP'?4.5:arc.t==='GOLD'?3:2.5;
-      var c=svgEl('circle',{cx:f(x),cy:f(y),r:rad,fill:seatColor(id,arc.t),'data-id':id,'data-t':arc.t,style:'cursor:pointer;transition:fill .12s'});
-      var s=ST.inv[id]||'available';
-      if(s==='available'){
-        (function(cid,circle,t){
-          circle.onclick=function(){
-            if(t==='GOLD'||t==='GEN'){
-              // first come first serve — click just adds/removes from qty selection
-              toggleSeat(cid);
-              // sync qty button display to match selected count
-              var goldCount=Array.from(ST.sel).filter(function(s){return s.indexOf('GOLD-')===0;}).length;
-              var genCount=Array.from(ST.sel).filter(function(s){return s.indexOf('GEN-')===0;}).length;
-              ST.gQty=goldCount; ST.nQty=genCount;
-              var gEl=document.getElementById('tq-gold'); if(gEl) gEl.textContent=goldCount;
-              var nEl=document.getElementById('tq-general'); if(nEl) nEl.textContent=genCount;
-            } else {
-              toggleSeat(cid);
-            }
-          };
-          circle.onmouseenter=function(){if(!ST.sel.has(cid)) circle.setAttribute('fill','#fcd34d');};
-          circle.onmouseleave=function(){circle.setAttribute('fill',seatColor(cid,t));};
-        })(id,c,arc.t);
-      }
-      svg.appendChild(c);
-      circles[id]=c;
-    });
-  });
-
-  // Stage
-  svg.appendChild(svgEl('rect',{x:'295',y:'487',width:'210',height:'18',rx:'3',fill:'#0d0c12',stroke:'#c9a96e','stroke-width':'.8'}));
-  var st=svgEl('text',{x:'400',y:'500',fill:'#c9a96e','font-size':'9','font-weight':'700','text-anchor':'middle','letter-spacing':'4','font-family':'Montserrat,sans-serif','pointer-events':'none'});
-  st.textContent='S T A G E';
-  svg.appendChild(st);
-
-  return svg;
-}
-
-function updateColors(){
-  for(var id in circles){
-    var c=circles[id];
-    c.setAttribute('fill',seatColor(id,c.getAttribute('data-t')));
-  }
-}
-function toggleSeat(id){
-  if(ST.sel.has(id)) ST.sel.delete(id); else ST.sel.add(id);
-  updateColors();
-  renderCart();
-}
-function calcTotal(){
-  var t=0;
-  var vvSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
-  var vpSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
-  var vvCount=vvSel.length||ST.vvipQty;
-  var vpCount=vpSel.length||ST.vipQty;
-  t+=vvCount*CFG.prices.VVIP+vpCount*CFG.prices.VIP;
-  t+=ST.gQty*CFG.prices.GOLD+ST.nQty*CFG.prices.GENERAL;
-  Object.keys(ST.merch).forEach(function(k){t+=ST.merch[k]*(MERCH_PRICES[k]||0);});
-  return t;
-}
-function fmt(n){return n.toLocaleString();}
-function renderCart(){
-  var total=calcTotal();
-  document.getElementById('cart-total').textContent=fmt(total);
-  var vvSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
-  var vpSel=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
-  var vvCount=vvSel.length||ST.vvipQty;
-  var vpCount=vpSel.length||ST.vipQty;
-  var lines=[];
-  var itemCount=0;
-  if(vvCount){lines.push(sumLine('VVIP Platinum Suite x'+vvCount,fmt(vvCount*CFG.prices.VVIP)));itemCount+=vvCount;}
-  if(vpCount){lines.push(sumLine('VIP Gold Reserve x'+vpCount,fmt(vpCount*CFG.prices.VIP)));itemCount+=vpCount;}
-  if(ST.gQty){lines.push(sumLine('Gold Ballroom x'+ST.gQty+' (first come first serve)',fmt(ST.gQty*CFG.prices.GOLD)));itemCount+=ST.gQty;}
-  if(ST.nQty){lines.push(sumLine('General Admission x'+ST.nQty+' (first come first serve)',fmt(ST.nQty*CFG.prices.GENERAL)));itemCount+=ST.nQty;}
-  Object.keys(ST.merch).forEach(function(k){
-    if(ST.merch[k]>0){lines.push(sumLine(MERCH_NAMES[k]+' x'+ST.merch[k],fmt(ST.merch[k]*MERCH_PRICES[k])));itemCount+=ST.merch[k];}
-  });
-  var box=document.getElementById('sum-lines');
-  if(lines.length){
-    box.innerHTML=lines.join('');
-  } else {
-    box.innerHTML='<div class="sum-empty">Select tickets above to begin</div>';
-  }
-  var cnt=document.getElementById('sum-count');
-  if(cnt) cnt.textContent=itemCount+(itemCount===1?' item':' items');
-  // highlight active rows
-  ['vvip','vip','gold','general'].forEach(function(tt){
-    var row=document.getElementById('trow-'+tt);
-    if(row){
-      var active=(tt==='vvip'&&vvCount>0)||(tt==='vip'&&vpCount>0)||(tt==='gold'&&ST.gQty>0)||(tt==='general'&&ST.nQty>0);
-      row.classList.toggle('trow-active',active);
-    }
-  });
-  // seat map always visible
-  var mapOpen=true;
-  var collapse=document.getElementById('seat-map-collapse');
-  if(collapse) collapse.classList.toggle('open',mapOpen);
-  if(window._updateStickyCart){var _vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});var _vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});window._updateStickyCart(ST.sel,ST.gQty+(_vv.length||ST.vvipQty),ST.nQty+(_vp.length||ST.vipQty),total);}
-}
-function sumLine(name,price){
-  return '<div class="sum-line"><span class="sum-line-name">'+name+'</span><span class="sum-line-price">$'+price+'</span></div>';
-}
-function showConfirmation(name,email,orderId){
-  var panel=document.querySelector('.seat-right');
-  var total=calcTotal();
-  var vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
-  var vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
-  var lines=[];
-  if(vv.length) lines.push('VVIP &times;'+vv.length);
-  if(vp.length) lines.push('VIP &times;'+vp.length);
-  if(ST.gQty) lines.push('Gold &times;'+ST.gQty);
-  if(ST.nQty) lines.push('General &times;'+ST.nQty);
-  var firstName=name.split(' ')[0];
-  panel.style.transition='opacity .3s';
-  panel.style.opacity='0';
-  setTimeout(function(){
-    while(panel.firstChild) panel.removeChild(panel.firstChild);
-
-    // ── confirmation card built entirely with DOM ──
-    function el(tag,attrs,text){
-      var e=document.createElement(tag);
-      if(attrs) Object.keys(attrs).forEach(function(k){
-        if(k==='style') e.style.cssText=attrs[k];
-        else e.setAttribute(k,attrs[k]);
-      });
-      if(text!==undefined) e.textContent=text;
-      return e;
-    }
-
-    var checkWrap=el('div',{style:'text-align:center;padding:24px 0 18px'});
-    var checkCircle=el('div',{style:'width:64px;height:64px;border:2px solid #d4af6e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;background:rgba(212,175,110,.08)'});
-    var checkSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    checkSvg.setAttribute('width','28');checkSvg.setAttribute('height','28');checkSvg.setAttribute('viewBox','0 0 28 28');
-    var checkPath=document.createElementNS('http://www.w3.org/2000/svg','polyline');
-    checkPath.setAttribute('points','5,14 11,20 23,8');checkPath.setAttribute('fill','none');checkPath.setAttribute('stroke','#f5d97a');checkPath.setAttribute('stroke-width','2.5');checkPath.setAttribute('stroke-linecap','round');checkPath.setAttribute('stroke-linejoin','round');
-    checkSvg.appendChild(checkPath);
-    checkCircle.appendChild(checkSvg);
-
-    var hd=el('div',{style:"font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fdf0cc;letter-spacing:.04em;margin-bottom:6px"},'Reservation Received');
-    var sub=el('div',{style:"font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(248,239,213,.65);line-height:1.6;margin-bottom:24px"});
-    sub.textContent='Thank you, '+firstName+'. Your seats are held for 24 hours while we prepare your payment confirmation.';
-
-    checkWrap.appendChild(checkCircle);
-    checkWrap.appendChild(hd);
-    checkWrap.appendChild(sub);
-
-    // order details box
-    var box=el('div',{style:'border:1px solid rgba(212,175,110,.25);padding:16px;background:rgba(0,0,0,.25);margin-bottom:20px;position:relative'});
-    var boxLine=el('div',{style:'position:absolute;top:0;left:8px;right:8px;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,110,.4),transparent)'});
-    box.appendChild(boxLine);
-
-    function detailRow(label,val){
-      var row=el('div',{style:'display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(212,175,110,.1);font-size:12px'});
-      row.appendChild(el('span',{style:"color:rgba(248,239,213,.5);letter-spacing:.08em;font-family:'Montserrat',sans-serif;font-size:10px;text-transform:uppercase"},label));
-      row.appendChild(el('span',{style:"color:#fdf0cc;font-family:'Cormorant Garamond',serif;font-size:14px"},val));
-      return row;
-    }
-    box.appendChild(detailRow('Order ID', orderId));
-    box.appendChild(detailRow('Name', name));
-    box.appendChild(detailRow('Email', email));
-    box.appendChild(detailRow('Tickets', lines.join(', ')));
-    var totalRow=el('div',{style:'display:flex;justify-content:space-between;padding-top:10px;margin-top:4px'});
-    totalRow.appendChild(el('span',{style:"font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(248,239,213,.5);font-family:'Montserrat',sans-serif;align-self:center"},'Total'));
-    totalRow.appendChild(el('span',{style:"font-family:'Playfair Display',serif;font-size:20px;color:#d4af6e"},'$'+fmt(total)));
-    box.appendChild(totalRow);
-
-    // info message
-    var info=el('div',{style:"font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(248,239,213,.55);text-align:center;line-height:1.7;margin-bottom:20px"});
-    info.textContent='Payment instructions will be sent to '+email+' within 2 hours. For assistance call (847) 306-7606.';
-
-    // new reservation button
-    var resetBtn=el('button',{style:"width:100%;padding:14px;border:1px solid rgba(212,175,110,.4);background:transparent;color:#d4af6e;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;cursor:pointer"},'Add Another Reservation');
-    resetBtn.onclick=function(){location.reload();};
-
-    panel.appendChild(checkWrap);
-    panel.appendChild(box);
-    panel.appendChild(info);
-    panel.appendChild(resetBtn);
-    panel.style.opacity='1';
-  },300);
-}
-
-function showNotice(msg,type){
-  var el=document.getElementById('g-notice');
-  el.textContent=msg;el.style.display='block';
-  var map={error:['rgba(220,38,38,.1)','#fca5a5','#fca5a5'],warn:['rgba(245,158,11,.1)','#fcd34d','#fcd34d'],info:['rgba(201,169,110,.1)','#c9a96e','#c9a96e']};
-  var c=map[type]||map.info;
-  el.style.background=c[0];el.style.borderColor=c[1];el.style.color=c[2];
-  setTimeout(function(){el.style.display='none';},5000);
-}
-
-async function checkout(){
-  var name=document.getElementById('g-name').value.trim();
-  var email=document.getElementById('g-email').value.trim();
-  var phone=document.getElementById('g-phone').value.trim();
-  var total=calcTotal();
-  if(!name||!email||!phone){showNotice('Please enter your name, email, and phone.','warn');return;}
-  if(total<=0){showNotice('Please select at least one ticket.','warn');return;}
-  var btn=document.getElementById('btn-checkout');
-  btn.disabled=true;btn.textContent='Processing…';
-  var orderId='MAFS-'+Date.now();
-  if(!CFG.appsScriptUrl.includes('PASTE_')){
-    try{
-      var res=await fetch(CFG.appsScriptUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'reserve',name:name,email:email,phone:phone,seatIds:Array.from(ST.sel),goldQty:ST.gQty,generalQty:ST.nQty,total:total})});
-      var d=await res.json();
-      if(!d.ok){showNotice(d.error+(d.unavailable?': '+d.unavailable.join(', '):''),'error');btn.disabled=false;btn.textContent='Proceed to Payment →';return;}
-      orderId=d.orderId;
-    }catch(e){console.warn(e);}
-  }
-  var vv=Array.from(ST.sel).filter(function(s){return s.indexOf('VVIP')===0;});
-  var vp=Array.from(ST.sel).filter(function(s){return s.indexOf('VIP')===0;});
-  var link=vv.length?CFG.paymentLinks.VVIP:vp.length?CFG.paymentLinks.VIP:ST.gQty?CFG.paymentLinks.GOLD:CFG.paymentLinks.GENERAL;
-  if(!link||link.includes('PASTE_')){
-    showNotice('Order '+orderId+' logged. Payment links coming soon — contact (847) 306-7606 to complete.','info');
-  } else {
-    window.location.href=link+(link.includes('?')?'&':'?')+'order_id='+encodeURIComponent(orderId);
-  }
-  btn.disabled=false;btn.textContent='Proceed to Payment →';
-}
-
-async function loadInventory(){
-  if(!CFG.appsScriptUrl||CFG.appsScriptUrl.includes('PASTE_')) return;
-  try{
-    var res=await fetch(CFG.appsScriptUrl+'?action=inventory');
-    var d=await res.json();
-    if(d.ok) d.seats.forEach(function(s){ST.inv[s.seatId]=s.status;});
-    updateColors();
-  }catch(e){}
-}
-
-// ── FIREWORKS ──
-(function(){
-  var canvas=document.createElement('canvas');
-  canvas.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55';
-  document.body.insertBefore(canvas,document.body.firstChild);
-  var ctx=canvas.getContext('2d');
-  var W,H,particles=[];
-  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-  resize();
-  window.addEventListener('resize',resize);
-
-  var COLORS=['#f0d07a','#c9a96e','#f7e9c0','#fcd34d','#fff8dc','#e0c97a','#fffacd'];
-
-  function Firework(x,y){
-    this.x=x;this.y=y;
-    this.color=COLORS[Math.floor(Math.random()*COLORS.length)];
-    this.particles=[];
-    var count=Math.floor(40+Math.random()*30);
-    for(var i=0;i<count;i++){
-      var angle=Math.random()*Math.PI*2;
-      var speed=Math.random()*3.5+1;
-      this.particles.push({x:x,y:y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,alpha:1,size:Math.random()*2+.5});
-    }
-  }
-  Firework.prototype.update=function(){
-    this.particles.forEach(function(p){
-      p.x+=p.vx;p.y+=p.vy;p.vy+=0.06;p.vx*=0.98;p.alpha-=0.013;
-    });
-    this.particles=this.particles.filter(function(p){return p.alpha>0;});
-    return this.particles.length>0;
-  };
-  Firework.prototype.draw=function(ctx){
-    var color=this.color;
-    this.particles.forEach(function(p){
-      ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=color;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
-      ctx.restore();
-    });
-  };
-
-  var fwList=[];
-  function launchRandom(){
-    var x=W*.1+Math.random()*(W*.8);
-    var y=H*.1+Math.random()*(H*.55);
-    fwList.push(new Firework(x,y));
-  }
-
-  // Initial burst
-  for(var i=0;i<4;i++) setTimeout(launchRandom,i*280);
-  // Ongoing random launches
-  setInterval(function(){
-    if(Math.random()<0.7) launchRandom();
-  },1800);
-
-  function loop(){
-    ctx.clearRect(0,0,W,H);
-    fwList=fwList.filter(function(fw){var alive=fw.update();fw.draw(ctx);return alive;});
-    requestAnimationFrame(loop);
-  }
-  loop();
-
-/* ── FIREWORKS ── */
-(function(){
-  var canvas=document.getElementById('fw-canvas');
-  if(!canvas)return;
-  var ctx=canvas.getContext('2d');
-  var W,H,particles=[];
-  var COLORS=['#d4af6e','#f5d97a','#ffffff','#a78bfa','#4ade80','#fcd34d','#f9a8d4'];
-
-  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-  resize();
-  window.addEventListener('resize',resize);
-
-  function Particle(x,y,color){
-    var angle=Math.random()*Math.PI*2;
-    var speed=Math.random()*3+1.5;
-    this.x=x; this.y=y;
-    this.vx=Math.cos(angle)*speed;
-    this.vy=Math.sin(angle)*speed;
-    this.alpha=1;
-    this.decay=Math.random()*0.018+0.012;
-    this.size=Math.random()*2+1;
-    this.color=color;
-    this.trail=[];
-  }
-  Particle.prototype.update=function(){
-    this.trail.push({x:this.x,y:this.y,a:this.alpha});
-    if(this.trail.length>4)this.trail.shift();
-    this.x+=this.vx; this.y+=this.vy;
-    this.vy+=0.04;  /* gravity */
-    this.vx*=0.98; this.vy*=0.98;
-    this.alpha-=this.decay;
-  };
-  Particle.prototype.draw=function(){
-    for(var i=0;i<this.trail.length;i++){
-      var t=this.trail[i];
-      ctx.globalAlpha=t.a*0.3*(i/this.trail.length);
-      ctx.fillStyle=this.color;
-      ctx.beginPath();ctx.arc(t.x,t.y,this.size*.6,0,Math.PI*2);ctx.fill();
-    }
-    ctx.globalAlpha=this.alpha;
-    ctx.fillStyle=this.color;
-    ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();
-    ctx.globalAlpha=1;
-  };
-
-  function burst(x,y){
-    var color=COLORS[Math.floor(Math.random()*COLORS.length)];
-    var count=Math.floor(Math.random()*8+10);
-    for(var i=0;i<count;i++) particles.push(new Particle(x,y,color));
-    /* gold sparkle ring */
-    for(var j=0;j<5;j++){
-      var sp=new Particle(x,y,'#fdf0cc');
-      sp.size=0.8; sp.decay=0.025;
-      sp.vx*=1.6; sp.vy*=1.6;
-      particles.push(sp);
-    }
-  }
-
-  var lastBurst=0;
-  var burstInterval=2200;
-
-  function loop(ts){
-    requestAnimationFrame(loop);
-    ctx.clearRect(0,0,W,H);
-    /* periodic auto-burst */
-    if(ts-lastBurst>burstInterval){
-      lastBurst=ts;
-      burstInterval=1800+Math.random()*2400;
-      /* fire 1-2 bursts per cycle */
-      var count=Math.random()<0.4?2:1;
-      for(var b=0;b<count;b++){
-        burst(
-          W*0.15+Math.random()*(W*0.70),
-          H*0.05+Math.random()*(H*0.45)
-        );
-      }
-    }
-    particles=particles.filter(function(p){
-      p.update();p.draw();
-      return p.alpha>0.02;
-    });
-  }
-  requestAnimationFrame(loop);
-
-/* ── CHATBOT GUIDE ── */
-(function(){
-  var KB = {
-    greet: "Welcome to the MAFS 2026 Gala! I'm your concierge. Ask me anything about tickets, seating, the evening's programme, or how to reserve your table.",
-    tickets: "We have four ticket tiers:\n\n✦ VVIP – $500/seat (50 available)\nFront-row fan arc, champagne reception, reserved namecard table, gift bag & priority valet.\n\n✦ VIP – $250/seat (100 available)\nArc seating with stage view, reserved seat with namecard, dinner & beverages.\n\n✦ Gold – $150/ticket (200 available)\nBallroom floor open seating, full dinner service, all programming.\n\n✦ General – $100/ticket (200 available)\nGeneral admission, dinner & refreshments, all programming.",
-    vvip: "VVIP is our Platinum Suite — the finest seats in the house. Front-row fan arc seating with a clear stage view, a champagne welcome reception, a reserved table with your namecard, an exclusive gift bag, and priority valet parking. Only 50 seats available at $500 each.",
-    vip: "VIP (Gold Reserve) offers arc seating with a perfect stage view, a reserved seat with your namecard, complimentary dinner & beverages, and the event programme. 100 seats at $250 each.",
-    gold: "Gold (Grand Ballroom) is open seating on the ballroom floor — great atmosphere, full dinner service, access to all programming, and the event programme. 200 tickets at $150 each.",
-    general: "General Admission (The Promenade) includes dinner & refreshments and access to all programming. 200 tickets at $100 each. First come, first served seating.",
-    date: "The MAFS Gala 2026 is on Saturday, December 12, 2026. Doors open at 6:00 PM with dinner service beginning at 7:30 PM.",
-    venue: "The gala is held at 1 E Bode Rd, Streamwood, IL 60107. Dress code is Black Tie.",
-    buy: "To buy tickets:\n1. Scroll up to 'Select Your Experience'\n2. Click your preferred tier (VVIP, VIP, Gold, or General)\n3. For VVIP/VIP — click individual seats on the fan arc map\n4. For Gold/General — click any available seat or use the +/- buttons\n5. Fill in your name, email, and phone\n6. Click 'Proceed to Payment'\nNeed help? Just ask!",
-    seating: "The interactive seat map lets you pick your exact seat. Purple dots = VVIP, pink = VIP, gold = Gold (first come first serve), grey = General (first come first serve). Green means selected, dark means sold.",
-    mission: "Every ticket directly funds MAFS programs supporting seniors, families, and youth across the Fox Suburbs — including elder care, family services, and youth development.",
-    contact: "For questions, call (847) 306-7606 or email info@mafsinc.com. Our team is happy to help with group reservations or accessibility needs.",
-    merch: "We also have event add-ons: a Commemorative Gala Programme ($25), MAFS 2026 Tote Bag ($35), Professional Photo Package ($75), and Limited Edition Gala Poster ($50). Add them in the purchase section!",
-    default: "Great question! For anything I can't answer, reach our team at (847) 306-7606 or info@mafsinc.com. I can help with: ticket prices, VVIP details, date & venue, how to buy, seating info, or our mission."
-  };
-
-  function match(q) {
-    q = q.toLowerCase();
-    if (/vvip|platinum|champagne|front.?row/.test(q)) return KB.vvip;
-    if (/vip|gold reserve|arc seat/.test(q)) return KB.vip;
-    if (/gold|ballroom floor|grand ballroom/.test(q)) return KB.gold;
-    if (/general|admission|promenade|cheapest|cheap/.test(q)) return KB.general;
-    if (/ticket|price|cost|how much|tier|package/.test(q)) return KB.tickets;
-    if (/when|date|time|december|doors/.test(q)) return KB.date;
-    if (/where|venue|address|location|streamwood|dress|attire/.test(q)) return KB.venue;
-    if (/buy|purchase|reserve|checkout|pay|how do/.test(q)) return KB.buy;
-    if (/seat|map|circle|click|select|pick/.test(q)) return KB.seating;
-    if (/mission|fund|support|community|program|senior|youth/.test(q)) return KB.mission;
-    if (/contact|call|email|phone|help|question/.test(q)) return KB.contact;
-    if (/merch|merchandise|programme|tote|photo|poster|add.?on/.test(q)) return KB.merch;
-    if (/hi|hello|hey|start|begin/.test(q)) return KB.greet;
-    return KB.default;
-  }
-
-  var panel = document.getElementById('chat-panel');
-  var msgs  = document.getElementById('chat-messages');
-  var input = document.getElementById('chat-input');
-  var mic   = document.getElementById('chat-mic');
-  var cam   = document.getElementById('chat-cam');
-  var typing= document.getElementById('chat-typing');
-  var preview = document.getElementById('cam-preview');
-  var recognition = null;
-  var camStream = null;
-
-  function addMsg(text, who) {
-    var d = document.createElement('div');
-    d.className = 'cmsg ' + who;
-    d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  function botReply(text) {
-    typing.style.display = 'block';
-    setTimeout(function() {
-      typing.style.display = 'none';
-      addMsg(text, 'bot');
-    }, 600 + Math.min(text.length * 8, 900));
-  }
-
-  function send(q) {
-    if (!q.trim()) return;
-    addMsg(q, 'user');
-    input.value = '';
-    botReply(match(q));
-  }
-
-  document.getElementById('chat-toggle').onclick = function() {
-    panel.classList.toggle('open');
-    if (panel.classList.contains('open') && msgs.children.length === 0) {
-      setTimeout(function(){ addMsg(KB.greet, 'bot'); }, 300);
-    }
-  };
-  document.getElementById('chat-close').onclick = function() { panel.classList.remove('open'); };
-  document.getElementById('chat-send').onclick = function() { send(input.value); };
-  input.onkeydown = function(e){ if(e.key==='Enter') send(input.value); };
-
-  document.querySelectorAll('.cqbtn').forEach(function(btn){
-    btn.onclick = function(){ send(btn.getAttribute('data-q')); };
-  });
-
-  // ── VOICE INPUT (Web Speech API) ──
-  mic.onclick = function() {
-    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      addMsg("Voice input isn't supported in this browser. Try Chrome or Edge.", 'bot');
-      return;
-    }
-    if (recognition && mic.classList.contains('active')) {
-      recognition.stop(); return;
-    }
-    recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    mic.classList.add('active');
-    recognition.start();
-    recognition.onresult = function(e) {
-      var transcript = e.results[0][0].transcript;
-      mic.classList.remove('active');
-      send(transcript);
-    };
-    recognition.onerror = function() { mic.classList.remove('active'); };
-    recognition.onend   = function() { mic.classList.remove('active'); };
-  };
-
-  // ── CAMERA TOGGLE ──
-  cam.onclick = function() {
-    if (camStream) {
-      camStream.getTracks().forEach(function(t){ t.stop(); });
-      camStream = null;
-      preview.classList.remove('show');
-      cam.classList.remove('active');
-      addMsg("Camera turned off.", 'bot');
-    } else {
-      navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false})
-        .then(function(stream) {
-          camStream = stream;
-          preview.srcObject = stream;
-          preview.classList.add('show');
-          cam.classList.add('active');
-          addMsg("Camera on! I can see you're ready to enjoy the gala experience. How can I help you today?", 'bot');
-        })
-        .catch(function() {
-          addMsg("Camera access was denied. You can still use the chat or voice input!", 'bot');
-        });
-    }
-  };
-})();
-
-})();
-
-})();
-
-// ── GOLD PARTICLES ──
-(function(){
-  var wrap=document.getElementById('particles');
-  if(!wrap) return;
-  for(var i=0;i<22;i++){
-    var p=document.createElement('div');
-    p.className='p';
-    var size=Math.random()*3+1;
-    p.style.cssText='width:'+size+'px;height:'+size+'px;left:'+Math.random()*100+'%;bottom:'+Math.random()*20+'%;opacity:'+(.2+Math.random()*.5)+';animation-duration:'+((8+Math.random()*14).toFixed(1))+'s;animation-delay:'+((Math.random()*8).toFixed(1))+'s';
-    wrap.appendChild(p);
-  }
-})();
-
-// ── INIT ──
-document.getElementById('svg-wrap').appendChild(buildSVG());
-renderCart();
-loadInventory();
-
-document.querySelectorAll('.tqb').forEach(function(btn){
-  btn.onclick=function(){
-    var t=btn.dataset.t,d=Number(btn.dataset.d);
-    var el=document.getElementById('tq-'+t);
-    if(t==='vvip'){ST.vvipQty=Math.max(0,Math.min(38,ST.vvipQty+d));if(el)el.textContent=ST.vvipQty;}
-    else if(t==='vip'){ST.vipQty=Math.max(0,Math.min(75,ST.vipQty+d));if(el)el.textContent=ST.vipQty;}
-    else if(t==='gold'){ST.gQty=Math.max(0,Math.min(200,ST.gQty+d));if(el)el.textContent=ST.gQty;}
-    else if(t==='general'){ST.nQty=Math.max(0,Math.min(200,ST.nQty+d));if(el)el.textContent=ST.nQty;}
-    else if(ST.merch.hasOwnProperty(t)){ST.merch[t]=Math.max(0,Math.min(20,ST.merch[t]+d));if(el)el.textContent=ST.merch[t];}
-    renderCart();
-  };
-});
-document.getElementById('btn-checkout').onclick=checkout;
-
-window.scrollToSeating=function(){
-  document.getElementById('tickets').scrollIntoView({behavior:'smooth'});
-};
-
-// ── ZOOM / PAN / ROTATE ──
-(function(){
-  var container=document.getElementById('chart-container');
-  var svgWrap=container.querySelector('#svg-wrap');
-  if(!svgWrap) return;
-  var scale=1,ox=0,oy=0,rot=0;
-  var MIN_SCALE=1,MAX_SCALE=4;
-  var dragging=false,startX,startY,startOx,startOy;
-  var pinchDist=null;
-
-  function clampPan(){
-    var cw=container.offsetWidth,ch=container.offsetHeight;
-    var sw=svgWrap.offsetWidth*scale,sh=svgWrap.offsetHeight*scale;
-    var maxOx=Math.max(0,sw-cw)*0.5+cw*0.15;
-    var maxOy=Math.max(0,sh-ch)*0.5+ch*0.15;
-    ox=Math.max(-maxOx,Math.min(maxOx,ox));
-    oy=Math.max(-maxOy,Math.min(maxOy,oy));
-  }
-
-  function apply(){
-    clampPan();
-    svgWrap.style.transform='translate('+ox+'px,'+oy+'px) scale('+scale+') rotate('+rot+'deg)';
-  }
-  svgWrap.style.transformOrigin='center center';
-
-  container.addEventListener('mousedown',function(e){
-    dragging=true;startX=e.clientX;startY=e.clientY;startOx=ox;startOy=oy;e.preventDefault();
-  });
-  window.addEventListener('mousemove',function(e){
-    if(!dragging) return;
-    ox=startOx+(e.clientX-startX);oy=startOy+(e.clientY-startY);apply();
-  });
-  window.addEventListener('mouseup',function(){dragging=false;});
-
-  container.addEventListener('wheel',function(e){
-    e.preventDefault();
-    var d=e.deltaY>0?-.12:.12;
-    scale=Math.max(MIN_SCALE,Math.min(MAX_SCALE,scale+d));
-    apply();
-  },{passive:false});
-
-  container.addEventListener('touchstart',function(e){
-    if(e.touches.length===1){dragging=true;startX=e.touches[0].clientX;startY=e.touches[0].clientY;startOx=ox;startOy=oy;}
-    else if(e.touches.length===2){dragging=false;pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
-    e.preventDefault();
-  },{passive:false});
-  container.addEventListener('touchmove',function(e){
-    if(e.touches.length===1&&dragging){ox=startOx+(e.touches[0].clientX-startX);oy=startOy+(e.touches[0].clientY-startY);apply();}
-    else if(e.touches.length===2&&pinchDist!==null){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);scale=Math.max(MIN_SCALE,Math.min(MAX_SCALE,scale*(d/pinchDist)));pinchDist=d;apply();}
-    e.preventDefault();
-  },{passive:false});
-  container.addEventListener('touchend',function(){dragging=false;pinchDist=null;});
-
-  document.getElementById('btn-zoom-in').onclick=function(){scale=Math.min(MAX_SCALE,scale+.25);apply();};
-  document.getElementById('btn-zoom-out').onclick=function(){scale=Math.max(MIN_SCALE,scale-.25);apply();};
-  document.getElementById('btn-rot-l').onclick=function(){rot=(rot-15+360)%360;apply();};
-  document.getElementById('btn-rot-r').onclick=function(){rot=(rot+15)%360;apply();};
-  document.getElementById('btn-reset').onclick=function(){scale=1;ox=0;oy=0;rot=0;apply();};
-})();
-
-// ── STICKY CART ──
-(function(){
-  var sticky=document.createElement('div');
-  sticky.className='sticky-cart';
-  sticky.id='sticky-cart';
-  var summary=document.createElement('div');summary.className='sc-summary';
-  var cnt=document.createElement('div');cnt.className='sc-count';cnt.id='sc-count';cnt.textContent='0 tickets';
-  var items=document.createElement('div');items.className='sc-items';items.id='sc-items';items.textContent='Select seats above';
-  summary.appendChild(cnt);summary.appendChild(items);
-  var tot=document.createElement('div');tot.className='sc-total';tot.textContent='$';
-  var totSpan=document.createElement('span');totSpan.id='sc-total';totSpan.textContent='0';
-  tot.appendChild(totSpan);
-  var btn=document.createElement('button');btn.className='sc-btn';btn.id='sc-pay';btn.textContent='Pay Now →';
-  sticky.appendChild(summary);sticky.appendChild(tot);sticky.appendChild(btn);
-  document.body.appendChild(sticky);
-  btn.onclick=function(){
-    document.getElementById('gala-seating').scrollIntoView({behavior:'smooth'});
-    setTimeout(function(){document.getElementById('btn-checkout').click();},600);
-  };
-  window._updateStickyCart=function(sel,gQ,nQ,total){
-    var count=sel.size+gQ+nQ;
-    cnt.textContent=count+' ticket'+(count!==1?'s':'')+' selected';
-    var parts=[];
-    var vv=Array.from(sel).filter(function(s){return s.indexOf('VVIP')===0;});
-    var vp=Array.from(sel).filter(function(s){return s.indexOf('VIP')===0;});
-    if(vv.length) parts.push('VVIP x'+vv.length);
-    if(vp.length) parts.push('VIP x'+vp.length);
-    if(gQ) parts.push('Gold x'+gQ);
-    if(nQ) parts.push('General x'+nQ);
-    items.textContent=parts.length?parts.join(' · '):'Nothing selected yet';
-    totSpan.textContent=fmt(total);
-    if(count>0) sticky.classList.add('show'); else sticky.classList.remove('show');
-  };
-})();
-
-// ── COUNTDOWN ──
-(function(){
-  var target=new Date('2026-12-12T18:00:00');
-  function tick(){
-    var now=new Date();
-    var diff=target-now;
-    if(diff<=0){document.getElementById('countdown').style.display='none';return;}
-    var d=Math.floor(diff/86400000);
-    var h=Math.floor((diff%86400000)/3600000);
-    var m=Math.floor((diff%3600000)/60000);
-    var s=Math.floor((diff%60000)/1000);
-    function pad(n){return n<10?'0'+n:n;}
-    document.getElementById('cd-days').textContent=d;
-    document.getElementById('cd-hrs').textContent=pad(h);
-    document.getElementById('cd-min').textContent=pad(m);
-    document.getElementById('cd-sec').textContent=pad(s);
-  }
-  tick();
-  setInterval(tick,1000);
-})();
-
-})();
-</script>
-
-<!-- CHATBOT GUIDE -->
-<div id="chat-bubble">
-  <div id="chat-panel">
-    <div id="chat-header">
-      <div id="chat-avatar">✦</div>
-      <div id="chat-header-info">
-        <strong>Gala Concierge</strong>
-        <span>● Online · MAFS 2026</span>
-      </div>
-      <button id="chat-close" aria-label="Close chat">✕</button>
-    </div>
-    <video id="cam-preview" autoplay muted playsinline></video>
-    <div id="chat-messages"></div>
-    <div id="chat-typing">Concierge is typing…</div>
-    <div id="chat-quick">
-      <button class="cqbtn" data-q="How much are tickets?">Ticket prices</button>
-      <button class="cqbtn" data-q="What is VVIP?">What's VVIP?</button>
-      <button class="cqbtn" data-q="When is the gala?">Date & time</button>
-      <button class="cqbtn" data-q="How do I buy tickets?">How to buy</button>
-    </div>
-    <div id="chat-input-row">
-      <input id="chat-input" type="text" placeholder="Ask anything about the gala…" autocomplete="off">
-      <button id="chat-mic" title="Voice input">🎤</button>
-      <button id="chat-cam" title="Camera">📷</button>
-      <button id="chat-send" title="Send">➤</button>
-    </div>
-  </div>
-  <button id="chat-toggle" aria-label="Open gala guide">✦</button>
 </div>
 
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mqt">
+    <span>MAFS 2026 Gala</span><span>November 14</span><span>Metropolitan Asian Family Services</span>
+    <span>Chicago Illinois</span><span>Reserve Now</span><span>Limited Seats</span>
+    <span>VVIP · VIP · Gold · General</span><span>Unity &amp; Impact</span>
+    <span>MAFS 2026 Gala</span><span>November 14</span><span>Metropolitan Asian Family Services</span>
+    <span>Chicago Illinois</span><span>Reserve Now</span><span>Limited Seats</span>
+    <span>VVIP · VIP · Gold · General</span><span>Unity &amp; Impact</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="ai">
+    <div>
+      <p class="atg rv">About the Gala</p>
+      <h2 class="ah rv d1">Serving our community<br>for 34 years.</h2>
+      <p class="ap rv d2">The MAFS Annual Gala is our flagship fundraising event — bringing together community leaders, families, and advocates for an unforgettable evening of fine dining, entertainment, and meaningful impact.</p>
+      <p class="ap rv d2">Every dollar raised supports Metropolitan Asian Family Services programs serving immigrant families, seniors, and youth across Chicagoland — providing case management, literacy services, and crisis support.</p>
+      <div class="as rv d3">
+        <div class="asc"><div class="asn"><span class="acnt" data-t="2500">0</span>+</div><div class="asl">Families Served Annually</div></div>
+        <div class="asc"><div class="asn"><span class="acnt" data-t="34">0</span>+</div><div class="asl">Years of Service</div></div>
+      </div>
+    </div>
+    <div class="av rv d2">
+      <div class="avg"></div>
+      <div class="avr">
+        <div class="avri"></div><div class="avri"></div><div class="avri"></div><div class="avri"></div>
+      </div>
+      <div class="avc"><div class="avy">2026</div><div class="avm">Metropolitan · Asian · Family</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ART DECO SECTION BREAK -->
+<div style="background:var(--black);padding:44px 80px;">
+  <div class="adv rv">
+    <span class="adr"></span><span class="adg">◆</span><span class="adg s">◆</span><span class="adg">◆</span><span class="adl"></span>
+  </div>
+</div>
+
+<!-- TICKETS -->
+<section class="tks" id="tickets">
+  <div class="tki">
+    <div class="tkh rv">
+      <p class="tkl">Reserve Your Seat</p>
+      <h2 class="tkt">Choose Your Experience</h2>
+    </div>
+    <div class="tkg">
+
+      <div class="tc rv d1">
+        <div class="tcr tr"></div><div class="tcr bl"></div>
+        <div class="tsh"></div>
+        <div class="ttr">Tier 01</div>
+        <div class="tn">General</div>
+        <div class="tp">$100</div>
+        <div class="tsb">Per Ticket · First Come First Served</div>
+        <div class="tdv"></div>
+        <ul class="tpl">
+          <li>Gala dinner &amp; welcome cocktails</li>
+          <li>Live entertainment</li>
+          <li>Program booklet</li>
+          <li>General seating</li>
+        </ul>
+        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+      </div>
+
+      <div class="tc rv d2">
+        <div class="tcr tr"></div><div class="tcr bl"></div>
+        <div class="tsh"></div>
+        <div class="ttr">Tier 02</div>
+        <div class="tn">Gold</div>
+        <div class="tp">$150</div>
+        <div class="tsb">Per Ticket · First Come First Served</div>
+        <div class="tdv"></div>
+        <ul class="tpl">
+          <li>Everything in General</li>
+          <li>Reserved priority seating</li>
+          <li>Cocktail hour access</li>
+          <li>Recognition in program</li>
+        </ul>
+        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+      </div>
+
+      <div class="tc rv d3">
+        <div class="tcr tr"></div><div class="tcr bl"></div>
+        <div class="tsh"></div>
+        <div class="ttr">Tier 03</div>
+        <div class="tn">VIP</div>
+        <div class="tp">$250</div>
+        <div class="tsb">Per Ticket · Limited Availability</div>
+        <div class="tdv"></div>
+        <ul class="tpl">
+          <li>Everything in Gold</li>
+          <li>Premium reserved table</li>
+          <li>Exclusive VIP reception</li>
+          <li>Meet &amp; greet with speakers</li>
+          <li>Gift bag</li>
+        </ul>
+        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+      </div>
+
+      <div class="tc ft rv d4">
+        <div class="tcr tr"></div><div class="tcr bl"></div>
+        <div class="tsh"></div>
+        <div class="fb">Most Exclusive</div>
+        <div class="ttr">Tier 04</div>
+        <div class="tn">VVIP</div>
+        <div class="tp">$500</div>
+        <div class="tsb">Per Ticket · Very Limited Seats</div>
+        <div class="tdv"></div>
+        <ul class="tpl">
+          <li>Everything in VIP</li>
+          <li>Front-row presidential table</li>
+          <li>Private pre-gala dinner</li>
+          <li>Speaking opportunity</li>
+          <li>Full-page program ad</li>
+          <li>Year-round recognition</li>
+        </ul>
+        <a href="https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU" target="_blank" rel="noopener" class="tbtn">Reserve Seat</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<div class="impact">
+  <div class="impi">
+    <div class="impb rv"><div class="impn"><span class="acnt" data-t="120">0</span><span class="imps">K+</span></div><div class="impl"><strong>Total Raised</strong>Past Gala Events</div></div>
+    <div class="impb rv d1"><div class="impn"><span class="acnt" data-t="400">0</span><span class="imps">+</span></div><div class="impl"><strong>Guests Expected</strong>2026 Event</div></div>
+    <div class="impb rv d2"><div class="impn"><span class="acnt" data-t="12">0</span></div><div class="impl"><strong>Community Programs</strong>Funded by Gala</div></div>
+    <div class="impb rv d3"><div class="impn"><span class="acnt" data-t="34">0</span><span class="imps">+</span></div><div class="impl"><strong>Years of Impact</strong>Serving Chicagoland</div></div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<section class="sched" id="schedule">
+  <div class="sci">
+    <p class="scl rv">Evening Program</p>
+    <h2 class="sch rv d1">The Evening's Agenda</h2>
+    <div class="tll">
+      <div class="tli rv"><div class="tlt">5:30 PM</div><div class="tld"></div><div><div class="tln">VVIP Private Reception</div><div class="tlde">An exclusive pre-gala gathering for VVIP guests — cocktails, canapés, and private access to MAFS leadership.</div></div></div>
+      <div class="tli rv d1"><div class="tlt">6:00 PM</div><div class="tld"></div><div><div class="tln">Doors Open &amp; Cocktail Hour</div><div class="tlde">Welcome reception with cocktails, hors d'oeuvres, and networking. Live ambient music sets the evening's tone.</div></div></div>
+      <div class="tli rv d2"><div class="tlt">7:00 PM</div><div class="tld"></div><div><div class="tln">Welcome &amp; Dinner Service</div><div class="tlde">Opening remarks from MAFS leadership. Three-course dinner begins. Cultural entertainment performance.</div></div></div>
+      <div class="tli rv d3"><div class="tlt">8:00 PM</div><div class="tld"></div><div><div class="tln">Awards &amp; Recognition</div><div class="tlde">Honoring community champions, outstanding volunteers, and partner organizations driving impact across Chicagoland.</div></div></div>
+      <div class="tli rv d4"><div class="tlt">8:45 PM</div><div class="tld"></div><div><div class="tln">Keynote &amp; Fund-a-Dream</div><div class="tlde">Inspiring keynote followed by our live fund-a-dream fundraising appeal. Every gift directly funds family services.</div></div></div>
+      <div class="tli rv"><div class="tlt">9:30 PM</div><div class="tld"></div><div><div class="tln">Dancing &amp; Celebration</div><div class="tlde">Live DJ, dancing, dessert, and continued networking. An unforgettable close to a spectacular evening.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section class="spons" id="sponsors">
+  <div class="spni">
+    <h2 class="spnh rv">Partner With MAFS</h2>
+    <p class="spns rv d1">Join our community of sponsors. Packages from $500–$10,000.</p>
+    <div class="spng rv d2">
+      <div class="spnb">Gold Sponsor</div>
+      <div class="spnb">Silver Sponsor</div>
+      <div class="spnb">Bronze Sponsor</div>
+      <div class="spnb">Table Sponsor</div>
+      <div class="spnb">Program Ad</div>
+    </div>
+    <p class="spnn rv d3">Contact us at <a href="mailto:events@mafsinc.com">events@mafsinc.com</a></p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fcta">
+  <div class="adv" style="margin-bottom:72px;">
+    <span class="adr"></span><span class="adg">◆</span><span class="adg s">◆</span><span class="adg">◆</span><span class="adl"></span>
+  </div>
+  <div class="fci rv">
+    <p class="fct">Limited Seats Available</p>
+    <h2 class="fch">Be Part of<br><em>Something Greater</em></h2>
+    <p class="fcs">Join 400+ guests for a night of community, celebration, and lasting impact for Metropolitan Asian Family Services.</p>
+    <div class="fcc">
+      <a href="#tickets" class="bp"><span>Reserve Your Seat Now</span></a>
+      <a href="mailto:events@mafsinc.com" class="bo">Contact Event Team</a>
+    </div>
+    <p class="fcd">Saturday, November 14, 2026 · 6:00 PM CST · Chicago, IL</p>
+  </div>
+  <div class="adv" style="margin-top:72px;">
+    <span class="adr"></span><span class="adg s">◆</span><span class="adg">◆</span><span class="adg s">◆</span><span class="adl"></span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="fli"><img class="flg" src="https://assets.cdn.filesafe.space/0N1nDaqfrcejQQ0HmVIt/media/68add399d09ce33ee13f1cf2.png" alt="MAFS"></div>
+    <div class="flo">Metropolitan Asian Family Services</div>
+    <div class="flt">Serving immigrant families, seniors,<br>and youth across Chicagoland<br>since 1991.</div>
+  </div>
+  <div>
+    <div class="flh">Gala</div>
+    <ul class="fll">
+      <li><a href="#about">About</a></li>
+      <li><a href="#tickets">Tickets</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#sponsors">Sponsors</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="flh">Organization</div>
+    <ul class="fll">
+      <li><a href="https://mafsinc.com/about" target="_blank" rel="noopener">About MAFS</a></li>
+      <li><a href="https://mafsinc.com/programs" target="_blank" rel="noopener">Our Programs</a></li>
+      <li><a href="https://mafsinc.com/volunteer" target="_blank" rel="noopener">Volunteer</a></li>
+      <li><a href="https://mafsinc.com/donate" target="_blank" rel="noopener">Donate</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="flh">Contact</div>
+    <ul class="fll">
+      <li><a href="mailto:events@mafsinc.com">events@mafsinc.com</a></li>
+      <li><a href="tel:+18473067606">(847) 306-7606</a></li>
+      <li><a href="https://mafsinc.com" target="_blank" rel="noopener">mafsinc.com</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="flb">
+  <span>© 2026 Metropolitan Asian Family Services. All rights reserved.</span>
+  <span>MAFS Annual Gala · Unity &amp; Impact</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script>
+/* CURSOR */
+const dot=document.getElementById('cd'),ring=document.getElementById('cr')
+let mx=0,my=0,rx=0,ry=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'})
+;(function ar(){rx+=(mx-rx)*.08;ry+=(my-ry)*.08;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar)})()
+document.querySelectorAll('a,button,.tc,.spnb').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cx'))
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cx'))
+})
+
+/* NAV */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>60))
+
+/* HERO CANVAS — Art Deco sunburst + gold dust */
+const cv=document.getElementById('hc'),ctx=cv.getContext('2d')
+let W,H,rot=0
+const rsz=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight}
+rsz();window.addEventListener('resize',rsz)
+
+class P{
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*W;this.y=H+Math.random()*80
+    this.sz=Math.random()*2+.5
+    this.vy=-(Math.random()*.8+.3);this.vx=(Math.random()-.5)*.4
+    this.op=Math.random()*.38+.08
+    this.dm=Math.random()<.4
+    this.r=Math.random()*Math.PI*2;this.rs=(Math.random()-.5)*.03
+    this.life=1;this.dec=Math.random()*.0012+.0004
+  }
+  draw(){
+    ctx.save();ctx.translate(this.x,this.y);ctx.globalAlpha=this.op*this.life
+    ctx.fillStyle='rgba(201,168,76,1)'
+    if(this.dm){
+      ctx.rotate(this.r);const s=this.sz*1.4
+      ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s,0);ctx.lineTo(0,s);ctx.lineTo(-s,0);ctx.closePath();ctx.fill()
+    }else{ctx.beginPath();ctx.arc(0,0,this.sz,0,Math.PI*2);ctx.fill()}
+    ctx.restore()
+  }
+  update(){this.x+=this.vx;this.y+=this.vy;this.r+=this.rs;this.life-=this.dec;if(this.life<=0||this.y<-20)this.reset()}
+}
+const pts=[]
+for(let i=0;i<90;i++){const p=new P();p.y=Math.random()*H;pts.push(p)}
+
+function frame(){
+  ctx.clearRect(0,0,W,H)
+  const cx=W/2,cy=H*.48,lines=24,len=Math.max(W,H)*.72
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(rot)
+  for(let i=0;i<lines;i++){
+    const a=(i/lines)*Math.PI*2
+    const g=ctx.createLinearGradient(0,0,Math.cos(a)*len,Math.sin(a)*len)
+    g.addColorStop(0,'rgba(201,168,76,0.07)');g.addColorStop(.35,'rgba(201,168,76,0.025)');g.addColorStop(1,'rgba(201,168,76,0)')
+    ctx.strokeStyle=g;ctx.lineWidth=1
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*len,Math.sin(a)*len);ctx.stroke()
+  }
+  ctx.restore();rot+=.0007
+  pts.forEach(p=>{p.update();p.draw()})
+  requestAnimationFrame(frame)
+}
+frame()
+
+/* HERO ENTRANCE */
+anime({targets:'#hey',opacity:[0,1],translateY:[10,0],duration:900,delay:200,easing:'easeOutCubic'})
+anime({targets:'#hd1',opacity:[0,1],duration:700,delay:550,easing:'easeOutCubic'})
+anime({targets:'#hhh',opacity:[0,1],translateY:[22,0],duration:1200,delay:750,easing:'cubicBezier(0.16,1,0.3,1)'})
+anime({targets:'#hhs',opacity:[0,1],translateY:[10,0],duration:900,delay:1150,easing:'easeOutCubic'})
+anime({targets:'#hd2',opacity:[0,1],duration:600,delay:1350,easing:'easeOutCubic'})
+anime({targets:'#hth',opacity:[0,1],translateY:[10,0],duration:800,delay:1550,easing:'easeOutCubic'})
+anime({targets:'#hdt',opacity:[0,1],translateY:[8,0],duration:700,delay:1800,easing:'easeOutCubic'})
+anime({targets:'#hcta',opacity:[0,1],translateY:[14,0],duration:800,delay:2050,easing:'easeOutCubic'})
+
+/* COUNTDOWN */
+const EVT=new Date('2026-11-14T18:00:00')
+function tick(){
+  const diff=EVT-new Date()
+  if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='00');return}
+  const d=Math.floor(diff/864e5),h=Math.floor((diff%864e5)/36e5),m=Math.floor((diff%36e5)/6e4),s=Math.floor((diff%6e4)/1e3)
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0')
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0')
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0')
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0')
+}
+tick();setInterval(tick,1000)
+
+/* SCROLL REVEALS */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.08})
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el))
+
+/* COUNTERS */
+const cobs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return
+  const t=parseInt(e.target.dataset.t)
+  anime({targets:e.target,innerHTML:[0,t],round:1,duration:2200,delay:200,easing:'easeInOutExpo'})
+  cobs.unobserve(e.target)
+}),{threshold:.5})
+document.querySelectorAll('.acnt').forEach(el=>cobs.observe(el))
+
+/* MAGNETIC BUTTONS */
+document.querySelectorAll('.bp').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect()
+    btn.style.transform='translate('+((e.clientX-r.left-r.width/2)*.18)+'px,'+((e.clientY-r.top-r.height/2)*.24)+'px)'
+  })
+  btn.addEventListener('mouseleave',()=>{anime({targets:btn,translateX:0,translateY:0,duration:550,easing:'easeOutElastic(1,.6)'})})
+})
+</script>
 </body>
 </html>
