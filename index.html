@@ -1026,6 +1026,34 @@ const SECTIONS={
   D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12,12,12,12]}
 };
 const LINKS={VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',Gold:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',General:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'};
+const TIER_CENTS={VVIP:50000,VIP:25000,Gold:15000,General:10000};
+
+// ── SQUARE API CHECKOUT SERVER ───────────────────────────────────────────────
+// Start: SQUARE_ACCESS_TOKEN=tok SQUARE_LOCATION_ID=loc node ~/AI-OS/scripts/mafs-checkout-server.js
+const CHECKOUT_SERVER='http://localhost:3999';
+let serverAvailable=false;
+(async()=>{try{const r=await fetch(CHECKOUT_SERVER+'/health',{signal:AbortSignal.timeout(1200)});serverAvailable=r.ok;}catch(e){serverAvailable=false;}})();
+
+// Unified checkout: all tiers in one Square transaction (API path)
+// Falls back to per-tier static links if server not running
+async function unifiedCheckout(seats,tierFallback){
+  if(serverAvailable&&seats.length){
+    const payload=seats.map(([id,v])=>({section:v.sec,row:v.row,seat:v.seat,tier:v.tier,price:v.price}));
+    try{
+      const r=await fetch(CHECKOUT_SERVER+'/create-checkout',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({seats:payload})
+      });
+      if(r.ok){const d=await r.json();if(d.url){window.open(d.url,'_blank','noopener');return true;}}
+    }catch(e){}
+  }
+  // Fallback: one Square link per tier with note
+  const seatNote=seats.map(([id,v])=>`Section ${v.sec}, Row ${v.row}, Seat ${v.seat}`).join(' | ');
+  const note='MAFS Gala 2026 — Tier: '+(tierFallback||'Mixed')+' — '+seatNote;
+  window.open((LINKS[tierFallback]||LINKS.General)+'?note='+encodeURIComponent(note),'_blank','noopener');
+  return false;
+}
+
 let selSeats=new Map();
 let curSec=null;
 // Sync tab seat counts from SECTIONS data
@@ -1189,7 +1217,14 @@ function renderCart(){
   items.innerHTML=ih;
   const byT={};
   selSeats.forEach((v,k)=>{if(!byT[v.tier])byT[v.tier]={cnt:0,tot:0,ids:[]};byT[v.tier].cnt++;byT[v.tier].tot+=v.price;byT[v.tier].ids.push(k);});
+  const tiers=Object.keys(byT);
   let ch='';
+  if(tiers.length>1){
+    // Multi-tier: offer single unified checkout when server available
+    const allCnt=cnt,allTot=total;
+    ch+=`<button id="scCheckoutAllBtn" class="sc-co-btn" style="background:linear-gradient(135deg,#8b4513,#d4af37);font-size:.85rem;margin-bottom:4px;" onclick="scCheckoutAll()">Complete Purchase · ${allCnt} Seat${allCnt>1?'s':''} · $${allTot.toLocaleString()}</button>`;
+    ch+=`<div style="text-align:center;font-size:.68rem;color:var(--muted);margin-bottom:10px;letter-spacing:.04em;">— or checkout by tier —</div>`;
+  }
   ['VVIP','VIP','Gold','General'].forEach(t=>{
     if(byT[t])ch+=`<button class="sc-co-btn" onclick="scCheckout('${t}','${byT[t].ids.join(',')}')">Checkout ${t} · ${byT[t].cnt} seat${byT[t].cnt>1?'s':''} · $${byT[t].tot.toLocaleString()}</button>`;
   });
@@ -1199,15 +1234,42 @@ function scRemove(id){selSeats.delete(id);if(curSec)renderGrid(curSec);if(curSec
 function scClearAll(){selSeats.clear();if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
 function scCheckout(tier,rawIds){
   const ids=rawIds.split(',').filter(Boolean);
-  const seatNote=ids.map(id=>{const p=id.split('-');return'Section '+p[0]+', Row '+p[1]+', Seat '+p[2];}).join(' | ');
-  const note='MAFS Gala 2026 — Tier: '+tier+' — '+seatNote;
+  const seats=ids.map(id=>{const v=selSeats.get(id);return[id,v];}).filter(([,v])=>v);
   ids.forEach(id=>{reservedSeats.set(id,{initials:'◆',tier:tier});selSeats.delete(id);});
   saveReserved();
   if(curSec)renderGrid(curSec);
   if(mCurSec)mRenderGrid(mCurSec);
   renderCart();
-  window.open(LINKS[tier]+'?note='+encodeURIComponent(note),'_blank','noopener');
+  unifiedCheckout(seats,tier);
 }
+// Checkout ALL selected seats (all tiers) in one transaction
+async function scCheckoutAll(){
+  const btn=document.getElementById('scCheckoutAllBtn');
+  if(btn){btn.textContent='Processing…';btn.disabled=true;}
+  const seats=[...selSeats.entries()];
+  const tiers=[...new Set(seats.map(([,v])=>v.tier))];
+  const tierFallback=tiers.length===1?tiers[0]:null;
+  if(serverAvailable){
+    // Mark all as reserved first
+    seats.forEach(([id,v])=>{reservedSeats.set(id,{initials:'◆',tier:v.tier});selSeats.delete(id);});
+    saveReserved();
+    const ok=await unifiedCheckout(seats,tierFallback);
+    if(ok){if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);renderCart();return;}
+  }
+  // Fallback: checkout by tier separately
+  tiers.forEach(t=>{
+    const ts=seats.filter(([,v])=>v.tier===t);
+    const seatNote=ts.map(([,v])=>`Section ${v.sec}, Row ${v.row}, Seat ${v.seat}`).join(' | ');
+    const note='MAFS Gala 2026 — Tier: '+t+' — '+seatNote;
+    ts.forEach(([id,v])=>{reservedSeats.set(id,{initials:'◆',tier:t});selSeats.delete(id);});
+    window.open(LINKS[t]+'?note='+encodeURIComponent(note),'_blank','noopener');
+  });
+  saveReserved();
+  if(curSec)renderGrid(curSec);
+  if(mCurSec)mRenderGrid(mCurSec);
+  renderCart();
+}
+window.scCheckoutAll=scCheckoutAll;
 window.scOpen=scOpen;window.scShowMap=scShowMap;window.scToggle=scToggle;window.scRemove=scRemove;window.scClearAll=scClearAll;window.scCheckout=scCheckout;
 
 /* ── SEAT SELECTION MODAL ── */
@@ -1407,15 +1469,13 @@ function confirmReservation(){
   if(curSec)renderGrid(curSec);
   if(mCurSec)mRenderGrid(mCurSec);
   renderCart();
-  const _sn=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return'Section '+p[0]+', Row '+p[1]+', Seat '+p[2];}).join(' | ');
-  const _note='MAFS Gala 2026 — Tier: '+_pendingTier+' — '+_sn;
-  window.open(_pendingLink+'?note='+encodeURIComponent(_note),'_blank','noopener');
+  const _seats=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return[base,{sec:p[0],row:+p[1],seat:+p[2],tier:_pendingTier,price:TIER_CENTS[_pendingTier]?TIER_CENTS[_pendingTier]/100:0}];});
+  unifiedCheckout(_seats,_pendingTier);
 }
 function skipReservation(){
   closeInitOv();
-  const _sn=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return'Section '+p[0]+', Row '+p[1]+', Seat '+p[2];}).join(' | ');
-  const _note='MAFS Gala 2026 — Tier: '+_pendingTier+' — '+_sn;
-  window.open(_pendingLink+'?note='+encodeURIComponent(_note),'_blank','noopener');
+  const _seats=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return[base,{sec:p[0],row:+p[1],seat:+p[2],tier:_pendingTier,price:TIER_CENTS[_pendingTier]?TIER_CENTS[_pendingTier]/100:0}];});
+  unifiedCheckout(_seats,_pendingTier);
 }
 function closeInitOv(){document.getElementById('initOv').classList.remove('open');}
 window.promptReservation=promptReservation;window.confirmReservation=confirmReservation;
