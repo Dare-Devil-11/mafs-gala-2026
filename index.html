@@ -283,6 +283,21 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-seat.vvip-s{color:#1bc7b4;background:rgba(14,155,138,.1);}.sc-seat.vip-s{color:#e1509e;background:rgba(225,80,145,.1);}.sc-seat.gold-s{color:#d4af37;background:rgba(212,175,55,.1);}.sc-seat.gen-s{color:#9a60e0;background:rgba(130,75,210,.1);}
 .sc-seat:hover{background:rgba(201,168,76,.22);border-color:var(--gold);}
 .sc-seat.sel{background:rgba(201,168,76,.38)!important;border-color:var(--gold)!important;box-shadow:0 0 5px rgba(201,168,76,.35);}
+.sc-seat.reserved{cursor:not-allowed!important;pointer-events:none;opacity:.52;position:relative;overflow:hidden;font-size:.52rem!important;letter-spacing:0;}
+.sc-seat.reserved::after{content:'';position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - .6px),currentColor calc(50% - .6px),currentColor calc(50% + .6px),transparent calc(50% + .6px));opacity:.5;}
+#initOv{position:fixed;inset:0;background:rgba(6,10,26,.92);backdrop-filter:blur(10px);z-index:2000;display:none;align-items:center;justify-content:center;}
+#initOv.open{display:flex;}
+.init-box{background:var(--surface);border:1px solid rgba(212,175,55,.3);border-radius:16px;padding:36px 40px;max-width:440px;width:90%;text-align:center;box-shadow:0 0 60px rgba(0,0,0,.5);}
+.init-title{font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold);margin-bottom:8px;letter-spacing:.06em;}
+.init-sub{font-size:.8rem;color:var(--muted);margin-bottom:18px;line-height:1.65;}
+.init-seats{font-size:.72rem;color:var(--td);background:rgba(255,255,255,.04);border-radius:8px;padding:10px 14px;margin-bottom:20px;max-height:72px;overflow-y:auto;text-align:left;line-height:1.9;border:1px solid rgba(255,255,255,.06);}
+.init-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:14px 16px;color:var(--td);font-family:'Josefin Sans',sans-serif;font-size:1.4rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;outline:none;transition:border-color .2s;margin-bottom:20px;}
+.init-input:focus{border-color:var(--gold);}
+.init-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.init-confirm{flex:1;min-width:140px;padding:13px;background:var(--gold);color:var(--black);border:none;border-radius:8px;font-family:'Josefin Sans',sans-serif;font-size:.72rem;letter-spacing:.15em;font-weight:700;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.init-confirm:hover{background:var(--gold2);}
+.init-skip{flex:1;min-width:120px;padding:13px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:8px;font-family:'Josefin Sans',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.init-skip:hover{border-color:rgba(255,255,255,.3);color:var(--td);}
 .sc-cart{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:sticky;top:88px;}
 .sc-cart-h{padding:14px 18px;border-bottom:1px solid var(--border);font-family:'Cinzel Decorative',serif;font-size:.78rem;letter-spacing:.1em;color:var(--gold);display:flex;align-items:center;gap:8px;}
 .sc-cnt{background:rgba(201,168,76,.2);color:var(--gold);font-size:.62rem;padding:2px 7px;border-radius:10px;font-family:'Cinzel',serif;}
@@ -988,21 +1003,37 @@ document.querySelectorAll('.acnt').forEach(el=>{if(!el.dataset.target&&el.datase
 /* ── SEATING CHART ── */
 ;(function(){
 const TIERS=[
-  {name:'VVIP',rows:[1,2],price:500,shape:'★',cls:'vvip-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU'},
-  {name:'VIP',rows:[3,4,5],price:250,shape:'●',cls:'vip-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD'},
-  {name:'Gold',rows:[6,7,8,9,10],price:150,shape:'▲',cls:'gold-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG'},
-  {name:'General',rows:[11,12,13,14,15,16],price:100,shape:'■',cls:'gen-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'}
+  {name:'VVIP',price:500,shape:'★',cls:'vvip-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU'},
+  {name:'VIP',price:250,shape:'●',cls:'vip-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD'},
+  {name:'Gold',price:150,shape:'▲',cls:'gold-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG'},
+  {name:'General',price:100,shape:'■',cls:'gen-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'}
 ];
+// Per-section tier row boundaries (D has more Gold/General rows)
+const SEC_TIER_ROWS={
+  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
+  B:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
+  C:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
+  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10,11],General:[12,13,14,15,16,17,18]}
+};
 const SECTIONS={
-  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:[7,7,11,11,11,14,14,14,14,14,14,14,14,14,14,14]},
-  B:{label:'Section B',fill:'rgba(184,150,60,.68)',seats:[8,8,10,10,10,12,12,12,12,12,12,12,12,12,12,12]},
-  C:{label:'Section C',fill:'rgba(168,134,44,.68)',seats:[8,8,10,10,10,11,11,11,11,11,11,11,11,11,11,11]},
-  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12,12]}
+  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:[7,7,10,10,10,14,14,14,14,14,14,14,14,14,14]},
+  B:{label:'Section B',fill:'rgba(184,150,60,.68)',seats:[4,6,4,5,6,10,10,10,10,10,10,10,10,10,10]},
+  C:{label:'Section C',fill:'rgba(168,134,44,.68)',seats:[4,6,4,5,6,10,10,10,10,10,10,10,10,10,10]},
+  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12,12,12,12]}
 };
 const LINKS={VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',Gold:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',General:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'};
 let selSeats=new Map();
 let curSec=null;
-function getTier(r){return TIERS.find(t=>t.rows.includes(r));}
+// Reserved seats persisted across page loads: key=seatId, value={initials,tier}
+const reservedSeats=new Map(Object.entries(JSON.parse(localStorage.getItem('mafs_gala_reserved')||'{}')));
+function saveReserved(){localStorage.setItem('mafs_gala_reserved',JSON.stringify(Object.fromEntries(reservedSeats)));}
+let _pendingTier='',_pendingRawIds=[],_pendingLink='';
+function getTier(r,secId){
+  const sRows=SEC_TIER_ROWS[secId]||SEC_TIER_ROWS.A;
+  const tn=Object.keys(sRows).find(k=>sRows[k].includes(r))||'General';
+  const base=TIERS.find(t=>t.name===tn)||TIERS[3];
+  return {...base,rows:sRows[tn]};
+}
 function pt(cx,cy,r,deg){const a=deg*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy-r*Math.sin(a)};}
 function arc(cx,cy,r1,r2,a1,a2){
   const is=pt(cx,cy,r1,a1),ie=pt(cx,cy,r1,a2),os=pt(cx,cy,r2,a1),oe=pt(cx,cy,r2,a2);
@@ -1079,15 +1110,20 @@ function renderGrid(secId){
   let h='';
   let lastTierName='';
   s.seats.forEach((cnt,idx)=>{
-    const row=idx+1,tier=getTier(row);
+    const row=idx+1,tier=getTier(row,secId);
     if(tier.name!==lastTierName){
       h+=`<div class="sc-tier-divider"><span>${tier.shape} ${tier.name} · $${tier.price}/seat · Rows ${tier.rows[0]}–${tier.rows[tier.rows.length-1]}</span></div>`;
       lastTierName=tier.name;
     }
     h+=`<div class="sc-row"><div class="sc-row-lbl">R${row}</div>`;
     for(let st=1;st<=cnt;st++){
-      const sid=`${secId}-${row}-${st}`,isSel=selSeats.has(sid);
-      h+=`<div class="sc-seat ${tier.cls}${isSel?' sel':''}" data-id="${sid}" data-tier="${tier.name}" data-price="${tier.price}" onclick="scToggle(this)">${tier.shape}</div>`;
+      const sid=`${secId}-${row}-${st}`,isSel=selSeats.has(sid),isRes=reservedSeats.has(sid);
+      if(isRes){
+        const {initials}=reservedSeats.get(sid);
+        h+=`<div class="sc-seat ${tier.cls} reserved" data-id="${sid}" title="Reserved — ${initials}">${initials}</div>`;
+      }else{
+        h+=`<div class="sc-seat ${tier.cls}${isSel?' sel':''}" data-id="${sid}" data-tier="${tier.name}" data-price="${tier.price}" onclick="scToggle(this)">${tier.shape}</div>`;
+      }
     }
     h+='</div>';
   });
@@ -1194,20 +1230,24 @@ function mOpenSec(id){
   document.querySelectorAll('.m-tab').forEach(t=>t.classList.toggle('active',t.dataset.sec===id));
   mRenderGrid(id);mUpdateCnt(id);
 }
-function mGetTier(r){return TIERS.find(t=>t.rows.includes(r));}
 function mRenderGrid(secId){
   const s=SECTIONS[secId];let h='',last='';
   const mTC={VVIP:{c:'#0e9b8a',bg:'rgba(14,155,138,.12)',sel:'rgba(14,155,138,.42)',bdr:'#0e9b8a',hdr:'#0b7a6e'},VIP:{c:'#e1509e',bg:'rgba(225,80,145,.12)',sel:'rgba(225,80,145,.42)',bdr:'#e1509e',hdr:'#c0306a'},Gold:{c:'#9a7820',bg:'rgba(212,175,55,.12)',sel:'rgba(212,175,55,.42)',bdr:'#d4af37',hdr:'#7a5c1e'},General:{c:'#8250d2',bg:'rgba(130,75,210,.12)',sel:'rgba(130,75,210,.42)',bdr:'#8250d2',hdr:'#5c30a0'}};
   s.seats.forEach((cnt,idx)=>{
-    const row=idx+1,tier=mGetTier(row),tc=mTC[tier.name]||mTC.General;
+    const row=idx+1,tier=getTier(row,secId),tc=mTC[tier.name]||mTC.General;
     if(tier.name!==last){
       h+=`<div style="padding:7px 0 3px;font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.1em;color:${tc.hdr};border-top:1px solid rgba(26,21,16,.07);margin-top:4px;">${tier.shape} ${tier.name} · $${tier.price}/seat · Rows ${tier.rows[0]}–${tier.rows[tier.rows.length-1]}</div>`;
       last=tier.name;
     }
     h+=`<div style="display:flex;align-items:center;gap:2px;flex-wrap:nowrap;margin-bottom:1px;"><div style="font-size:.54rem;color:rgba(26,21,16,.35);width:21px;text-align:right;flex-shrink:0;font-family:'Cinzel',serif;">R${row}</div>`;
     for(let st=1;st<=cnt;st++){
-      const sid=`m-${secId}-${row}-${st}`,isSel=mSelSeats.has(sid);
-      h+=`<div onclick="mToggleSeat(this)" data-id="${sid}" data-tier="${tier.name}" data-price="${tier.price}" style="font-size:.67rem;padding:2px;min-width:18px;min-height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:3px;transition:all .1s;user-select:none;border:1px solid ${isSel?tc.bdr:'transparent'};background:${isSel?tc.sel:tc.bg};color:${tc.c};">${tier.shape}</div>`;
+      const sid=`m-${secId}-${row}-${st}`,baseSid=`${secId}-${row}-${st}`,isSel=mSelSeats.has(sid),isRes=reservedSeats.has(baseSid);
+      if(isRes){
+        const {initials}=reservedSeats.get(baseSid);
+        h+=`<div style="font-size:.5rem;padding:2px;min-width:18px;min-height:18px;display:flex;align-items:center;justify-content:center;cursor:not-allowed;border-radius:3px;user-select:none;border:1px solid rgba(120,120,120,.25);background:rgba(80,80,80,.12);color:rgba(140,140,140,.55);position:relative;overflow:hidden;" title="Reserved — ${initials}"><span style="position:relative;z-index:1;">${initials}</span><span style="position:absolute;inset:0;background:linear-gradient(to top right,transparent calc(50% - .6px),rgba(130,130,130,.45) calc(50% - .6px),rgba(130,130,130,.45) calc(50% + .6px),transparent calc(50% + .6px));"></span></div>`;
+      }else{
+        h+=`<div onclick="mToggleSeat(this)" data-id="${sid}" data-tier="${tier.name}" data-price="${tier.price}" style="font-size:.67rem;padding:2px;min-width:18px;min-height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:3px;transition:all .1s;user-select:none;border:1px solid ${isSel?tc.bdr:'transparent'};background:${isSel?tc.sel:tc.bg};color:${tc.c};">${tier.shape}</div>`;
+      }
     }
     h+='</div>';
   });
@@ -1234,17 +1274,19 @@ function mRenderCart(){
   const totAmt=document.getElementById('mTotalAmt');if(totAmt)totAmt.textContent='$'+total.toLocaleString();
   const byT={};
   items.forEach(([id,{tier,price}])=>{
-    if(!byT[tier])byT[tier]={cnt:0,tot:0,seats:[]};
+    if(!byT[tier])byT[tier]={cnt:0,tot:0,seats:[],rawIds:[]};
     byT[tier].cnt++;byT[tier].tot+=price;
     const pts=id.split('-');byT[tier].seats.push('§'+pts[1]+' R'+pts[2]+' S'+pts[3]);
+    byT[tier].rawIds.push(id);
   });
   let ch='';
   ['VVIP','VIP','Gold','General'].forEach(t=>{
     if(!byT[t])return;
     const seatList=byT[t].seats.join(', ');
+    const rawIdStr=byT[t].rawIds.join(',');
     const subj=encodeURIComponent('MAFS Gala 2026 – Seat Selection: '+t);
     const body=encodeURIComponent('MAFS Gala 2026 – Seat Reservation\n\nTier: '+t+'\nSeats: '+seatList+'\nTotal: $'+byT[t].tot+'\nDate: '+new Date().toLocaleString()+'\n\nPlease confirm reservation for this guest.\n\nMAFS Annual Gala · August 29, 2026');
-    ch+=`<a class="sm-co-btn" href="${LINKS[t]}" target="_blank" rel="noopener" onclick="mLogSeats('${t}',\`${seatList}\`,${byT[t].tot})">Checkout ${t} · ${byT[t].cnt} seat${byT[t].cnt>1?'s':''} · $${byT[t].tot}</a>`;
+    ch+=`<a class="sm-co-btn" href="#" onclick="mLogSeats('${t}','${seatList}',${byT[t].tot});promptReservation('${t}','${rawIdStr}',${byT[t].tot},'${LINKS[t]}');return false;">Checkout ${t} · ${byT[t].cnt} seat${byT[t].cnt>1?'s':''} · $${byT[t].tot}</a>`;
     ch+=`<a class="sm-email-btn" href="mailto:karana@umasinc.com?subject=${subj}&body=${body}">✉ Email Receipt — ${t}</a>`;
   });
   const cob=document.getElementById('mCoButtons');if(cob)cob.innerHTML=ch;
@@ -1295,6 +1337,36 @@ function closeSeatModal(){
   const modal=document.getElementById('seatModal');if(modal)modal.style.display='none';
   document.body.style.overflow='';
 }
+// ── RESERVED SEAT PROMPT ──
+function promptReservation(tier,rawIdStr,total,link){
+  _pendingTier=tier;
+  _pendingRawIds=rawIdStr.split(',').map(s=>s.trim());
+  _pendingLink=link;
+  const formatted=_pendingRawIds.map(id=>{const p=id.replace('m-','').split('-');return'§'+p[0]+' R'+p[1]+' S'+p[2];}).join(', ');
+  document.getElementById('initSeatList').textContent=formatted;
+  document.getElementById('initInput').value='';
+  document.getElementById('initOv').classList.add('open');
+  setTimeout(()=>document.getElementById('initInput').focus(),120);
+}
+function confirmReservation(){
+  const raw=document.getElementById('initInput').value.trim().toUpperCase().slice(0,4)||'◆';
+  _pendingRawIds.forEach(id=>{
+    const base=id.replace(/^m-/,'');
+    reservedSeats.set(base,{initials:raw,tier:_pendingTier});
+  });
+  saveReserved();
+  closeInitOv();
+  if(curSec)renderGrid(curSec);
+  if(mCurSec)mRenderGrid(mCurSec);
+  window.open(_pendingLink,'_blank','noopener');
+}
+function skipReservation(){
+  closeInitOv();
+  window.open(_pendingLink,'_blank','noopener');
+}
+function closeInitOv(){document.getElementById('initOv').classList.remove('open');}
+window.promptReservation=promptReservation;window.confirmReservation=confirmReservation;
+window.skipReservation=skipReservation;window.closeInitOv=closeInitOv;
 window.mOpenSec=mOpenSec;window.mToggleSeat=mToggleSeat;window.mRemoveSeat=mRemoveSeat;
 window.mLogSeats=mLogSeats;window.openSeatModal=openSeatModal;window.closeSeatModal=closeSeatModal;
 
@@ -1352,6 +1424,20 @@ document.querySelectorAll('.bp').forEach(btn=>{
           <div id="mCoButtons"></div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- INITIALS OVERLAY -->
+<div id="initOv" onclick="if(event.target===this)closeInitOv()">
+  <div class="init-box">
+    <div class="init-title">Mark Seats Reserved</div>
+    <div class="init-sub">Enter buyer initials to mark these seats as sold on the map. Or skip to go straight to checkout.</div>
+    <div class="init-seats" id="initSeatList"></div>
+    <input class="init-input" id="initInput" maxlength="4" placeholder="e.g. JD" autocomplete="off" />
+    <div class="init-btns">
+      <button class="init-confirm" onclick="confirmReservation()">Confirm &amp; Checkout</button>
+      <button class="init-skip" onclick="skipReservation()">Skip — Just Checkout</button>
     </div>
   </div>
 </div>
