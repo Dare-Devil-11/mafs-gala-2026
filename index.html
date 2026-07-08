@@ -611,12 +611,12 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
         <div class="tsb">Per Ticket · First Come First Served</div>
         <div class="tdv"></div>
         <ul class="tpl">
-          <li>Gala dinner &amp; welcome cocktails</li>
-          <li>Live entertainment</li>
-          <li>Program booklet</li>
-          <li>General seating</li>
+          <li>3-course gala dinner &amp; cocktail hour</li>
+          <li>Live cultural performances</li>
+          <li>Commemorative program booklet</li>
+          <li>General ballroom seating</li>
         </ul>
-        <button class="tbtn" onclick="openSeatModal('General')">Reserve Seat</button>
+        <button class="tbtn" onclick="openSeatModal('General')">Select Your Seat</button>
       </div>
 
       <div class="tc rv d2">
@@ -629,11 +629,11 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
         <div class="tdv"></div>
         <ul class="tpl">
           <li>Everything in General</li>
-          <li>Reserved priority seating</li>
-          <li>Cocktail hour access</li>
-          <li>Recognition in program</li>
+          <li>Priority reserved seating — Rows 6–10</li>
+          <li>Pre-event cocktail reception</li>
+          <li>Named recognition in program</li>
         </ul>
-        <button class="tbtn" onclick="openSeatModal('Gold')">Reserve Seat</button>
+        <button class="tbtn" onclick="openSeatModal('Gold')">Select Your Seat</button>
       </div>
 
       <div class="tc rv d3">
@@ -646,12 +646,12 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
         <div class="tdv"></div>
         <ul class="tpl">
           <li>Everything in Gold</li>
-          <li>Premium reserved table</li>
-          <li>Exclusive VIP reception</li>
-          <li>Meet &amp; greet with speakers</li>
-          <li>Gift bag</li>
+          <li>Premium table — Rows 3–5 stage view</li>
+          <li>Exclusive VIP lounge reception</li>
+          <li>Private meet &amp; greet with speakers</li>
+          <li>Curated gift bag</li>
         </ul>
-        <button class="tbtn" onclick="openSeatModal('VIP')">Reserve Seat</button>
+        <button class="tbtn" onclick="openSeatModal('VIP')">Select Your Seat</button>
       </div>
 
       <div class="tc ft rv d4">
@@ -665,13 +665,13 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
         <div class="tdv"></div>
         <ul class="tpl">
           <li>Everything in VIP</li>
-          <li>Front-row presidential table</li>
-          <li>Private pre-gala dinner</li>
-          <li>Speaking opportunity</li>
-          <li>Full-page program ad</li>
-          <li>Year-round recognition</li>
+          <li>Presidential table — front row, Rows 1–2</li>
+          <li>Exclusive pre-gala dinner with leadership</li>
+          <li>Honorary speaking opportunity</li>
+          <li>Full-page advertisement in program</li>
+          <li>Year-round digital &amp; print recognition</li>
         </ul>
-        <button class="tbtn" onclick="openSeatModal('VVIP')">Reserve Seat</button>
+        <button class="tbtn" onclick="openSeatModal('VVIP')">Select Your Seat</button>
       </div>
 
     </div>
@@ -694,7 +694,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
     <div class="sc-head rv">
       <div class="sec-label">Select Your Experience</div>
       <h2>Interactive Seating Chart</h2>
-      <p style="color:var(--muted);max-width:540px;margin:12px auto 0;font-size:.88rem;line-height:1.7;">Click any section to explore individual seats. Select seats and proceed directly to checkout.</p>
+      <p style="color:var(--muted);max-width:540px;margin:12px auto 0;font-size:.88rem;line-height:1.7;">Choose your exact seat — Section, Row, and Seat number. Mixed-tier selections check out in a single transaction.</p>
     </div>
     <div class="sc-tier-bar">
       <div class="sc-tier-pill vvip">
@@ -757,9 +757,9 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
         </div>
         <!-- CART -->
       <div class="sc-cart">
-        <div class="sc-cart-h">Your Seats <span class="sc-cnt" id="scTotalBadge">0</span></div>
+        <div class="sc-cart-h">Your Selection <span class="sc-cnt" id="scTotalBadge">0</span></div>
         <div class="sc-cart-body" id="scCartBody">
-          <div class="sc-cart-empty" id="scCartEmpty">No seats selected.<br>Click a section on the map to begin.</div>
+          <div class="sc-cart-empty" id="scCartEmpty">No seats selected yet.<br>Click a section above, then choose your seat.</div>
           <div id="scCartItems"></div>
         </div>
         <div class="sc-cart-totals" id="scCartTotals" style="display:none">
@@ -768,7 +768,7 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
             <span class="sc-total-amt" id="scTotalAmt">$0</span>
           </div>
           <div id="scCoButtons"></div>
-          <button class="sc-clear-btn" onclick="scClearAll()">Clear All Seats</button>
+          <button class="sc-clear-btn" onclick="scClearAll()">Clear Selection</button>
         </div>
       </div>
       </div><!-- end sc-lower-row -->
@@ -1389,15 +1389,20 @@ function mRenderCart(){
     const pts=id.split('-');byT[tier].seats.push('§'+pts[1]+' R'+pts[2]+' S'+pts[3]);
     byT[tier].rawIds.push(id);
   });
+  const tierKeys=Object.keys(byT);
   let ch='';
+  if(tierKeys.length>1){
+    const allCnt=items.length,allTot=tierKeys.reduce((s,t)=>s+byT[t].tot,0);
+    ch+=`<button id="mCheckoutAllBtn" class="sm-co-btn" style="background:linear-gradient(135deg,#8b4513,#d4af37);margin-bottom:6px;" onclick="mCheckoutAll()">Complete Reservation · ${allCnt} Seat${allCnt>1?'s':''} · $${allTot.toLocaleString()}</button>`;
+  }
   ['VVIP','VIP','Gold','General'].forEach(t=>{
     if(!byT[t])return;
     const seatList=byT[t].seats.join(', ');
     const rawIdStr=byT[t].rawIds.join(',');
     const subj=encodeURIComponent('MAFS Gala 2026 – Seat Selection: '+t);
     const body=encodeURIComponent('MAFS Gala 2026 – Seat Reservation\n\nTier: '+t+'\nSeats: '+seatList+'\nTotal: $'+byT[t].tot+'\nDate: '+new Date().toLocaleString()+'\n\nPlease confirm reservation for this guest.\n\nMAFS Annual Gala · August 29, 2026');
-    ch+=`<button class="sm-co-btn" onclick="mLogSeats('${t}','${seatList}',${byT[t].tot});promptReservation('${t}','${rawIdStr}',${byT[t].tot},'${LINKS[t]}')">Checkout ${t} · ${byT[t].cnt} seat${byT[t].cnt>1?'s':''} · $${byT[t].tot.toLocaleString()}</button>`;
-    ch+=`<a class="sm-email-btn" href="mailto:karana@umasinc.com?subject=${subj}&body=${body}">✉ Email Receipt — ${t}</a>`;
+    ch+=`<button class="sm-co-btn" onclick="mLogSeats('${t}','${seatList}',${byT[t].tot});promptReservation('${t}','${rawIdStr}',${byT[t].tot},'${LINKS[t]}')">Secure ${t} Seat${byT[t].cnt>1?'s':''} · ${byT[t].cnt} · $${byT[t].tot.toLocaleString()}</button>`;
+    ch+=`<a class="sm-email-btn" href="mailto:karana@umasinc.com?subject=${subj}&body=${body}">✉ Email Confirmation — ${t}</a>`;
   });
   const cob=document.getElementById('mCoButtons');if(cob)cob.innerHTML=ch;
 }
@@ -1411,6 +1416,40 @@ function mRemoveSeat(id){
   if(mCurSec===parts[1])mRenderGrid(parts[1]);
   mUpdateCnt(parts[1]);mRenderCart();
 }
+async function mCheckoutAll(){
+  const btn=document.getElementById('mCheckoutAllBtn');
+  if(btn){btn.textContent='Processing…';btn.disabled=true;}
+  const entries=[...mSelSeats.entries()];
+  const seats=entries.map(([id,v])=>{
+    const pts=id.split('-');
+    return[id,{sec:pts[1],row:+pts[2],seat:+pts[3],tier:v.tier,price:v.price}];
+  });
+  const tiers=[...new Set(seats.map(([,v])=>v.tier))];
+  const tierFallback=tiers.length===1?tiers[0]:null;
+  if(serverAvailable){
+    entries.forEach(([id,v])=>{
+      const base=id.replace(/^m-/,'');
+      reservedSeats.set(base,{initials:'◆',tier:v.tier});
+      mSelSeats.delete(id);
+    });
+    saveReserved();
+    const ok=await unifiedCheckout(seats,tierFallback);
+    if(ok){if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);mRenderCart();renderCart();return;}
+  }
+  // Fallback: per-tier static links
+  tiers.forEach(t=>{
+    const ts=seats.filter(([,v])=>v.tier===t);
+    const seatNote=ts.map(([,v])=>`Section ${v.sec}, Row ${v.row}, Seat ${v.seat}`).join(' | ');
+    const note='MAFS Gala 2026 — Tier: '+t+' — '+seatNote;
+    ts.forEach(([id,v])=>{
+      const base=id.replace(/^m-/,'');
+      reservedSeats.set(base,{initials:'◆',tier:t});mSelSeats.delete(id);
+    });
+    window.open(LINKS[t]+'?note='+encodeURIComponent(note),'_blank','noopener');
+  });
+  saveReserved();if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);mRenderCart();renderCart();
+}
+window.mCheckoutAll=mCheckoutAll;
 // ── Google Sheets logging (replace PASTE_YOUR_GAS_URL_HERE after deploying Apps Script)
 const GAS_URL='PASTE_YOUR_GAS_URL_HERE';
 function logToSheet(tier,seats,total){
@@ -1503,6 +1542,7 @@ document.querySelectorAll('.bp').forEach(btn=>{
       <div>
         <div class="sm-tier-lbl" id="mTierLabel">Select Your Seat</div>
         <div class="sm-title">Choose Your Seat</div>
+
       </div>
       <button class="sm-close" onclick="closeSeatModal()">✕ &nbsp;CLOSE</button>
     </div>
@@ -1524,9 +1564,9 @@ document.querySelectorAll('.bp').forEach(btn=>{
         <div class="sm-rows" id="mRowsDiv"></div>
       </div>
       <div class="sm-cart">
-        <div class="sm-cart-hdr">Your Seats <span class="sm-cart-badge" id="mCartBadge">0</span></div>
+        <div class="sm-cart-hdr">Your Reservation <span class="sm-cart-badge" id="mCartBadge">0</span></div>
         <div class="sm-cart-body">
-          <div class="sm-cart-empty" id="mCartEmpty">No seats selected.<br>Click a section on the map,<br>then choose your seat.</div>
+          <div class="sm-cart-empty" id="mCartEmpty">No seats added yet.<br>Tap a section on the map above,<br>then select your preferred seat.</div>
           <div id="mCartItems"></div>
         </div>
         <div class="sm-cart-totals" id="mCartTotals" style="display:none;">
@@ -1544,13 +1584,13 @@ document.querySelectorAll('.bp').forEach(btn=>{
 <!-- INITIALS OVERLAY -->
 <div id="initOv" onclick="if(event.target===this)closeInitOv()">
   <div class="init-box">
-    <div class="init-title">Mark Seats Reserved</div>
-    <div class="init-sub">Enter buyer initials to mark these seats as sold on the map. Or skip to go straight to checkout.</div>
+    <div class="init-title">Mark Seats as Reserved</div>
+    <div class="init-sub">Enter the guest's initials to mark these seats as sold on the seating map. Skip to proceed directly to checkout.</div>
     <div class="init-seats" id="initSeatList"></div>
     <input class="init-input" id="initInput" maxlength="4" placeholder="e.g. JD" autocomplete="off" />
     <div class="init-btns">
-      <button class="init-confirm" onclick="confirmReservation()">Confirm &amp; Checkout</button>
-      <button class="init-skip" onclick="skipReservation()">Skip — Just Checkout</button>
+      <button class="init-confirm" onclick="confirmReservation()">Confirm &amp; Proceed to Checkout</button>
+      <button class="init-skip" onclick="skipReservation()">Skip — Go Straight to Checkout</button>
     </div>
   </div>
 </div>
