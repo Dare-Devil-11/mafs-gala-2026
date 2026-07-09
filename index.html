@@ -1016,18 +1016,18 @@ const TIERS=[
   {name:'Gold',price:150,shape:'▲',cls:'gold-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG'},
   {name:'General',price:100,shape:'■',cls:'gen-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'}
 ];
-// Uniform grid: A&D end sections 15×11, B&C center sections 15×10
+// 4 sections A-D, 16 rows each. A&D end sections 11 seats/row, B&C center 10 seats/row
 const SEC_TIER_ROWS={
-  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
-  B:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
-  C:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
-  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]}
+  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]},
+  B:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]},
+  C:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]},
+  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]}
 };
 const SECTIONS={
-  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:Array(15).fill(11)},
-  B:{label:'Section B',fill:'rgba(184,150,60,.68)',seats:Array(15).fill(10)},
-  C:{label:'Section C',fill:'rgba(168,134,44,.68)',seats:Array(15).fill(10)},
-  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:Array(15).fill(11)}
+  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:Array(16).fill(11)},
+  B:{label:'Section B',fill:'rgba(184,150,60,.68)',seats:Array(16).fill(10)},
+  C:{label:'Section C',fill:'rgba(168,134,44,.68)',seats:Array(16).fill(10)},
+  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:Array(16).fill(11)}
 };
 const LINKS={VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',Gold:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',General:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'};
 const TIER_CENTS={VVIP:50000,VIP:25000,Gold:15000,General:10000};
