@@ -704,22 +704,22 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
       <div class="sc-tier-pill vvip">
         <span class="sc-sh">★</span>
         <div class="sc-tn">VVIP</div>
-        <div class="sc-tp">$500 / seat<br>Rows 1–2</div>
+        <div class="sc-tp">$500 / seat<br>38 seats total</div>
       </div>
       <div class="sc-tier-pill vip">
         <span class="sc-sh">●</span>
         <div class="sc-tn">VIP</div>
-        <div class="sc-tp">$250 / seat<br>Rows 3–5</div>
+        <div class="sc-tp">$250 / seat<br>91 seats total</div>
       </div>
       <div class="sc-tier-pill gold">
         <span class="sc-sh">▲</span>
         <div class="sc-tn">Gold</div>
-        <div class="sc-tp">$150 / seat<br>Rows 6–10</div>
+        <div class="sc-tp">$150 / seat<br>258 seats total</div>
       </div>
       <div class="sc-tier-pill gen">
         <span class="sc-sh">■</span>
         <div class="sc-tn">General</div>
-        <div class="sc-tp">$100 / seat<br>Rows 11–15</div>
+        <div class="sc-tp">$100 / seat<br>281 seats total</div>
       </div>
     </div>
     <div class="sc-layout">
@@ -1016,18 +1016,22 @@ const TIERS=[
   {name:'Gold',price:150,shape:'▲',cls:'gold-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG'},
   {name:'General',price:100,shape:'■',cls:'gen-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'}
 ];
-// 4 sections A-D, 16 rows each. A&D end sections 11 seats/row, B&C center 10 seats/row
+// Seat layout per Dhalbir's paper (2026-07-09)
+// A(18 rows): VVIP 2×7, VIP 3×9, Gold 6×12, General 7×12 → 197 seats
+// B(17 rows): VVIP 4+6, VIP 6+7+8, Gold 5×11, General 7×11 → 163 seats
+// C(15 rows): VVIP 4+6, VIP 4+5+6, Gold 5×10, General 5×10 → 125 seats
+// D(15 rows): VVIP 2×7, VIP 3×11, Gold 5×14, General 5×14 → 187 seats
 const SEC_TIER_ROWS={
-  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]},
-  B:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]},
-  C:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]},
-  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16]}
+  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10,11],General:[12,13,14,15,16,17,18]},
+  B:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16,17]},
+  C:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
+  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]}
 };
 const SECTIONS={
-  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:Array(16).fill(11)},
-  B:{label:'Section B',fill:'rgba(184,150,60,.68)',seats:Array(16).fill(10)},
-  C:{label:'Section C',fill:'rgba(168,134,44,.68)',seats:Array(16).fill(10)},
-  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:Array(16).fill(11)}
+  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12,12,12,12]},
+  B:{label:'Section B (Centre Left)',fill:'rgba(184,150,60,.68)',seats:[4,6,6,7,8,11,11,11,11,11,11,11,11,11,11,11,11]},
+  C:{label:'Section C (Centre Right)',fill:'rgba(168,134,44,.68)',seats:[4,6,4,5,6,10,10,10,10,10,10,10,10,10,10]},
+  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,11,11,11,14,14,14,14,14,14,14,14,14,14]}
 };
 const LINKS={VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',Gold:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',General:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'};
 const TIER_CENTS={VVIP:50000,VIP:25000,Gold:15000,General:10000};
@@ -1454,11 +1458,11 @@ async function mCheckoutAll(){
   saveReserved();if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);mRenderCart();renderCart();
 }
 window.mCheckoutAll=mCheckoutAll;
-// ── Google Sheets logging (replace PASTE_YOUR_GAS_URL_HERE after deploying Apps Script)
-const GAS_URL='PASTE_YOUR_GAS_URL_HERE';
+// ── Google Sheets logging
+const GAS_URL='https://script.google.com/macros/s/AKfycbwYJeb1c9kT0Tkc1lPd5mXBKlw25U-k5ipWjagmnpUigLUCPauQxmJ31st7gqUN8E-jhg/exec';
 function logToSheet(tier,seats,total){
   if(!GAS_URL||GAS_URL.startsWith('PASTE'))return;
-  const url=GAS_URL+'?ts='+encodeURIComponent(new Date().toISOString())
+  const url=GAS_URL+'?action=log&ts='+encodeURIComponent(new Date().toISOString())
     +'&tier='+encodeURIComponent(tier)
     +'&seats='+encodeURIComponent(seats)
     +'&total='+encodeURIComponent(total);
