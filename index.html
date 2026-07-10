@@ -1173,81 +1173,67 @@ function arc(cx,cy,r1,r2,a1,a2){
   const f=n=>n.toFixed(1);
   return `M${f(is.x)} ${f(is.y)} A${r1} ${r1} 0 0 0 ${f(ie.x)} ${f(ie.y)} L${f(oe.x)} ${f(oe.y)} A${r2} ${r2} 0 0 1 ${f(os.x)} ${f(os.y)} Z`;
 }
-function buildMap(){
-  const svg=document.getElementById('scVenueSvg');
+// Renders the fan map with one dot per ACTUAL seat (not a decorative approximation) —
+// dot count per row comes straight from SECTIONS[secId].seats / SEC_TIER_ROWS.
+function drawVenueMap(svgId,ptFn,arcFn,pathClass,clickFn,baseStyle){
+  const svg=document.getElementById(svgId);
   if(!svg)return;
   const cx=350,cy=500;
-  // 3° gap between sections, 5px radial gap between tiers → 16 distinct segments
   const G=3, RG=5;
   const secAngs={A:[22+G/2,57-G/2],B:[57+G/2,92-G/2],C:[92+G/2,127-G/2],D:[127+G/2,158-G/2]};
-  const tierSegs=[
-    {r1:95,      r2:142-RG, sym:'★',sz:13},
-    {r1:142+RG,  r2:200-RG, sym:'●',sz:12},
-    {r1:200+RG,  r2:282-RG, sym:'▲',sz:11},
-    {r1:282+RG,  r2:365,    sym:'■',sz:10}
+  const tierBands=[
+    {name:'VVIP',r1:95,r2:142-RG,sym:'★',sz:8},
+    {name:'VIP',r1:142+RG,r2:200-RG,sym:'●',sz:7},
+    {name:'Gold',r1:200+RG,r2:282-RG,sym:'▲',sz:7},
+    {name:'General',r1:282+RG,r2:365,sym:'■',sz:6}
   ];
-  // jewel-tone palettes: Gold · Sapphire · Emerald · Amethyst
-  // Tier-based colors: VVIP=teal, VIP=pink, Gold=gold, General=purple (same across all sections)
-  const tierFills=['rgba(14,155,138,.93)','rgba(225,80,145,.90)','rgba(212,175,55,.88)','rgba(130,75,210,.85)'];
-  const secFills={A:tierFills,B:tierFills,C:tierFills,D:tierFills};
-  const secSymCols={A:'#fff',B:'#fff',C:'rgba(7,5,3,.85)',D:'#fff'};
-  const secLblCols={A:'#e8c85a',B:'#e8c85a',C:'#e8c85a',D:'#e8c85a'};
-  // tier row-divider definitions
-  const tierRowDivs=[
-    {r1:95,r2:142-RG,rows:2},
-    {r1:142+RG,r2:200-RG,rows:3},
-    {r1:200+RG,r2:282-RG,rows:5},
-    {r1:282+RG,r2:365,rows:6}
-  ];
+  const tierFills={VVIP:'rgba(14,155,138,.93)',VIP:'rgba(225,80,145,.90)',Gold:'rgba(212,175,55,.88)',General:'rgba(130,75,210,.85)'};
+  const secLblCol='#e8c85a';
   let h='';
-  Object.entries(secAngs).forEach(([secId,[a1,a2]])=>{
-    const midA=(a1+a2)/2;
-    tierSegs.forEach(({r1,r2,sym,sz},ti)=>{
-      if(ti===0&&(secId==='B'||secId==='C'))return; // VVIP ring for B/C drawn once, merged, below
-      const fill=secFills[secId][ti],symCol=ti===2?'rgba(7,5,3,.85)':'#fff';
-      const midR=(r1+r2)/2, p=pt(cx,cy,midR,midA);
-      h+=`<path class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${secId}" onclick="scOpen('${secId}')" />`;
-      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
-    });
-    // row divider arcs within each tier band
-    tierRowDivs.forEach(({r1,r2,rows},ti)=>{
-      if(ti===0&&(secId==='B'||secId==='C'))return;
-      const step=(r2-r1)/rows;
-      for(let i=1;i<rows;i++){
-        const r=r1+step*i;
-        const p1=pt(cx,cy,r,a1),p2=pt(cx,cy,r,a2);
-        h+=`<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.8" pointer-events="none"/>`;
-      }
-    });
-    const lp=pt(cx,cy,382,midA);
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="${secLblCols[secId]}" font-size="17" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${secId}</text>`;
-  });
-  // merged VVIP wedge spanning Section B + Section C (innermost ring, shared "BC" section)
-  {
-    const ba1=secAngs.B[0], ca2=secAngs.C[1];
-    const {r1,r2,sym,sz}=tierSegs[0], {rows}=tierRowDivs[0];
-    const midA=(ba1+ca2)/2, midR=(r1+r2)/2, p=pt(cx,cy,midR,midA);
-    h+=`<path class="sc-section-path" d="${arc(cx,cy,r1,r2,ba1,ca2)}" fill="${tierFills[0]}" data-sec="BC" onclick="scOpen('BC')" />`;
-    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="#fff" font-size="${sz}" pointer-events="none">${sym}</text>`;
-    const step=(r2-r1)/rows;
-    for(let i=1;i<rows;i++){
-      const r=r1+step*i;
-      const p1=pt(cx,cy,r,ba1),p2=pt(cx,cy,r,ca2);
-      h+=`<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.8" pointer-events="none"/>`;
-    }
-    const lp=pt(cx,cy,382,midA);
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="#e8c85a" font-size="13" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">VVIP</text>`;
+
+  // background wedge (click target + tier color wash) — seat dots render on top
+  function bandWash(secId,a1,a2,r1,r2,fill){
+    h+=`<path class="${pathClass}" d="${arcFn(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${secId}" onclick="${clickFn}('${secId}')"${baseStyle?` style="${baseStyle}"`:''}/>`;
   }
+  // one glyph per real seat, evenly spaced across the section's angular span for that row
+  function seatRow(secId,rowNum,cnt,rMid,sym,sz,a1,a2){
+    const step=(a2-a1)/(cnt+1);
+    for(let s=1;s<=cnt;s++){
+      const ang=a1+step*s;
+      const p=ptFn(cx,cy,rMid,ang);
+      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.35).toFixed(1)}" text-anchor="middle" font-size="${sz}" fill="rgba(255,255,255,.85)" data-sec="${secId}" class="sc-seat-glyph" pointer-events="none">${sym}</text>`;
+    }
+  }
+  function renderSection(secId,a1,a2){
+    const rows=SEC_TIER_ROWS[secId], seats=SECTIONS[secId].seats;
+    tierBands.forEach(({name,r1,r2,sym,sz})=>{
+      const tierRows=rows[name];
+      if(!tierRows||!tierRows.length)return;
+      bandWash(secId,a1,a2,r1,r2,tierFills[name]);
+      const bandStep=(r2-r1)/tierRows.length;
+      tierRows.forEach((rowNum,i)=>{
+        seatRow(secId,rowNum,seats[rowNum-1],r1+bandStep*(i+0.5),sym,sz,a1,a2);
+      });
+    });
+    const midA=(a1+a2)/2, lp=ptFn(cx,cy,382,midA);
+    const lbl=secId==='BC'?'VVIP':secId;
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="${secLblCol}" font-size="${secId==='BC'?13:17}" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${lbl}</text>`;
+  }
+
+  Object.entries(secAngs).forEach(([secId,[a1,a2]])=>renderSection(secId,a1,a2));
+  // shared VVIP wedge spanning Section B + Section C (innermost ring)
+  renderSection('BC',secAngs.B[0],secAngs.C[1]);
+
   // stage — large, prominent kiosk display
-  h+=`<defs><linearGradient id="stgG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
-  h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#stgG)" stroke="#C9A84C" stroke-width="1.8"/>`;
+  h+=`<defs><linearGradient id="stgG${svgId}" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
+  h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#stgG${svgId})" stroke="#C9A84C" stroke-width="1.8"/>`;
   h+=`<text x="350" y="480" text-anchor="middle" fill="#7a5218" font-size="14" font-weight="700" font-family="'Cinzel Decorative',serif" letter-spacing="0.22em" pointer-events="none">STAGE</text>`;
-  // spotlight lines from stage to fan
   ['195','268','350','432','505'].forEach(x=>{
     h+=`<line x1="${x}" y1="455" x2="${x}" y2="410" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.25"/>`;
   });
   svg.innerHTML=h;
 }
+function buildMap(){drawVenueMap('scVenueSvg',pt,arc,'sc-section-path','scOpen',null);}
 function scOpen(id){
   curSec=id;
   document.getElementById('scGridTitle').textContent=SECTIONS[id].label;
@@ -1373,76 +1359,7 @@ window.scOpen=scOpen;window.scShowMap=scShowMap;window.scToggle=scToggle;window.
 
 /* ── SEAT SELECTION MODAL ── */
 let mCurSec=null,mSelSeats=new Map();
-function mPt(cx,cy,r,deg){const a=deg*Math.PI/180;return{x:cx+r*Math.cos(a),y:cy-r*Math.sin(a)};}
-function mArc(cx,cy,r1,r2,a1,a2){
-  const is=mPt(cx,cy,r1,a1),ie=mPt(cx,cy,r1,a2),os=mPt(cx,cy,r2,a1),oe=mPt(cx,cy,r2,a2);
-  const f=n=>n.toFixed(1);
-  return `M${f(is.x)} ${f(is.y)} A${r1} ${r1} 0 0 0 ${f(ie.x)} ${f(ie.y)} L${f(oe.x)} ${f(oe.y)} A${r2} ${r2} 0 0 1 ${f(os.x)} ${f(os.y)} Z`;
-}
-function mBuildMap(){
-  const svg=document.getElementById('mVenueSvg');if(!svg)return;
-  const cx=350,cy=500,G=3,RG=5;
-  const secAngs={A:[22+G/2,57-G/2],B:[57+G/2,92-G/2],C:[92+G/2,127-G/2],D:[127+G/2,158-G/2]};
-  const tierSegs=[
-    {r1:95,r2:142-RG,sym:'★',sz:13},
-    {r1:142+RG,r2:200-RG,sym:'●',sz:12},
-    {r1:200+RG,r2:282-RG,sym:'▲',sz:11},
-    {r1:282+RG,r2:365,sym:'■',sz:10}
-  ];
-  const mTierFills=['rgba(14,155,138,.93)','rgba(225,80,145,.90)','rgba(212,175,55,.88)','rgba(130,75,210,.85)'];
-  const mSecFills={A:mTierFills,B:mTierFills,C:mTierFills,D:mTierFills};
-  const mSecSymCols={A:'#fff',B:'#fff',C:'rgba(7,5,3,.85)',D:'#fff'};
-  const mSecLblCols={A:'#e8c85a',B:'#e8c85a',C:'#e8c85a',D:'#e8c85a'};
-  const mTierRowDivs=[
-    {r1:95,r2:142-RG,rows:2},
-    {r1:142+RG,r2:200-RG,rows:3},
-    {r1:200+RG,r2:282-RG,rows:5},
-    {r1:282+RG,r2:365,rows:6}
-  ];
-  let h='';
-  Object.entries(secAngs).forEach(([sid,[a1,a2]])=>{
-    const midA=(a1+a2)/2;
-    tierSegs.forEach(({r1,r2,sym,sz},ti)=>{
-      if(ti===0&&(sid==='B'||sid==='C'))return; // VVIP ring for B/C drawn once, merged, below
-      const fill=mSecFills[sid][ti],symCol=ti===2?'rgba(7,5,3,.85)':'#fff';
-      const midR=(r1+r2)/2,p=mPt(cx,cy,midR,midA);
-      h+=`<path class="m-sec-path" d="${mArc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${sid}" onclick="mOpenSec('${sid}')" style="cursor:pointer;stroke:rgba(255,255,255,.15);stroke-width:1.5;transition:filter .16s"/>`;
-      h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
-    });
-    mTierRowDivs.forEach(({r1,r2,rows},ti)=>{
-      if(ti===0&&(sid==='B'||sid==='C'))return;
-      const step=(r2-r1)/rows;
-      for(let i=1;i<rows;i++){
-        const r=r1+step*i;
-        const p1=mPt(cx,cy,r,a1),p2=mPt(cx,cy,r,a2);
-        h+=`<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.8" pointer-events="none"/>`;
-      }
-    });
-    const lp=mPt(cx,cy,382,midA);
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="${mSecLblCols[sid]}" font-size="17" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${sid}</text>`;
-  });
-  // merged VVIP wedge spanning Section B + Section C (innermost ring, shared "BC" section)
-  {
-    const ba1=secAngs.B[0], ca2=secAngs.C[1];
-    const {r1,r2,sym,sz}=tierSegs[0], {rows}=mTierRowDivs[0];
-    const midA=(ba1+ca2)/2, midR=(r1+r2)/2, p=mPt(cx,cy,midR,midA);
-    h+=`<path class="m-sec-path" d="${mArc(cx,cy,r1,r2,ba1,ca2)}" fill="${mTierFills[0]}" data-sec="BC" onclick="mOpenSec('BC')" style="cursor:pointer;stroke:rgba(255,255,255,.15);stroke-width:1.5;transition:filter .16s"/>`;
-    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="#fff" font-size="${sz}" pointer-events="none">${sym}</text>`;
-    const step=(r2-r1)/rows;
-    for(let i=1;i<rows;i++){
-      const r=r1+step*i;
-      const p1=mPt(cx,cy,r,ba1),p2=mPt(cx,cy,r,ca2);
-      h+=`<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.8" pointer-events="none"/>`;
-    }
-    const lp=mPt(cx,cy,382,midA);
-    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="#e8c85a" font-size="13" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">VVIP</text>`;
-  }
-  h+=`<defs><linearGradient id="mStgG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
-  h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#mStgG)" stroke="#C9A84C" stroke-width="1.8"/>`;
-  h+=`<text x="350" y="480" text-anchor="middle" fill="#7a5218" font-size="14" font-weight="700" font-family="'Cinzel Decorative',serif" letter-spacing="0.22em" pointer-events="none">STAGE</text>`;
-  ['195','268','350','432','505'].forEach(x=>{h+=`<line x1="${x}" y1="455" x2="${x}" y2="410" stroke="#C9A84C" stroke-width="0.8" stroke-opacity="0.25"/>`;});
-  svg.innerHTML=h;
-}
+function mBuildMap(){drawVenueMap('mVenueSvg',pt,arc,'m-sec-path','mOpenSec','cursor:pointer;stroke:rgba(255,255,255,.15);stroke-width:1.5;transition:filter .16s');}
 function mOpenSec(id){
   mCurSec=id;
   const gt=document.getElementById('mGridTitle');if(gt)gt.textContent=SECTIONS[id].label;
