@@ -101,6 +101,8 @@ nav.sc{padding:16px 80px;background:rgba(6,10,26,.96);backdrop-filter:blur(20px)
 
 /* ABOUT */
 .about{background:var(--cream);color:var(--tl);padding:120px 80px;}
+.promo-vid{background:var(--black);padding:64px 24px;}
+@media(max-width:768px){.promo-vid{padding:40px 20px;}}
 .ai{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;}
 .atg{font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:24px;display:flex;align-items:center;gap:16px;}
 .atg::before{content:'';width:32px;height:1px;background:var(--emerald);}
@@ -539,6 +541,15 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
     </div>
   </div>
   <div class="sh"><span class="st">Scroll</span><div class="sl"></div></div>
+</section>
+
+<!-- PROMO VIDEO -->
+<section class="promo-vid rv">
+  <div class="container">
+    <video controls preload="metadata" style="width:100%;max-width:900px;display:block;margin:0 auto;border-radius:var(--radius,14px);border:1px solid var(--border,rgba(255,255,255,.08));box-shadow:0 4px 24px rgba(0,0,0,.35);">
+      <source src="media/gala-promo.mp4" type="video/mp4">
+    </video>
+  </div>
 </section>
 
 <!-- COUNTDOWN -->
