@@ -252,8 +252,10 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 .sc-sec{background:#FAF6EE;padding:96px 0;--surface:#fff;--border:rgba(26,21,16,.14);--muted:rgba(26,21,16,.44);--text:#1a1510;--radius:12px;}
 .sc-head{text-align:center;margin-bottom:48px;}
 .sc-tier-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:40px;max-width:860px;margin-left:auto;margin-right:auto;}
-.sc-tier-pill{display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px 22px;border:1px solid var(--border);border-radius:18px;background:var(--surface);transition:border-color .25s,transform .25s,box-shadow .25s;text-align:center;cursor:default;min-width:0;width:100%;}
-.sc-tier-pill:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 36px rgba(201,168,76,.22);}
+.sc-tier-pill{display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px 22px;border:1px solid var(--border);border-radius:18px;background:var(--surface);transition:border-color .3s,transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;text-align:center;cursor:default;min-width:0;width:100%;}
+.sc-tier-pill:hover{border-color:var(--gold);transform:translateY(-8px) rotate(-1.5deg) scale(1.035);box-shadow:0 16px 40px rgba(201,168,76,.28);}
+.sc-tier-pill:hover .sc-sh{transform:scale(1.25) rotate(8deg);}
+.sc-sh{display:inline-block;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
 .sc-tier-pill .sc-sh{font-size:9rem;line-height:1;display:block;filter:drop-shadow(0 3px 12px currentColor);}
 .sc-tier-pill .sc-tn{font-family:'Cinzel Decorative',serif;font-size:2.8rem;letter-spacing:.1em;color:var(--gold);margin-top:10px;}
 .sc-tier-pill .sc-tp{font-size:1.8rem;color:var(--muted);line-height:1.65;white-space:nowrap;}
@@ -723,22 +725,22 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
       <p style="color:var(--muted);max-width:540px;margin:12px auto 0;font-size:.88rem;line-height:1.7;">Choose your exact seat — Section, Row, and Seat number. Mixed-tier selections check out in a single transaction.</p>
     </div>
     <div class="sc-tier-bar">
-      <div class="sc-tier-pill vvip">
+      <div class="sc-tier-pill vvip rv">
         <span class="sc-sh">★</span>
         <div class="sc-tn">VVIP</div>
         <div class="sc-tp">$500 / seat<br>38 seats total</div>
       </div>
-      <div class="sc-tier-pill vip">
+      <div class="sc-tier-pill vip rv d1">
         <span class="sc-sh">●</span>
         <div class="sc-tn">VIP</div>
         <div class="sc-tp">$250 / seat<br>96 seats total</div>
       </div>
-      <div class="sc-tier-pill gold">
+      <div class="sc-tier-pill gold rv d2">
         <span class="sc-sh">▲</span>
         <div class="sc-tn">Gold</div>
         <div class="sc-tp">$150 / seat<br>247 seats total</div>
       </div>
-      <div class="sc-tier-pill gen">
+      <div class="sc-tier-pill gen rv d3">
         <span class="sc-sh">■</span>
         <div class="sc-tn">General</div>
         <div class="sc-tp">$100 / seat<br>281 seats total</div>
@@ -1280,7 +1282,13 @@ function scToggle(el){
   const id=el.dataset.id;
   if(selSeats.has(id)){selSeats.delete(id);el.classList.remove('sel');}
   else{const p=id.split('-');selSeats.set(id,{sec:p[0],row:+p[1],seat:+p[2],tier:el.dataset.tier,price:+el.dataset.price});el.classList.add('sel');}
+  popSeat(el);
   if(curSec)updateSecCnt(curSec);renderCart();
+}
+// Satisfying little bounce whenever a seat is clicked — selected or deselected
+function popSeat(el){
+  if(typeof anime==='undefined')return;
+  anime({targets:el,scale:[1,1.5,1],duration:380,easing:'easeOutElastic(1,.6)'});
 }
 function updateSecCnt(sid){
   const n=[...selSeats.keys()].filter(k=>k.startsWith(sid+'-')).length;
