@@ -330,6 +330,18 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
 /* large fan map */
 .sc-fanmap-wrap{padding:32px 24px 20px;display:flex;justify-content:center;background:#EDE7DC;}
 .sc-fanmap-wrap svg{width:100%;max-width:800px;display:block;cursor:default;}
+/* legend */
+.sc-legend{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:16px 22px;padding:18px 24px 26px;background:#EDE7DC;border-top:1px solid rgba(26,21,16,.08);}
+.sc-lg-item{display:flex;align-items:center;gap:9px;}
+.sc-lg-sw{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.4);}
+.sc-lg-sw.vvip{background:rgba(14,155,138,.93);}
+.sc-lg-sw.vip{background:rgba(225,80,145,.90);}
+.sc-lg-sw.gold{background:rgba(212,175,55,.88);color:rgba(26,21,16,.85);}
+.sc-lg-sw.gen{background:rgba(130,75,210,.85);}
+.sc-lg-tx{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.03em;color:rgba(26,21,16,.7);}
+.sc-lg-tx b{font-family:'Cinzel Decorative',serif;color:#7a5218;letter-spacing:.06em;}
+.sc-lg-div{color:var(--gold);opacity:.5;font-size:.6rem;}
+@media(max-width:640px){.sc-legend{gap:10px 14px;padding:14px 16px 20px;}.sc-lg-tx{font-size:.66rem;}}
 .sc-active-bar{padding:10px 20px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;min-height:42px;}
 /* section tabs */
 .sc-sec-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
@@ -499,7 +511,6 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
     <li><a href="#tickets">Tickets</a></li>
     <li><a href="#seating">Seating</a></li>
     <li><a href="#schedule">Schedule</a></li>
-    <li><a href="#sponsors">Sponsor</a></li>
   </ul>
   <a href="#seating" class="nt">Select Seats</a>
 </nav>
@@ -762,6 +773,16 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
         <div class="sc-fanmap-wrap">
           <svg id="scVenueSvg" viewBox="15 110 670 400" xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
+        <!-- LEGEND -->
+        <div class="sc-legend">
+          <div class="sc-lg-item"><span class="sc-lg-sw vvip">★</span><span class="sc-lg-tx"><b>VVIP</b> · $500 · 38 seats</span></div>
+          <span class="sc-lg-div">◆</span>
+          <div class="sc-lg-item"><span class="sc-lg-sw vip">●</span><span class="sc-lg-tx"><b>VIP</b> · $250 · 96 seats</span></div>
+          <span class="sc-lg-div">◆</span>
+          <div class="sc-lg-item"><span class="sc-lg-sw gold">▲</span><span class="sc-lg-tx"><b>Gold</b> · $150 · 247 seats</span></div>
+          <span class="sc-lg-div">◆</span>
+          <div class="sc-lg-item"><span class="sc-lg-sw gen">■</span><span class="sc-lg-tx"><b>General</b> · $100 · 281 seats</span></div>
+        </div>
         <!-- ACTIVE SECTION INFO + SEAT COUNT -->
         <div class="sc-active-bar">
           <span class="sc-active-sec-name" id="scGridTitle">Select a section above or click the map</span>
@@ -809,23 +830,6 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
   </div>
 </section>
 
-<!-- SPONSORS -->
-<section class="spons" id="sponsors">
-  <div class="spni">
-    <h2 class="spnh rv">Partner With MAFS</h2>
-    <p class="spns rv d1">Corporate partnership opportunities for the 2026 Annual Gala — every tier funds real, measurable impact.</p>
-    <div class="spng rv d2">
-      <a class="spnb" href="media/sponsorship/sponsorship-packet.pdf" target="_blank" rel="noopener"><span>Bronze<br>$2,500</span></a>
-      <a class="spnb" href="media/sponsorship/sponsorship-packet.pdf" target="_blank" rel="noopener"><span>Silver<br>$3,500</span></a>
-      <a class="spnb" href="media/sponsorship/sponsorship-packet.pdf" target="_blank" rel="noopener"><span>Gold<br>$5,500</span></a>
-      <a class="spnb" href="media/sponsorship/sponsorship-packet.pdf" target="_blank" rel="noopener"><span>Diamond<br>$10,000</span></a>
-      <a class="spnb" href="media/sponsorship/sponsorship-packet.pdf" target="_blank" rel="noopener"><span>Platinum<br>$20,000</span></a>
-    </div>
-    <p class="spns rv d3" style="font-size:14px;margin:36px 0 20px;">Also available: <a href="media/sponsorship/ads-registration-form.pdf" target="_blank" rel="noopener">program ads</a> from $500, and <a href="media/sponsorship/booth-registration-form.pdf" target="_blank" rel="noopener">exhibitor booths</a> from $200.</p>
-    <p class="spnn rv d3">Download the <a href="media/sponsorship/sponsorship-invitation.pdf" target="_blank" rel="noopener">sponsorship invitation</a> · <a href="media/sponsorship/corporate-sponsorship-brochure.pdf" target="_blank" rel="noopener">full corporate brochure</a><br>Contact Dalbir Dhillon at (847) 306-7616 or <a href="mailto:dalbird@umasinc.com">dalbird@umasinc.com</a></p>
-  </div>
-</section>
-
 <!-- FINAL CTA -->
 <section class="fcta">
   <div class="adv" style="margin-bottom:72px;">
@@ -860,7 +864,6 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
       <li><a href="#tickets">Tickets</a></li>
       <li><a href="#seating">Seating Chart</a></li>
       <li><a href="#schedule">Schedule</a></li>
-      <li><a href="#sponsors">Sponsors</a></li>
     </ul>
   </div>
   <div>
