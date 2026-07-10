@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.2",
+    "axios": "^1.18.1",
+    "firebase": "^12.16.0",
+    "papaparse": "^5.5.4",
+    "qrcode": "^1.5.4",
+    "sweetalert2": "^11.26.25"
+  }
+}
