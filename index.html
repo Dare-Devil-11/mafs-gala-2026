@@ -497,7 +497,6 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
     <li><a href="#tickets">Tickets</a></li>
     <li><a href="#seating">Seating</a></li>
     <li><a href="#schedule">Schedule</a></li>
-    <li><a href="#sponsors">Sponsor</a></li>
   </ul>
   <a href="#seating" class="nt">Select Seats</a>
 </nav>
@@ -709,12 +708,12 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
       <div class="sc-tier-pill vip">
         <span class="sc-sh">●</span>
         <div class="sc-tn">VIP</div>
-        <div class="sc-tp">$250 / seat<br>91 seats total</div>
+        <div class="sc-tp">$250 / seat<br>96 seats total</div>
       </div>
       <div class="sc-tier-pill gold">
         <span class="sc-sh">▲</span>
         <div class="sc-tn">Gold</div>
-        <div class="sc-tp">$150 / seat<br>258 seats total</div>
+        <div class="sc-tp">$150 / seat<br>247 seats total</div>
       </div>
       <div class="sc-tier-pill gen">
         <span class="sc-sh">■</span>
@@ -733,6 +732,10 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
           <button class="sc-sec-tab" data-sec="B" onclick="scOpen('B')">
             <span class="sc-tab-lbl">§ B</span>
             <span class="sc-tab-sub" id="tabCntB">125 seats</span>
+          </button>
+          <button class="sc-sec-tab" data-sec="BC" onclick="scOpen('BC')">
+            <span class="sc-tab-lbl">§ VVIP</span>
+            <span class="sc-tab-sub" id="tabCntBC">10 seats</span>
           </button>
           <button class="sc-sec-tab" data-sec="C" onclick="scOpen('C')">
             <span class="sc-tab-lbl">§ C</span>
@@ -796,22 +799,6 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
   </div>
 </section>
 
-<!-- SPONSORS -->
-<section class="spons" id="sponsors">
-  <div class="spni">
-    <h2 class="spnh rv">Partner With MAFS</h2>
-    <p class="spns rv d1">Join our community of sponsors. Packages from $500–$10,000.</p>
-    <div class="spng rv d2">
-      <div class="spnb">Gold Sponsor</div>
-      <div class="spnb">Silver Sponsor</div>
-      <div class="spnb">Bronze Sponsor</div>
-      <div class="spnb">Table Sponsor</div>
-      <div class="spnb">Program Ad</div>
-    </div>
-    <p class="spnn rv d3">Contact us at <a href="mailto:events@mafsinc.com">events@mafsinc.com</a></p>
-  </div>
-</section>
-
 <!-- FINAL CTA -->
 <section class="fcta">
   <div class="adv" style="margin-bottom:72px;">
@@ -846,7 +833,6 @@ footer{background:var(--deep);border-top:1px solid var(--bg);padding:68px 80px 3
       <li><a href="#tickets">Tickets</a></li>
       <li><a href="#seating">Seating Chart</a></li>
       <li><a href="#schedule">Schedule</a></li>
-      <li><a href="#sponsors">Sponsors</a></li>
     </ul>
   </div>
   <div>
@@ -1017,21 +1003,24 @@ const TIERS=[
   {name:'General',price:100,shape:'■',cls:'gen-s',link:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'}
 ];
 // Seat layout per Dhalbir's paper (2026-07-09)
-// A(18 rows): VVIP 2×7, VIP 3×9, Gold 6×12, General 7×12 → 197 seats
-// B(17 rows): VVIP 4+6, VIP 6+7+8, Gold 5×11, General 7×11 → 163 seats
-// C(15 rows): VVIP 4+6, VIP 4+5+6, Gold 5×10, General 5×10 → 125 seats
-// D(15 rows): VVIP 2×7, VIP 3×11, Gold 5×14, General 5×14 → 187 seats
+// A(15 rows): VVIP 2×7, VIP 3×11, Gold 5×14, General 5×14 → 187 seats — swapped with D's old layout
+// B(15 rows): VIP 6+7+8, Gold 5×11, General 7×11 → 153 seats — VVIP moved to shared BC section
+// BC VVIP (shared, between B & C): row 1 = 4 seats, row 2 = 6 seats → 10 seats
+// C(13 rows): VIP 4+5+6, Gold 5×10, General 5×10 → 115 seats — VVIP moved to shared BC section
+// D(18 rows): VVIP 2×7, VIP 3×9, Gold 6×12, General 7×12 → 197 seats — swapped with A's old layout
 const SEC_TIER_ROWS={
-  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10,11],General:[12,13,14,15,16,17,18]},
-  B:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15,16,17]},
-  C:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
-  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]}
+  A:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10],General:[11,12,13,14,15]},
+  B:{VIP:[1,2,3],Gold:[4,5,6,7,8],General:[9,10,11,12,13,14,15]},
+  BC:{VVIP:[1,2]},
+  C:{VIP:[1,2,3],Gold:[4,5,6,7,8],General:[9,10,11,12,13]},
+  D:{VVIP:[1,2],VIP:[3,4,5],Gold:[6,7,8,9,10,11],General:[12,13,14,15,16,17,18]}
 };
 const SECTIONS={
-  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12,12,12,12]},
-  B:{label:'Section B (Centre Left)',fill:'rgba(184,150,60,.68)',seats:[4,6,6,7,8,11,11,11,11,11,11,11,11,11,11,11,11]},
-  C:{label:'Section C (Centre Right)',fill:'rgba(168,134,44,.68)',seats:[4,6,4,5,6,10,10,10,10,10,10,10,10,10,10]},
-  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,11,11,11,14,14,14,14,14,14,14,14,14,14]}
+  A:{label:'Section A',fill:'rgba(201,168,76,.78)',seats:[7,7,11,11,11,14,14,14,14,14,14,14,14,14,14]},
+  B:{label:'Section B (Centre Left)',fill:'rgba(184,150,60,.68)',seats:[6,7,8,11,11,11,11,11,11,11,11,11,11,11,11]},
+  BC:{label:'VVIP · Sections B & C',fill:'rgba(14,155,138,.85)',seats:[4,6]},
+  C:{label:'Section C (Centre Right)',fill:'rgba(168,134,44,.68)',seats:[4,5,6,10,10,10,10,10,10,10,10,10,10]},
+  D:{label:'Section D',fill:'rgba(152,118,36,.72)',seats:[7,7,9,9,9,12,12,12,12,12,12,12,12,12,12,12,12,12]}
 };
 const LINKS={VVIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/6QDQYRXTBMFAWAQBJGSAE4QU',VIP:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/22W5D2LML6UYA2RCTI6RDZYD',Gold:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/B337UM4VKLN7ZSSP2BWBUWKG',General:'https://checkout.square.site/merchant/12MSXSBWPTMV2/checkout/PFVGPH2REMOFIFJB4ZZKKVUS'};
 const TIER_CENTS={VVIP:50000,VIP:25000,Gold:15000,General:10000};
@@ -1044,6 +1033,9 @@ let serverAvailable=false;
 
 // Unified checkout: all tiers in one Square transaction (API path)
 // Falls back to per-tier static links if server not running
+// Returns {status:'ok'|'conflict'|'fallback', conflicts?:[seatId,...]}
+// 'conflict' means someone else already bought one of these seats — caller must NOT
+// mark them reserved locally, since the server (source of truth) rejected the purchase.
 async function unifiedCheckout(seats,tierFallback){
   if(serverAvailable&&seats.length){
     const payload=seats.map(([id,v])=>({section:v.sec,row:v.row,seat:v.seat,tier:v.tier,price:v.price}));
@@ -1052,20 +1044,36 @@ async function unifiedCheckout(seats,tierFallback){
         method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({seats:payload})
       });
-      if(r.ok){const d=await r.json();if(d.url){window.open(d.url,'_blank','noopener');return true;}}
+      if(r.status===409){const d=await r.json().catch(()=>({}));return{status:'conflict',conflicts:d.conflicts||[]};}
+      if(r.ok){const d=await r.json();if(d.url){window.open(d.url,'_blank','noopener');return{status:'ok'};}}
     }catch(e){}
   }
-  // Fallback: one Square link per tier with note
+  // Fallback: one Square link per tier with note (server unreachable — can't check conflicts)
   const seatNote=seats.map(([id,v])=>`Section ${v.sec}, Row ${v.row}, Seat ${v.seat}`).join(' | ');
   const note='MAFS Gala 2026 — Tier: '+(tierFallback||'Mixed')+' — '+seatNote;
   window.open((LINKS[tierFallback]||LINKS.General)+'?note='+encodeURIComponent(note),'_blank','noopener');
-  return false;
+  return{status:'fallback'};
+}
+// Someone else already bought one of the selected seats — drop it from selection,
+// mark it taken, and tell the guest instead of silently letting them "buy" it too.
+function handleSeatConflict(conflicts){
+  (conflicts||[]).forEach(id=>{
+    if(!reservedSeats.has(id))reservedSeats.set(id,{initials:'◆',tier:''});
+    selSeats.delete(id);mSelSeats.delete('m-'+id);
+  });
+  saveReserved();
+  if(curSec)renderGrid(curSec);
+  if(mCurSec)mRenderGrid(mCurSec);
+  renderCart();mRenderCart();
+  const names=(conflicts||[]).map(id=>{const p=id.split('-');return`Sec ${p[0]} Row ${p[1]} Seat ${p[2]}`;}).join(', ');
+  const empty=document.getElementById('scCartEmpty');
+  if(empty){empty.style.display='block';empty.innerHTML=`⚠ Just taken by another guest: ${names}. Please pick a different seat.`;}
 }
 
 let selSeats=new Map();
 let curSec=null;
 // Sync tab seat counts from SECTIONS data
-['A','B','C','D'].forEach(s=>{const el=document.getElementById('tabCnt'+s);if(el)el.textContent=SECTIONS[s].seats.reduce((a,b)=>a+b,0)+' seats';});
+['A','B','BC','C','D'].forEach(s=>{const el=document.getElementById('tabCnt'+s);if(el)el.textContent=SECTIONS[s].seats.reduce((a,b)=>a+b,0)+' seats';});
 // Reserved seats persisted across page loads: key=seatId, value={initials,tier}
 const reservedSeats=new Map(Object.entries(JSON.parse(localStorage.getItem('mafs_gala_reserved')||'{}')));
 function saveReserved(){localStorage.setItem('mafs_gala_reserved',JSON.stringify(Object.fromEntries(reservedSeats)));}
@@ -1089,7 +1097,7 @@ async function loadAdminBlocks(){
     adminBlockedSeats.clear();
     txt.split(/\r?\n/).forEach(line=>{
       const id=(line.split(',')[0]||'').trim().replace(/"/g,'');
-      if(/^[A-D]-\d+-\d+$/.test(id))adminBlockedSeats.add(id);
+      if(/^(A|B|BC|C|D)-\d+-\d+$/.test(id))adminBlockedSeats.add(id);
     });
     if(curSec)renderGrid(curSec);
     if(mCurSec)mRenderGrid(mCurSec);
@@ -1097,6 +1105,25 @@ async function loadAdminBlocks(){
 }
 loadAdminBlocks();
 setInterval(loadAdminBlocks,60000);
+
+// ── SHARED SEAT RESERVATIONS (server-backed, prevents double-booking) ────────
+// Pulls the live reserved-seat set from CHECKOUT_SERVER so every visitor sees
+// the same taken seats, not just the ones reserved in their own browser.
+async function loadServerReservations(){
+  if(!CHECKOUT_SERVER)return;
+  try{
+    const r=await fetch(CHECKOUT_SERVER+'/reserved',{cache:'no-store',signal:AbortSignal.timeout(4000)});
+    if(!r.ok)return;
+    const{reserved}=await r.json();
+    let changed=false;
+    Object.entries(reserved||{}).forEach(([id,v])=>{
+      if(!reservedSeats.has(id)){reservedSeats.set(id,{initials:'◆',tier:v.tier});changed=true;}
+    });
+    if(changed){saveReserved();if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);}
+  }catch(e){}
+}
+loadServerReservations();
+setInterval(loadServerReservations,20000);
 function getTier(r,secId){
   const sRows=SEC_TIER_ROWS[secId]||SEC_TIER_ROWS.A;
   const tn=Object.keys(sRows).find(k=>sRows[k].includes(r))||'General';
@@ -1139,13 +1166,15 @@ function buildMap(){
   Object.entries(secAngs).forEach(([secId,[a1,a2]])=>{
     const midA=(a1+a2)/2;
     tierSegs.forEach(({r1,r2,sym,sz},ti)=>{
+      if(ti===0&&(secId==='B'||secId==='C'))return; // VVIP ring for B/C drawn once, merged, below
       const fill=secFills[secId][ti],symCol=ti===2?'rgba(7,5,3,.85)':'#fff';
       const midR=(r1+r2)/2, p=pt(cx,cy,midR,midA);
       h+=`<path class="sc-section-path" d="${arc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${secId}" onclick="scOpen('${secId}')" />`;
       h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
     });
     // row divider arcs within each tier band
-    tierRowDivs.forEach(({r1,r2,rows})=>{
+    tierRowDivs.forEach(({r1,r2,rows},ti)=>{
+      if(ti===0&&(secId==='B'||secId==='C'))return;
       const step=(r2-r1)/rows;
       for(let i=1;i<rows;i++){
         const r=r1+step*i;
@@ -1156,6 +1185,22 @@ function buildMap(){
     const lp=pt(cx,cy,382,midA);
     h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="${secLblCols[secId]}" font-size="17" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${secId}</text>`;
   });
+  // merged VVIP wedge spanning Section B + Section C (innermost ring, shared "BC" section)
+  {
+    const ba1=secAngs.B[0], ca2=secAngs.C[1];
+    const {r1,r2,sym,sz}=tierSegs[0], {rows}=tierRowDivs[0];
+    const midA=(ba1+ca2)/2, midR=(r1+r2)/2, p=pt(cx,cy,midR,midA);
+    h+=`<path class="sc-section-path" d="${arc(cx,cy,r1,r2,ba1,ca2)}" fill="${tierFills[0]}" data-sec="BC" onclick="scOpen('BC')" />`;
+    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="#fff" font-size="${sz}" pointer-events="none">${sym}</text>`;
+    const step=(r2-r1)/rows;
+    for(let i=1;i<rows;i++){
+      const r=r1+step*i;
+      const p1=pt(cx,cy,r,ba1),p2=pt(cx,cy,r,ca2);
+      h+=`<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.8" pointer-events="none"/>`;
+    }
+    const lp=pt(cx,cy,382,midA);
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="#e8c85a" font-size="13" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">VVIP</text>`;
+  }
   // stage — large, prominent kiosk display
   h+=`<defs><linearGradient id="stgG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
   h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#stgG)" stroke="#C9A84C" stroke-width="1.8"/>`;
@@ -1240,15 +1285,16 @@ function renderCart(){
 }
 function scRemove(id){selSeats.delete(id);if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
 function scClearAll(){selSeats.clear();if(curSec)renderGrid(curSec);if(curSec)updateSecCnt(curSec);renderCart();}
-function scCheckout(tier,rawIds){
+async function scCheckout(tier,rawIds){
   const ids=rawIds.split(',').filter(Boolean);
   const seats=ids.map(id=>{const v=selSeats.get(id);return[id,v];}).filter(([,v])=>v);
+  const res=await unifiedCheckout(seats,tier);
+  if(res.status==='conflict'){handleSeatConflict(res.conflicts);return;}
   ids.forEach(id=>{reservedSeats.set(id,{initials:'◆',tier:tier});selSeats.delete(id);});
   saveReserved();
   if(curSec)renderGrid(curSec);
   if(mCurSec)mRenderGrid(mCurSec);
   renderCart();
-  unifiedCheckout(seats,tier);
 }
 // Checkout ALL selected seats (all tiers) in one transaction
 async function scCheckoutAll(){
@@ -1258,13 +1304,15 @@ async function scCheckoutAll(){
   const tiers=[...new Set(seats.map(([,v])=>v.tier))];
   const tierFallback=tiers.length===1?tiers[0]:null;
   if(serverAvailable){
-    // Mark all as reserved first
-    seats.forEach(([id,v])=>{reservedSeats.set(id,{initials:'◆',tier:v.tier});selSeats.delete(id);});
-    saveReserved();
-    const ok=await unifiedCheckout(seats,tierFallback);
-    if(ok){if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);renderCart();return;}
+    const res=await unifiedCheckout(seats,tierFallback);
+    if(res.status==='conflict'){handleSeatConflict(res.conflicts);if(btn){btn.textContent='Complete Purchase';btn.disabled=false;}return;}
+    if(res.status==='ok'){
+      seats.forEach(([id,v])=>{reservedSeats.set(id,{initials:'◆',tier:v.tier});selSeats.delete(id);});
+      saveReserved();
+      if(curSec)renderGrid(curSec);if(mCurSec)mRenderGrid(mCurSec);renderCart();return;
+    }
   }
-  // Fallback: checkout by tier separately
+  // Fallback: checkout by tier separately (server unreachable — can't verify conflicts)
   tiers.forEach(t=>{
     const ts=seats.filter(([,v])=>v.tier===t);
     const seatNote=ts.map(([,v])=>`Section ${v.sec}, Row ${v.row}, Seat ${v.seat}`).join(' | ');
@@ -1312,12 +1360,14 @@ function mBuildMap(){
   Object.entries(secAngs).forEach(([sid,[a1,a2]])=>{
     const midA=(a1+a2)/2;
     tierSegs.forEach(({r1,r2,sym,sz},ti)=>{
+      if(ti===0&&(sid==='B'||sid==='C'))return; // VVIP ring for B/C drawn once, merged, below
       const fill=mSecFills[sid][ti],symCol=ti===2?'rgba(7,5,3,.85)':'#fff';
       const midR=(r1+r2)/2,p=mPt(cx,cy,midR,midA);
       h+=`<path class="m-sec-path" d="${mArc(cx,cy,r1,r2,a1,a2)}" fill="${fill}" data-sec="${sid}" onclick="mOpenSec('${sid}')" style="cursor:pointer;stroke:rgba(255,255,255,.15);stroke-width:1.5;transition:filter .16s"/>`;
       h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="${symCol}" font-size="${sz}" pointer-events="none">${sym}</text>`;
     });
-    mTierRowDivs.forEach(({r1,r2,rows})=>{
+    mTierRowDivs.forEach(({r1,r2,rows},ti)=>{
+      if(ti===0&&(sid==='B'||sid==='C'))return;
       const step=(r2-r1)/rows;
       for(let i=1;i<rows;i++){
         const r=r1+step*i;
@@ -1328,6 +1378,22 @@ function mBuildMap(){
     const lp=mPt(cx,cy,382,midA);
     h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="${mSecLblCols[sid]}" font-size="17" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">${sid}</text>`;
   });
+  // merged VVIP wedge spanning Section B + Section C (innermost ring, shared "BC" section)
+  {
+    const ba1=secAngs.B[0], ca2=secAngs.C[1];
+    const {r1,r2,sym,sz}=tierSegs[0], {rows}=mTierRowDivs[0];
+    const midA=(ba1+ca2)/2, midR=(r1+r2)/2, p=mPt(cx,cy,midR,midA);
+    h+=`<path class="m-sec-path" d="${mArc(cx,cy,r1,r2,ba1,ca2)}" fill="${mTierFills[0]}" data-sec="BC" onclick="mOpenSec('BC')" style="cursor:pointer;stroke:rgba(255,255,255,.15);stroke-width:1.5;transition:filter .16s"/>`;
+    h+=`<text x="${p.x.toFixed(1)}" y="${(p.y+sz*0.4).toFixed(1)}" text-anchor="middle" fill="#fff" font-size="${sz}" pointer-events="none">${sym}</text>`;
+    const step=(r2-r1)/rows;
+    for(let i=1;i<rows;i++){
+      const r=r1+step*i;
+      const p1=mPt(cx,cy,r,ba1),p2=mPt(cx,cy,r,ca2);
+      h+=`<path d="M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="0.8" pointer-events="none"/>`;
+    }
+    const lp=mPt(cx,cy,382,midA);
+    h+=`<text x="${lp.x.toFixed(1)}" y="${(lp.y+6).toFixed(1)}" text-anchor="middle" fill="#e8c85a" font-size="13" font-weight="700" font-family="'Cinzel Decorative',serif" pointer-events="none">VVIP</text>`;
+  }
   h+=`<defs><linearGradient id="mStgG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0.08"/></linearGradient></defs>`;
   h+=`<rect x="145" y="455" width="410" height="38" rx="6" fill="url(#mStgG)" stroke="#C9A84C" stroke-width="1.8"/>`;
   h+=`<text x="350" y="480" text-anchor="middle" fill="#7a5218" font-size="14" font-weight="700" font-family="'Cinzel Decorative',serif" letter-spacing="0.22em" pointer-events="none">STAGE</text>`;
@@ -1481,7 +1547,7 @@ function openSeatModal(tierName){
   modal.style.display='block';document.body.style.overflow='hidden';
   const lbl=document.getElementById('mTierLabel');if(lbl)lbl.textContent=tierName+' Tickets';
   const tabs=document.getElementById('mSecTabs');
-  if(tabs)tabs.innerHTML=['A','B','C','D'].map(s=>`<button class="m-tab" data-sec="${s}" onclick="mOpenSec('${s}')"><span style="display:block;font-size:.88rem;font-weight:700;letter-spacing:.06em;margin-bottom:2px;">§${s}</span><span style="display:block;font-size:.53rem;font-family:'Cinzel',serif;color:rgba(26,21,16,.35);">${SECTIONS[s].seats.reduce((a,b)=>a+b,0)} seats</span></button>`).join('');
+  if(tabs)tabs.innerHTML=['A','B','BC','C','D'].map(s=>`<button class="m-tab" data-sec="${s}" onclick="mOpenSec('${s}')"><span style="display:block;font-size:.88rem;font-weight:700;letter-spacing:.06em;margin-bottom:2px;">§${s==='BC'?'V':s}</span><span style="display:block;font-size:.53rem;font-family:'Cinzel',serif;color:rgba(26,21,16,.35);">${SECTIONS[s].seats.reduce((a,b)=>a+b,0)} seats</span></button>`).join('');
   mSelSeats.clear();mBuildMap();mOpenSec('A');mRenderCart();
   setTimeout(()=>{
     const tierObj=TIERS.find(t=>t.name===tierName);if(!tierObj)return;
@@ -1505,24 +1571,34 @@ function promptReservation(tier,rawIdStr,total,link){
   document.getElementById('initOv').classList.add('open');
   setTimeout(()=>document.getElementById('initInput').focus(),120);
 }
-function confirmReservation(){
+async function confirmReservation(){
   const raw=document.getElementById('initInput').value.trim().toUpperCase().slice(0,4)||'◆';
+  closeInitOv();
+  const _seats=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return[base,{sec:p[0],row:+p[1],seat:+p[2],tier:_pendingTier,price:TIER_CENTS[_pendingTier]?TIER_CENTS[_pendingTier]/100:0}];});
+  const res=await unifiedCheckout(_seats,_pendingTier);
+  if(res.status==='conflict'){handleSeatConflict(res.conflicts);return;}
   _pendingRawIds.forEach(id=>{
     const base=id.replace(/^m-/,'');
     reservedSeats.set(base,{initials:raw,tier:_pendingTier});
   });
   saveReserved();
-  closeInitOv();
   if(curSec)renderGrid(curSec);
   if(mCurSec)mRenderGrid(mCurSec);
   renderCart();
-  const _seats=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return[base,{sec:p[0],row:+p[1],seat:+p[2],tier:_pendingTier,price:TIER_CENTS[_pendingTier]?TIER_CENTS[_pendingTier]/100:0}];});
-  unifiedCheckout(_seats,_pendingTier);
 }
-function skipReservation(){
+async function skipReservation(){
   closeInitOv();
   const _seats=_pendingRawIds.map(id=>{const base=id.replace(/^m-/,'');const p=base.split('-');return[base,{sec:p[0],row:+p[1],seat:+p[2],tier:_pendingTier,price:TIER_CENTS[_pendingTier]?TIER_CENTS[_pendingTier]/100:0}];});
-  unifiedCheckout(_seats,_pendingTier);
+  const res=await unifiedCheckout(_seats,_pendingTier);
+  if(res.status==='conflict'){handleSeatConflict(res.conflicts);return;}
+  _pendingRawIds.forEach(id=>{
+    const base=id.replace(/^m-/,'');
+    reservedSeats.set(base,{initials:'◆',tier:_pendingTier});
+  });
+  saveReserved();
+  if(curSec)renderGrid(curSec);
+  if(mCurSec)mRenderGrid(mCurSec);
+  renderCart();
 }
 function closeInitOv(){document.getElementById('initOv').classList.remove('open');}
 window.promptReservation=promptReservation;window.confirmReservation=confirmReservation;
